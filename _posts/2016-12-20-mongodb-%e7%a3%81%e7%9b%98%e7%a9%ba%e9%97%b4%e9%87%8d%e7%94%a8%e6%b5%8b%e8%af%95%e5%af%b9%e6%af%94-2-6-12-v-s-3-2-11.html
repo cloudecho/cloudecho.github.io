@@ -1,0 +1,192 @@
+---
+layout: post
+status: publish
+published: true
+title: mongodb 磁盘空间重用测试对比 (2.6.12 v.s. 3.2.11)
+
+
+
+date: '2016-12-20 13:36:56 +0800'
+date_gmt: '2016-12-20 05:36:56 +0800'
+categories:
+- Database
+- Opensource
+tags:
+- mongodb
+- nosql
+- 大数据
+comments: []
+---
+<p>从测试日志可以看出：</p>
+<ul>
+<li>mongodb3默认的WiredTiger存储引擎，与mongodb2的MMAP相比，在空间利用率上有着质的飞越；
+</li>
+<li>mongodb3在删除集合后，对应的磁盘空间会立即回收，这极大的减轻了运维工作量。</li>
+</ul>
+<p>以下是测试日志：</p>
+<blockquote><p>mongodb_reuse_diskspace_test_log.txt</p></blockquote>
+<p>$ mongo --version<br />
+MongoDB shell version: 2.6.12<br />
+=====================================================<br />
+测试集合名称：person2<br />
+准备<br />
+db.person2.drop();<br />
+db.repairDatabase();</p>
+<p>$ du -h -d 1  data/master<br />
+ 80M	data/master/admin<br />
+  0B	data/master/journal<br />
+ 10G	data/master/local<br />
+ 80M	data/master/logevents<br />
+ 10G	data/master</p>
+<p>写入727.2万<br />
+727.2万  person2.dataSize=1.6254186630249023G 每条数据 240bytes<br />
+$ du -h -d 1  data/master<br />
+  0B	data/master/_tmp<br />
+ 80M	data/master/admin<br />
+289M	data/master/journal<br />
+ 10G	data/master/local<br />
+4.0G	data/master/logevents<br />
+ 14G	data/master</p>
+<p>再写入500万<br />
+[2016-12-15 14:08:33.460 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:09:39.644 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-15 14:09:40.471 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:10:48.308 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-15 14:10:48.969 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:11:58.608 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-15 14:11:59.592 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:13:09.636 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-15 14:13:10.622 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:14:35.282 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功</p>
+<p>1227.2万 person2.dataSize=2.7430057525634766G<br />
+$ du -h -d 1  data/master<br />
+  0B	data/master/_tmp<br />
+ 80M	data/master/admin<br />
+491M	data/master/journal<br />
+ 10G	data/master/local<br />
+6.0G	data/master/logevents<br />
+ 17G	data/master</p>
+<p>删除集合 db.person2.drop();<br />
+$ du -h -d 1  data/master<br />
+  0B	data/master/_tmp<br />
+ 80M	data/master/admin<br />
+492M	data/master/journal<br />
+ 10G	data/master/local<br />
+6.0G	data/master/logevents<br />
+ 17G	data/master</p>
+<p>再写入500万<br />
+[2016-12-15 14:17:39.876 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:18:29.688 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-15 14:18:30.380 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:19:18.009 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-15 14:19:18.591 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:20:07.668 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-15 14:20:08.188 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:20:58.533 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-15 14:20:59.098 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-15 14:21:56.991 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功</p>
+<p>500万 person2.dataSize=1.1175870895385742G<br />
+$ du -h -d 1  data/master<br />
+  0B	data/master/_tmp<br />
+ 80M	data/master/admin<br />
+325M	data/master/journal<br />
+ 10G	data/master/local<br />
+6.0G	data/master/logevents<br />
+ 16G	data/master</p>
+<p>[echo@EchoMa mongodb3]$ mongo --version<br />
+MongoDB shell version: 3.2.11<br />
+=====================================================<br />
+[echo@EchoMa data]$ du -h -d 1 master<br />
+ 20K	master/diagnostic.data<br />
+300M	master/journal<br />
+ 64K	master/local<br />
+300M	master</p>
+<p>首先向logevents.person2写入800万</p>
+<p>[2016-12-20 11:14:57.037 CST] main  INFO context.TestContextManager: Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext]<br />
+[2016-12-20 11:14:57.212 CST] main  INFO xml.XmlBeanDefinitionReader: Loading XML bean definitions from URL [file:/Users/echo/workjava/ctower-v3.0/mongodb-demo/target/classes/applicationContext-mongo2.xml]<br />
+[2016-12-20 11:14:57.533 CST] main  INFO support.GenericApplicationContext: Refreshing org.springframework.context.support.GenericApplicationContext@321e4dd0: startup date [Tue Dec 20 11:14:57 CST 2016]; root of context hierarchy<br />
+[2016-12-20 11:14:57.644 CST] main  INFO config.PropertyPlaceholderConfigurer: Loading properties file from URL [file:/Users/echo/workjava/ctower-v3.0/mongodb-demo/target/classes/conf/conf-mongo2.properties]<br />
+[2016-12-20 11:14:57.678 CST] main  INFO support.DefaultListableBeanFactory: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@a78f12e: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,mongo,org.springframework.beans.factory.config.CustomEditorConfigurer#0,org.springframework.beans.factory.config.CustomEditorConfigurer#1,org.springframework.beans.factory.config.CustomEditorConfigurer#2,mongoDbFactory,mongoTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy<br />
+[2016-12-20 11:14:59.535 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:16:11.159 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:16:11.201 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 1000010<br />
+[2016-12-20 11:16:12.463 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:17:13.819 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:17:13.820 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 2000010<br />
+[2016-12-20 11:17:14.273 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:18:15.463 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:18:15.479 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 3000010<br />
+[2016-12-20 11:18:17.394 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:19:13.793 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:19:13.794 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 4000010<br />
+[2016-12-20 11:19:14.279 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:20:46.799 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:20:46.806 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 5000010<br />
+[2016-12-20 11:20:47.462 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:22:59.124 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:22:59.127 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 6000010<br />
+[2016-12-20 11:23:00.799 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:24:26.280 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:24:26.283 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 7000010<br />
+[2016-12-20 11:24:27.261 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:26:03.717 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:26:03.723 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 8000010<br />
+[2016-12-20 11:26:03.805 CST] Thread-2  INFO support.GenericApplicationContext: Closing org.springframework.context.support.GenericApplicationContext@321e4dd0: startup date [Tue Dec 20 11:14:57 CST 2016]; root of context hierarchy<br />
+[2016-12-20 11:26:03.811 CST] Thread-2  INFO support.DefaultListableBeanFactory: Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@a78f12e: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,mongo,org.springframework.beans.factory.config.CustomEditorConfigurer#0,org.springframework.beans.factory.config.CustomEditorConfigurer#1,org.springframework.beans.factory.config.CustomEditorConfigurer#2,mongoDbFactory,mongoTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy</p>
+<p>查看磁盘文件大小<br />
+[echo@EchoMa mongodb3]$ du -h -d 1 data/master<br />
+140K	data/master/admin<br />
+1.1M	data/master/diagnostic.data<br />
+400M	data/master/journal<br />
+478M	data/master/local<br />
+703M	data/master/logevents<br />
+1.5G	data/master</p>
+<p>删除person2集合<br />
+db.person2.drop();</p>
+<p>[echo@EchoMa mongodb3]$ du -h -d 1 data/master<br />
+140K	data/master/admin<br />
+1.1M	data/master/diagnostic.data<br />
+400M	data/master/journal<br />
+478M	data/master/local<br />
+8.0K	data/master/logevents<br />
+879M	data/master</p>
+<p>再写入800万<br />
+[2016-12-20 11:43:27.632 CST] main  INFO context.TestContextManager: Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext]<br />
+[2016-12-20 11:43:27.814 CST] main  INFO xml.XmlBeanDefinitionReader: Loading XML bean definitions from URL [file:/Users/echo/workjava/ctower-v3.0/mongodb-demo/target/classes/applicationContext-mongo.xml]<br />
+[2016-12-20 11:43:28.159 CST] main  INFO support.GenericApplicationContext: Refreshing org.springframework.context.support.GenericApplicationContext@401a37b1: startup date [Tue Dec 20 11:43:28 CST 2016]; root of context hierarchy<br />
+[2016-12-20 11:43:28.296 CST] main  INFO config.PropertyPlaceholderConfigurer: Loading properties file from URL [file:/Users/echo/workjava/ctower-v3.0/mongodb-demo/target/classes/conf/conf-mongo.properties]<br />
+[2016-12-20 11:43:28.329 CST] main  INFO support.DefaultListableBeanFactory: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@54891f43: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,mongo,org.springframework.beans.factory.config.CustomEditorConfigurer#0,org.springframework.beans.factory.config.CustomEditorConfigurer#1,org.springframework.beans.factory.config.CustomEditorConfigurer#2,mongoDbFactory,mongoTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy<br />
+[2016-12-20 11:43:30.177 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:44:55.370 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:44:55.435 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 1000000<br />
+[2016-12-20 11:44:56.017 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:46:36.982 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:46:36.987 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 2000000<br />
+[2016-12-20 11:46:37.680 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:47:39.489 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:47:39.492 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 3000000<br />
+[2016-12-20 11:47:40.754 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:49:25.819 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:49:25.828 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 4000000<br />
+[2016-12-20 11:49:26.283 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:50:47.129 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:50:47.135 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 5000000<br />
+[2016-12-20 11:50:48.615 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:52:36.344 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:52:36.348 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 6000000<br />
+[2016-12-20 11:52:37.756 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:54:06.097 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:54:06.100 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 7000000<br />
+[2016-12-20 11:54:06.721 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 1000000条记录已就绪<br />
+[2016-12-20 11:55:36.462 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: 写入1000000条记录至Person2成功<br />
+[2016-12-20 11:55:36.462 CST] main  INFO mongodb.MongoDbReuseDiskspaceTest: Person2 记录数: 8000000<br />
+[2016-12-20 11:55:36.486 CST] Thread-2  INFO support.GenericApplicationContext: Closing org.springframework.context.support.GenericApplicationContext@401a37b1: startup date [Tue Dec 20 11:43:28 CST 2016]; root of context hierarchy<br />
+[2016-12-20 11:55:36.489 CST] Thread-2  INFO support.DefaultListableBeanFactory: Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@54891f43: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,mongo,org.springframework.beans.factory.config.CustomEditorConfigurer#0,org.springframework.beans.factory.config.CustomEditorConfigurer#1,org.springframework.beans.factory.config.CustomEditorConfigurer#2,mongoDbFactory,mongoTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy</p>
+<p>查看磁盘文件大小<br />
+[echo@EchoMa mongodb3]$ du -h -d 1 data/master<br />
+140K	data/master/admin<br />
+1.3M	data/master/diagnostic.data<br />
+400M	data/master/journal<br />
+956M	data/master/local<br />
+694M	data/master/logevents<br />
+2.0G	data/master</p>

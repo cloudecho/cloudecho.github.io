@@ -1,0 +1,119 @@
+---
+layout: post
+status: publish
+published: true
+title: activemq5.x.x主从安装指南
+
+
+
+date: '2017-05-05 18:28:10 +0800'
+date_gmt: '2017-05-05 10:28:10 +0800'
+categories:
+- Opensource
+tags:
+- activemq
+- jms
+- 中间件
+- 消息
+comments: []
+---
+<h2>一、服务器规划</h2>
+<p>下面的服务器ip、用户、目录为示例，根据具体情况设定。</p>
+<p>安装activemq前，请确保已经安装jdk1.7或jdk1.8。</p>
+<h3>1.1 服务器列表</h3>
+<p>操作系统: CentOS6.2+ 或 Redhat6.2+</p>
+<p><code>192.168.10.1  serv-a1  主<br />
+192.168.10.2  serv-b1  从</code></p>
+<h3>1.2 用户规划</h3>
+<ul>
+<li>mqusr activemq用户</li>
+</ul>
+<h3>1.3 目录规划</h3>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>用途</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/opt</td>
+<td>应用目录</td>
+<td>owner: mqusr</td>
+</tr>
+<tr>
+<td>/opt/_archive</td>
+<td>安装程序归档</td>
+<td></td>
+</tr>
+<tr>
+<td>/data</td>
+<td>数据目录</td>
+<td>owner: mqusr</td>
+</tr>
+<tr>
+<td>/data/nas_data</td>
+<td>nas共享目录</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>二、activemq 安装至 serv-a1 （主）, serv-b1（从）</h2>
+<p>下面以serv-a1为例。</p>
+<h3>2.1 建立数据目录</h3>
+<p><code>[root@serv-a1 ~]# mkdir /data/nas_data/activemq<br />
+[root@serv-a1 ~]# mkdir /data/nas_data/activemq/serv-a1<br />
+[root@serv-a1 ~]# mkdir /data/nas_data/activemq/serv-b1<br />
+[root@serv-a1 ~]# chown -R mqusr:mqusr /data/nas_data/activemq/<br />
+[root@serv-a1 ~]# su - mqusr</code></p>
+<h3>2.2 解压activemq程序包</h3>
+<p><code>[mqusr@serv-a1 ~]$ cd /opt/<br />
+[mqusr@serv-a1 opt]$ tar -zxf apache-activemq-5.13.4-bin.tar.gz<br />
+[mqusr@serv-a1 opt]$ mv apache-activemq-5.13.4/ activemq-5.13.4/</code></p>
+<h3>2.3 重建data目录 （两台机共享目录）</h3>
+<p><code>[mqusr@serv-a1 opt]]$ cd activemq-5.13.4/<br />
+[mqusr@serv-a1 activemq-5.13.4]$ rm -rf data/<br />
+[mqusr@serv-a1 activemq-5.13.4]$ ln -s /data/nas_data/activemq/ data</code></p>
+<h3>2.4 配置</h3>
+<h4>2.4.1</h4>
+<p><code>[mqusr@serv-a1 activemq-5.13.4]$ vi conf/activemq.xml</code><br />
+定位至40行，添加 schedulerSupport="true"，并保存</p>
+<p><strong>注</strong>：两台机器的brokerName不一样，配置为机器名即可。<br />
+<code>xml<br />
+40 <broker xmlns="http://activemq.apache.org/schema/core"<br />
+41       brokerName="serv-a1" dataDirectory="${activemq.data}"<br />
+42       schedulerSupport="true" ></code></p>
+<h4>2.4.2</h4>
+<p><code>[mqusr@serv-a1 activemq-5.13.4]$ vi bin/env</code><br />
+分别定位至27、102行，设置 ACTIVEMQ_OPTS_MEMORY、ACTIVEMQ_PIDFILE</p>
+<p><strong>注</strong>：其中的serv-a1取机器名<br />
+<code>27 ACTIVEMQ_OPTS_MEMORY="-Xms4G -Xmx4G"<br />
+102 ACTIVEMQ_PIDFILE="$ACTIVEMQ_DATA/serv-a1/activemq.pid"</code></p>
+<h4>2.4.3</h4>
+<p><code>[mqusr@serv-a1 activemq-5.13.4]$ vi conf/log4j.properties</code><br />
+分别定位至47、73行，设置log文件</p>
+<p><strong>注</strong>：其中的serv-a1取机器名<br />
+<code>47 log4j.appender.logfile.file=${activemq.base}/data/serv-a1/activemq.log<br />
+73 log4j.appender.audit.file=${activemq.base}/data/serv-a1/audit.log</code></p>
+<h4>2.4.4</h4>
+<p>设置 activemq 连接密码 （开发环境可选）<br />
+<code>[mqusr@serv-a1 activemq-5.13.4]$ vi conf/credentials.properties</code><br />
+<code>activemq.username=sys<br />
+activemq.password=changeMe</code></p>
+<h4>2.4.5</h4>
+<p>设置web控制台密码 （开发环境可选）<br />
+<code>[mqusr@serv-a1 activemq-5.13.4]$ vi conf/jetty-realm.properties</code><br />
+<code>admin: changeMe, admin</code></p>
+<h3>2.5 启动</h3>
+<p><code>[mqusr@serv-a1 activemq-5.13.4]$ ./bin/activemq start</code></p>
+<p>浏览器访问web控制台<br />
+http://serv-a1:8161/admin/<br />
+（用户密码 admin/changeMe）</p>
+<h2>三、参考资料</h2>
+<ul>
+<li>activemq官网 http://activemq.apache.org/</li>
+<li>安装文件下载页面 http://activemq.apache.org/download.html</li>
+<li>activemq cluster http://activemq.apache.org/clustering.html</li>
+</ul>

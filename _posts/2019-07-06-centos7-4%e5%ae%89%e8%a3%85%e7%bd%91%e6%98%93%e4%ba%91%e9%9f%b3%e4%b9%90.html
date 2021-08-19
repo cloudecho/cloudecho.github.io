@@ -1,0 +1,103 @@
+---
+layout: post
+status: publish
+published: true
+title: Centos7.4安装网易云音乐
+
+
+
+date: '2019-07-06 10:09:26 +0800'
+date_gmt: '2019-07-06 02:09:26 +0800'
+categories:
+- iMac
+tags:
+- centos
+- 网易云音乐
+comments: []
+---
+<p>转自「http://tieba.baidu.com/p/5593470159」</p>
+<p>步骤如下：<br />
+1. 前往网易云音乐下载地址<a class="j-no-opener-url" href="http://jump.bdimg.com/safecheck/index?url=x+Z5mMbGPAv7zFgtRCFyfwPeGQWa6UVUu4syTBQXaEcs9iTuiJvrDE+gLXOUCQ2RXweqO61U1mlkzVcOlqCZ4XLF9hofbIWd0tzf2EYcm2ifXRo7rINxi26Y8F9bLbRsjXI6E+H+p/x2Pah4egTNMg==" target="_blank" rel="noopener noreferrer nofollow">http://music.163.com/#/download</a>，下载乌班图64位版本安装程序，例如netease-cloud-music_1.1.0_amd64_ubuntu.deb。</p>
+<p>2. 解压netease-cloud-music_1.1.0_amd64_ubuntu.deb文件，执行如下命令：<br />
+sudo ar -vx netease-cloud-music_1.1.0_amd64_ubuntu.deb<br />
+得到如下三个文件：<br />
+x - debian-binary<br />
+x - control.tar.gz<br />
+x - data.tar.xz<br />
+继续解压data.tar.xz文件，执行如下命令：<br />
+sudo xz -dk data.tar.xz<br />
+sudo tar -xvf data.tar<br />
+解压后得到的usr目录，目录中包含bin、lib、share三个文件夹。</p>
+<p>3. 将这个usr文件夹放入到CentOS7中的/usr目录下，执行如下命令：<br />
+sudo cp -r usr/* /usr/</p>
+<p>4. 安装vlc，执行如下命令：<br />
+sudo rpm -Uvh&nbsp;<a class="j-no-opener-url" href="http://jump.bdimg.com/safecheck/index?url=x+Z5mMbGPAsrBQ1kSlmv+pKqBDi/C1mTLPYk7oib6ww44fhEtEoH/KCSTJlyQygrkIUmLucjWBt0greLg2oLtmxZQxTCa/kxsrBFZ9XuQzGEmpgb3LufhqM+HFgAEm++Wn9AFXKaiaygVzTkdkbNL88cWSwJtSsfFp6i1cGiZhBjj4gnh/xoAxzdNXokhpxuoN3x4Glt/soaC6x5BLDluT9kQMAs+k9FgisgepxCt4NWZhAVR4xoKDA8Zu4mdgY0" target="_blank" rel="noopener noreferrer nofollow">http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm</a><br />
+sudo yum update<br />
+sudo yum install vlc</p>
+<p>5. 安装libXScrnSaver，执行如下命令：<br />
+sudo yum install libXScrnSaver</p>
+<p>6. 安装Anaconda，前往<a class="j-no-opener-url" href="http://jump.bdimg.com/safecheck/index?url=rN3wPs8te/pL4AOY0zAwhw8NOg1UweiBop4LcHYaBr80fPjV59o0dLOs9Vkrj85CLPYk7oib6wxPoC1zlAkNkV8HqjutVNZpZM1XDpagmeFyxfYaH2yFndLc39hGHJton10aO6yDcYtumPBfWy20bI1yOhPh/qf8dj2oeHoEzTI=" target="_blank" rel="noopener noreferrer nofollow">https://www.anaconda.com/download/#download</a>网站，下载Python 3.6 version * &ldquo;64-Bit (x86) Installer (551 MB)&rdquo;文件，例如&ldquo;Anaconda3-5.1.0-Linux-x86_64.sh&rdquo;，下载完成后，执行如下命令：<br />
+sudo sh Anaconda3-5.1.0-Linux-x86_64.sh<br />
+然后一路yes，直至安装结束。</p>
+<p>7. 查看本机libgcc库信息，执行如下命令：<br />
+sudo strings /usr/lib64/libstdc++.so.6 | grep GLIBC<br />
+可能会显示如下信息，视各人机器情况：<br />
+GLIBCXX_3.4</p>
+<p>GLIBCXX_3.4.1</p>
+<p>GLIBCXX_3.4.2</p>
+<p>GLIBCXX_3.4.3</p>
+<p>GLIBCXX_3.4.4</p>
+<p>GLIBCXX_3.4.5</p>
+<p>GLIBCXX_3.4.6</p>
+<p>GLIBCXX_3.4.7</p>
+<p>GLIBCXX_3.4.8</p>
+<p>GLIBCXX_3.4.9</p>
+<p>GLIBCXX_3.4.10</p>
+<p>GLIBCXX_3.4.11</p>
+<p>GLIBCXX_3.4.12</p>
+<p>GLIBCXX_3.4.13</p>
+<p>GLIBCXX_FORCE_NEW</p>
+<p>GLIBCXX_DEBUG_MESSAGE_LENGTH<br />
+以上信息可以看出，gcc的动态库还是旧版本的，这个会导致不能正常开启网易云音乐程序。</p>
+<p>8. 执行以下命令，查找本机gcc的最新动态库：<br />
+find / -name "libstdc++.so*"<br />
+执行完上面命令，会显示一堆本机gcc动态库信息，从中找到如下信息：<br />
+/root/anaconda3/lib/libstdc++.so.6.0.24<br />
+可以看出anaconda3为第6步安装所得，将libstdc++.so.6.0.24文件复制到/usr/lib64目录下，执行如下命令：<br />
+sudo cp /root/anaconda3/lib/libstdc++.so.6.0.24 /usr/lib64<br />
+切换工作目录至/usr/lib64，执行命令：<br />
+cd /usr/lib64<br />
+删除原来软连接，执行命令：<br />
+sudo rm -rf libstdc++.so.6<br />
+将默认库的软连接指向最新动态库，执行命令：<br />
+ln -s libstdc++.so.6.0.24 libstdc++.so.6<br />
+再一次执行命令检查gcc动态库情况，执行如下命令：<br />
+strings /usr/lib64/libstdc++.so.6 | grep GLIBC<br />
+显示内容包含如下信息，则代表最新gcc动态库已经引入：<br />
+GLIBCXX_3.4.12<br />
+GLIBCXX_3.4.13<br />
+GLIBCXX_3.4.14<br />
+GLIBCXX_3.4.15<br />
+GLIBCXX_3.4.16<br />
+GLIBCXX_3.4.17<br />
+GLIBCXX_3.4.18<br />
+GLIBCXX_3.4.19<br />
+GLIBCXX_3.4.20<br />
+GLIBCXX_3.4.21<br />
+GLIBCXX_3.4.22<br />
+GLIBCXX_3.4.23<br />
+GLIBCXX_3.4.24</p>
+<p>9. 通过后台方式启动网易云音乐程序，执行如下命令：</p>
+<p>sudo /usr/bin/netease-cloud-music</p>
+<p>10. 通过快捷方式图标启动网易云音乐程序，参照如下步骤：<br />
+执行命令：<br />
+sudo find / -name netease-cloud-music.svg<br />
+得到netease-cloud-music.svg文件路径信息，如：/usr/share/icons/hicolor/scalable/apps/netease-cloud-music.svg<br />
+执行命令：</p>
+<p>sudo vim /usr/share/applications/netease-cloud-music.desktop<br />
+修改Icon图标路径，和Exec可执行命令路径，如下：<br />
+Icon=/usr/share/icons/hicolor/scalable/apps/netease-cloud-music.svg<br />
+Exec=/usr/bin/netease-cloud-music %U<br />
+修改桌面快捷方式权限，执行如下命令：</p>
+<p>sudo chmod u=rw,g=r,o=r /usr/share/applications/netease-cloud-music.desktop<br />
+完成以后，将会在&ldquo;应用程序&rdquo;-》&ldquo;影音&rdquo;菜单中看到&ldquo;网易云音乐&rdquo;图标，点击即可开启网易云音乐程序。</p>

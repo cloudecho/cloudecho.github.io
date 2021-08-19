@@ -1,0 +1,38 @@
+---
+layout: post
+status: publish
+published: true
+title: MySQL 全局禁用autocommit
+
+
+
+date: '2015-12-16 12:59:17 +0800'
+date_gmt: '2015-12-16 04:59:17 +0800'
+categories:
+- Database
+tags:
+- MySQL
+- autocommit
+comments: []
+---
+<table cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td id="postmessage_14111172" class="t_f"><a class="relatedlink" href="http://www.itpub.net/thread-1431442-1-1.html" target="_blank">mysql</a>默认开启auto commit，我们可以通过系统变量控制来动态控制session级别autocommit，如何从全局禁用autocommit呢，也许有时候我们不想让mysql自动提交。<br />
+mysql有一个Cmd-Line&amp;Option file&amp;System Var可以帮助我们实现这样的功能，它就是init_connect。</p>
+<p>这个参数用来定义每个session建立时自动执行的query。</p>
+<p>A string to be executed by the server for each client that connects. The string consists of one or more SQL statements. To specify multiple statements, separate them by semicolon characters.A string to be executed by the server for each client that connects. The string consists of one or more SQL statements. To specify multiple statements, separate them by semicolon characters.</p>
+<p>利用这个变量，可以通过如下方式禁用autocommit：</p>
+<p>way1：mysql>SET GLOBAL init_connect=&rsquo;SET autocommit=0&prime;;</p>
+<p>way2：在初始化参数文件中设置</p>
+<p>[mysqld]<br />
+init_connect=&rsquo;SET autocommit=0&prime;</p>
+<p>way3：</p>
+<p>启动mysql时带上命令行参数&ndash;init_connect=&rsquo;SET autocommit=0&prime;</p>
+<p>当然这个参数的设置对拥有super权限的用户是无效的，具体说明</p>
+<p>Note that the content of init_connect is not executed for users that have the SUPER privilege. This is done so that an erroneous value for init_connect does not prevent all clients from connecting. For example, the value might contain a statement that has a syntax error, thus causing client connections to fail. Not executing init_connect for users that have the SUPER privilege enables them to open a connection and fix the init_connect value.</p>
+<p>参考：<a href="http://dev.mysql.com/doc/refman/5.1/en/server-system-variables.html#sysvar_init_connect" target="_blank">http://dev.mysql.com/doc/refman/ ... sysvar_init_connect</a></td>
+</tr>
+</tbody>
+</table>
+<p>摘自『http://www.itpub.net/thread-1205953-1-1.html』</p>

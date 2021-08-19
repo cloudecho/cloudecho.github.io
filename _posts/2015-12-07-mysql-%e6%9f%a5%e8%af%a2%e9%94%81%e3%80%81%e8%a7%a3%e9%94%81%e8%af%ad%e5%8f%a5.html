@@ -1,0 +1,30 @@
+---
+layout: post
+status: publish
+published: true
+title: MySQL 查询锁、解锁语句
+
+
+
+date: '2015-12-07 21:02:54 +0800'
+date_gmt: '2015-12-07 13:02:54 +0800'
+categories:
+- Database
+tags: []
+comments: []
+---
+<p>一：锁表：</p>
+<p>锁定数据表，避免在备份过程中，表被更新</p>
+<p>mysql>LOCK TABLES tbl_name READ;</p>
+<p>为表增加一个写锁定：</p>
+<p>mysql>LOCK TABLES tbl_name WRITE;</p>
+<p>二：<a href="http://www.baidu.com/link?url=yF-NcqXN5gvepmQGz8rYMd1OVRK9Lqn9dzpDAOiuqnQfjNJEeCnJYSGGxCjswY31Lb0V1Ag9I_dhTzzgdP4XVAR-s6-feO3-K9QqKDPN9F7" target="_blank" data-click="{ 'F':'778717EA', 'F1':'9D73F1E4', 'F2':'4CA6DC6B', 'F3':'54E5342F', 'T':'1419915527', 'y':'EAEDF5BB' }"><em>查询mysql</em> 哪些表正在被锁状态</a></p>
+<p>show OPEN TABLES where In_use > 0;</p>
+<p>三：mysql解锁</p>
+<p>第一种</p>
+<p>show processlist;</p>
+<p>找到锁进程，kill id ;</p>
+<p>第二种</p>
+<p>mysql>UNLOCK TABLES;</p>
+<p>&nbsp;</p>
+<p>摘自『http://www.cnblogs.com/Alight/p/4193439.html』</p>

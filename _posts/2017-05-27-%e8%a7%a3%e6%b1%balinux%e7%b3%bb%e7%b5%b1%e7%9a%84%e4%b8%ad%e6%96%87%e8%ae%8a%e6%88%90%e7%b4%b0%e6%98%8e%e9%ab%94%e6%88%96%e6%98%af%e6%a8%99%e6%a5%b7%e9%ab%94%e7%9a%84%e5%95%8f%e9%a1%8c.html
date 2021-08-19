@@ -1,0 +1,28 @@
+---
+layout: post
+status: publish
+published: true
+title: 解決Linux系統的中文變成細明體或是標楷體的問題
+
+
+
+date: '2017-05-27 20:49:58 +0800'
+date_gmt: '2017-05-27 12:49:58 +0800'
+categories:
+- iMac
+tags:
+- linuxmint
+- 字体
+- 楷体
+comments: []
+---
+<header>
+<h6 class="article-title"><label>日期：</label><time class="article-time" datetime="2016-06-11T18:40:25+00:00">2016 年 6 月 11 日</time><label> | </label><label>作者：</label><a title="造訪 Magic Len 的網站" href="https://magiclen.org/" target="_blank" rel="author external noopener noreferrer">Magic Len</a></h6>
+</header>
+<div class="article-content">
+<p>許多<a class="auto-tag" title="查看「Linux發行版」標籤" href="https://magiclen.org/tag/linux%e7%99%bc%e8%a1%8c%e7%89%88/" target="_blank" rel="noopener noreferrer">Linux發行版</a>會內建幾個中文<a class="auto-tag" title="查看「字型」標籤" href="https://magiclen.org/tag/%e5%ad%97%e5%9e%8b/" target="_blank" rel="noopener noreferrer">字型</a>，以便遇到中文字的時候可以套用，而應用程式或<a class="auto-tag" title="查看「網頁」標籤" href="https://magiclen.org/tag/%e7%b6%b2%e9%a0%81/" target="_blank" rel="noopener noreferrer">網頁</a>也常會以優先順序的方式去選擇中文字體來套用，例如像是<a class="auto-tag" title="查看「微軟」標籤" href="https://magiclen.org/tag/%e5%be%ae%e8%bb%9f/" target="_blank" rel="noopener noreferrer">微軟</a><a class="auto-tag" title="查看「標楷體」標籤" href="https://magiclen.org/tag/%e6%a8%99%e6%a5%b7%e9%ab%94/" target="_blank" rel="noopener noreferrer">標楷體</a>的「<a class="auto-tag" title="查看「AR PL UKai」標籤" href="https://magiclen.org/tag/ar-pl-ukai/" target="_blank" rel="noopener noreferrer">AR PL UKai</a>」，或是像是<a class="auto-tag" title="查看「微軟」標籤" href="https://magiclen.org/tag/%e5%be%ae%e8%bb%9f/" target="_blank" rel="noopener noreferrer">微軟</a><a class="auto-tag" title="查看「細明體」標籤" href="https://magiclen.org/tag/%e7%b4%b0%e6%98%8e%e9%ab%94/" target="_blank" rel="noopener noreferrer">細明體</a>的「<a class="auto-tag" title="查看「AR PL UMing」標籤" href="https://magiclen.org/tag/ar-pl-uming/" target="_blank" rel="noopener noreferrer">AR PL UMing</a>」，都是很常見的預設<a class="auto-tag" title="查看「字型」標籤" href="https://magiclen.org/tag/%e5%ad%97%e5%9e%8b/" target="_blank" rel="noopener noreferrer">字型</a>。筆者習慣使用<a href="https://magiclen.org/open-fonts/" target="_blank" rel="noopener noreferrer">「Noto Sans CJK TC」和「文泉驛微米黑」</a>，所以會把這兩種<a class="auto-tag" title="查看「字型」標籤" href="https://magiclen.org/tag/%e5%ad%97%e5%9e%8b/" target="_blank" rel="noopener noreferrer">字型</a>設定為預設的<a class="auto-tag" title="查看「字型」標籤" href="https://magiclen.org/tag/%e5%ad%97%e5%9e%8b/" target="_blank" rel="noopener noreferrer">字型</a>，但通常都會有少部份軟體程式的<a class="auto-tag" title="查看「字型」標籤" href="https://magiclen.org/tag/%e5%ad%97%e5%9e%8b/" target="_blank" rel="noopener noreferrer">字型</a>無法套用預設的設定，而是自行套用了「<a class="auto-tag" title="查看「AR PL UKai」標籤" href="https://magiclen.org/tag/ar-pl-ukai/" target="_blank" rel="noopener noreferrer">AR PL UKai</a>」或是「<a class="auto-tag" title="查看「AR PL UMing」標籤" href="https://magiclen.org/tag/ar-pl-uming/" target="_blank" rel="noopener noreferrer">AR PL UMing</a>」這兩種醜醜的傳統印刷字。</p>
+<p>為了畫面的美觀，筆者會將「<a class="auto-tag" title="查看「AR PL UKai」標籤" href="https://magiclen.org/tag/ar-pl-ukai/" target="_blank" rel="noopener noreferrer">AR PL UKai</a>」和「<a class="auto-tag" title="查看「AR PL UMing」標籤" href="https://magiclen.org/tag/ar-pl-uming/" target="_blank" rel="noopener noreferrer">AR PL UMing</a>」這兩個<a class="auto-tag" title="查看「字型」標籤" href="https://magiclen.org/tag/%e5%ad%97%e5%9e%8b/" target="_blank" rel="noopener noreferrer">字型</a>從系統中移除。如果是使用<a class="auto-tag" title="查看「Ubuntu」標籤" href="https://magiclen.org/tag/ubuntu/" target="_blank" rel="noopener noreferrer">Ubuntu</a>或是基於<a class="auto-tag" title="查看「Ubuntu」標籤" href="https://magiclen.org/tag/ubuntu/" target="_blank" rel="noopener noreferrer">Ubuntu</a>的<a class="auto-tag" title="查看「Linux發行版」標籤" href="https://magiclen.org/tag/linux%e7%99%bc%e8%a1%8c%e7%89%88/" target="_blank" rel="noopener noreferrer">Linux發行版</a>的話，可以直接在終端機輸入以下指令來移除它們：</p>
+<blockquote><p>sudo apt-get remove <a class="auto-tag" title="查看「fonts-arphic-ukai」標籤" href="https://magiclen.org/tag/fonts-arphic-ukai/" target="_blank" rel="noopener noreferrer">fonts-arphic-ukai</a><a class="auto-tag" title="查看「fonts-arphic-uming」標籤" href="https://magiclen.org/tag/fonts-arphic-uming/" target="_blank" rel="noopener noreferrer">fonts-arphic-uming</a></p></blockquote>
+</div>
+<p>&nbsp;</p>
+<p>摘自：https://magiclen.org/linux-font-remove-kai/</p>

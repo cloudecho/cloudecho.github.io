@@ -1,0 +1,88 @@
+---
+layout: post
+status: publish
+published: true
+title: 利用cors实现js跨域访问
+
+
+
+date: '2015-12-09 14:39:15 +0800'
+date_gmt: '2015-12-09 06:39:15 +0800'
+categories:
+- Opensource
+tags:
+- cors
+- js跨域
+comments: []
+---
+<p>我验证了两个，一个是tomcat下自带的cors过滤器，一个是cors-filter-1.7.jar下的过滤器。两个我都测试了，没问题。</p>
+<p>应用tomcat的filter配置如下：参数cors.allowOrigin可以指定具体的源来访问</p>
+<div class="cnblogs_code">
+<pre><filter>
+  <filter-name>CorsFilter</filter-name>
+  <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+  <init-param>
+    <param-name>cors.allowed.origins</param-name>
+    <param-value>*</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cors.allowed.methods</param-name>
+    <param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cors.allowed.headers</param-name>
+    <param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cors.exposed.headers</param-name>
+    <param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cors.support.credentials</param-name>
+    <param-value>true</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cors.preflight.maxage</param-name>
+    <param-value>10</param-value>
+  </init-param>
+</filter>
+<filter-mapping>
+  <filter-name>CorsFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+</filter-mapping></pre>
+<div class="cnblogs_code_toolbar"></div>
+</div>
+<p>或者应用cors-filter-1.7.jar，还需要java-property-utils-1.9.jar，可以在<a href="http://mvnrepository.com/artifact/com.thetransactioncompany/cors-filter">http://mvnrepository.com/artifact/com.thetransactioncompany/cors-filter</a> 选择某个版本导入pom.xml中，自动导入jar包。</p>
+<p>配置如下：参数cors.allowOrigin可以指定具体的源来访问</p>
+<div class="cnblogs_code">
+<pre><filter>
+    <filter-name>CORS</filter-name>
+    <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+    <init-param>
+     <param-name>cors.allowOrigin</param-name>
+        <param-value>*</param-value>
+    </init-param>
+    <init-param>
+     <param-name>cors.supportedMethods</param-name>
+        <param-value>GET, POST, HEAD, PUT, DELETE</param-value>
+    </init-param>
+    <init-param>
+     <param-name>cors.supportedHeaders</param-name>
+        <param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified</param-value>
+    </init-param>
+    <init-param>
+        <param-name>cors.exposedHeaders</param-name>
+        <param-value>Set-Cookie</param-value>
+    </init-param>
+    <init-param>
+        <param-name>cors.supportsCredentials</param-name>
+        <param-value>true</param-value>
+    </init-param>
+</filter>
+<filter-mapping>
+    <filter-name>CORS</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping></pre>
+<div class="cnblogs_code_toolbar">摘自『http://www.cnblogs.com/chiyouguli/p/4283349.html』</div>
+</div>
+<p>&nbsp;</p>

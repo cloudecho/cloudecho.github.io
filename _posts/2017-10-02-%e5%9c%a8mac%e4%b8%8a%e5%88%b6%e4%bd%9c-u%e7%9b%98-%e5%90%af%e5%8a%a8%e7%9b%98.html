@@ -1,0 +1,46 @@
+---
+layout: post
+status: publish
+published: true
+title: 在mac上制作 U盘 启动盘
+
+
+
+date: '2017-10-02 10:33:32 +0800'
+date_gmt: '2017-10-02 02:33:32 +0800'
+categories:
+- OS
+tags:
+- linux
+- image
+- dmg
+- iso
+comments: []
+---
+<p><strong>1. 用hdiutil将ISO转dmg</strong></p>
+<blockquote><p>[echo@EchoMa software]$ <strong>hdiutil convert -format UDRW -o CentOS-7-x86_64-DVD-1804 CentOS-7-x86_64-DVD-1804.iso</strong><br />
+Reading Master Boot Record (MBR : 0)&hellip;<br />
+Reading CentOS 7 x86_64&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (Apple_ISO : 1)&hellip;<br />
+Reading&nbsp; (Type EF : 2)&hellip;<br />
+Reading CentOS 7 x86_64&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (Apple_ISO : 3)&hellip;<br />
+.........................................................................................<br />
+Elapsed Time:&nbsp; 2m 55.451s<br />
+Speed: 24.3Mbytes/sec<br />
+Savings: 0.0%<br />
+created: /Volumes/data/software/CentOS-7-x86_64-DVD-1804.dmg</p></blockquote>
+<p>这个时候我们就得到了一个.dmg硬盘镜像文件。</p>
+<p><strong>2. Unmount U盘</strong><br />
+查看U盘，路径通常为/dev/diskN</p>
+<blockquote><p>diskutil list</p></blockquote>
+<p>Unmount U盘</p>
+<blockquote><p>[echo@EchoMa software]$ <strong>diskutil unmountDisk /dev/disk4</strong><br />
+Unmount of all volumes on disk4 was successful</p></blockquote>
+<p><strong>3. 然后拷入镜像</strong></p>
+<blockquote><p>[echo@EchoMa software]$ <strong>sudo dd if=CentOS-7-x86_64-DVD-1804.dmg of=/dev/disk4 bs=1m</strong><br />
+4262+1 records in<br />
+4262+1 records out<br />
+4469153792 bytes transferred in 2602.575198 secs (1717204 bytes/sec)
+</p></blockquote>
+<p>&nbsp;<br />
+<strong>4. 最后弹出U盘</strong></p>
+<blockquote><p><strong>diskutil eject /dev/disk4</strong></p></blockquote>

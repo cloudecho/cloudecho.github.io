@@ -1,0 +1,49 @@
+---
+layout: post
+status: publish
+published: true
+title: MySQL 事务以及加锁机制
+
+
+
+date: '2015-12-16 15:45:24 +0800'
+date_gmt: '2015-12-16 07:45:24 +0800'
+categories:
+- Database
+tags:
+- MySQL
+- 事物
+- 锁机制
+comments: []
+---
+<div>事务的特征ACID，即原子性、一致性、隔离性、持久性。</div>
+<div>原子性保证一个事务为一个最小的单元，内部不可分割；</div>
+<div>一致性保证事务中的每个操作线程不可单独提交，成功则一起提交，不成功则事务回滚；</div>
+<div>隔离性保证不同事务间看到的数据视图相互独立，相互隔离（隔离级别可设置）；</div>
+<div>持久性保证事务提交后数据会持久的保存下来；</div>
+<div></div>
+<div>sql规范定义的事务的隔离级别：</div>
+<div>1.READ UNCOMMITTED(读取未提交内容)</div>
+<div>&nbsp; &nbsp; 所有事务可以看到未提交事务的执行结果，本隔离级别很少用到实际应用中，读取未提交的数据，又称为&ldquo;脏读&rdquo;。</div>
+<div>2.READ COMMITTED（读取提交内容）</div>
+<div>&nbsp; &nbsp; 大多数<a href="http://www.php1.cn/">数据库</a>的默认隔离级别是此级别，但不是<a href="http://www.php1.cn/">mysql</a>默认的。一个事务在开始的时候只能看见已提交事务所做的改变。一个事务从开始到提交前所做的任何改变都是不可见的，除非提交。这种隔离级别也称为不可重复读。</div>
+<div>3.REPEATABLE READ(可重复读)</div>
+<div>&nbsp; &nbsp; 此隔离级别是为了解决可重复读隔离级别导致的问题即一个事务多个实例并发读取数据时会看到不同的结果。此隔离级别不会看到其他事务提交后的结果，即事务即使提交了我也看不到。此级别也称为&ldquo;幻读&rdquo;。</div>
+<div>4.SERIALIZABLE(可串行化)</div>
+<div>&nbsp; &nbsp; 可串行化是最高的隔离级别，它通过强制事务排序，使之不可重读，解决了幻读的问题。此隔离级别会在每个读的数据行上加共享锁，使用这种隔离级别会产生大量的超时现象，一般实际开发中不会用到。</div>
+<div></div>
+<div>mysql加锁机制 :</div>
+<div>根据类型可分为共享锁（SHARED LOCK）和排他锁（EXCLUSIVE LOCK）或者叫读锁（READ LOCK）和写锁（WRITE LOCK）。</div>
+<div>根据粒度划分又分表锁和行锁。表锁由数据库服务器实现，行锁由存储引擎实现。</div>
+<div></div>
+<div>mysql提供了3种事务型存储引擎，InnDB、NDB Cluster和Falcon。</div>
+<div>一个事务执行的任何过程中都可以获得锁，但是只有事务提交或回滚的时候才释放这些锁。这些都是隐式锁定，也可以显式锁定，InnoDB支持显式锁定，例如：</div>
+<div>SELECT .... LOCK IN SHARE MODE (加共享锁)</div>
+<div>SELECT .....FOR UPDATE(加排他锁)</div>
+<div></div>
+<div>多版本并发控制（重要）：</div>
+<div>Mysql的事务存储引擎不是简单实用行加锁机制，而是叫多版本并发控制（MVCC）技术，和行加锁机制关联实用。以便应对更高的并发，当然是以消耗性能作为代价。</div>
+<div>每种存储引擎对MVCC的实现方式不同，InnoDB引擎的简单实现方式如下：</div>
+<div>InnoDB通过为每个数据航增加两个隐含值的方式来实现。这两个隐含值记录了行的创建时间，以及过期时间。每一行存储事件发生时的<a href="http://www.php1.cn/">系统</a>版本号。每一次开始一个新事务时版本号会自动加1，每个事务都会保存开始时的版本号，每个查询根据事务的版本号来查询结果。</div>
+<div></div>
+<div>摘自『http://www.php1.cn/Content/Mysql_ShiWuYiJiJiaSuoJiZhi.html』</div>
