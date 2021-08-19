@@ -4,26 +4,7 @@
 
 layout: post
 ---
-
-<!-- Html Elements for Search -->
-<div id="search-container">
-  <input class="post-link" style="color: #828282; width:100%;" type="text" id="search-input" placeholder="search...">
-  <ul class="post-list" id="results-container"></ul>
-</div>
-
-<!-- Script pointing to search-script.js -->
-<script src="/js/simple-jekyll-search.min.js" type="text/javascript"></script>
-
-<!-- Configuration -->
-<script>
-SimpleJekyllSearch({
-  searchInput: document.getElementById('search-input'),
-  resultsContainer: document.getElementById('results-container'),
-  json: '/search.json'
-})
-</script>
-
-<br>
+{%- include search.html -%}
 
 <!-- Display latest 5 posts -->
 <ul class="post-list">
