@@ -206,7 +206,6 @@ frontend main
     default_backend            static
 
     #acl root_path path_reg ^/$
-    #http-request redirect location /api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/ code 301 if root_path
 
 #---------------------------------------------------------------------
 # static backend for serving up images, stylesheets and such
