@@ -66,8 +66,7 @@ cat <<EEE >> /etc/hosts
 EEE
 EOF
 
-ansible k8s -u echo -m copy -a "src=/tmp/add-hosts.sh dest=/tmp/add-hosts.sh mode=700"
-ansible k8s -u echo -m shell -a "sudo /tmp/add-hosts.sh"
+ansible k8s -u echo -b -m script -a "/tmp/add-hosts.sh"
 ```
 
 # 2. Basic Configurations for servers
@@ -75,8 +74,8 @@ ansible k8s -u echo -m shell -a "sudo /tmp/add-hosts.sh"
 ## 2.1 Required ports (Firewall Configuration)
 
 ```sh
-ansible slb -u echo -m shell -a "sudo firewall-cmd --permanent --add-port=80/tcp --add-port=443/tcp --add-port=8081/tcp"
-ansible slb -u echo -m shell -a "sudo firewall-cmd --reload"
+ansible slb -u echo -b -m shell -a "firewall-cmd --permanent --add-port=80/tcp --add-port=443/tcp --add-port=8081/tcp"
+ansible slb -u echo -b -m shell -a "firewall-cmd --reload"
 ```
 
 ## 2.2 Set SELinux in permissive mode (effectively disabling it)
@@ -87,8 +86,7 @@ sudo setenforce 0
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 EOF
 
-ansible slb -u echo -m copy -a 'src=/tmp/set-selinux.sh  dest=/tmp/set-selinux.sh mode=0755'
-ansible slb -u echo -m shell -a 'sudo /tmp/set-selinux.sh'
+ansible slb -u echo -b -m script -a '/tmp/set-selinux.sh'
 ```
 
 # 3. Install HAProxy + Keepalived on SLB servers
@@ -104,14 +102,13 @@ sudo systemctl enable rh-haproxy18-haproxy
 sudo systemctl start rh-haproxy18-haproxy
 EOF
 
-ansible slb -u echo -m copy -a "src=/tmp/install-haproxy.sh dest=/tmp/install-haproxy.sh mode=700"
-ansible slb -u echo -m shell -a "/tmp/install-haproxy.sh"
+ansible slb -u echo -b -m script -a "/tmp/install-haproxy.sh"
 ```
 
 ## 3.2 Install Keepalived
 
 ```sh
-ansible slb -u echo -m shell -a "sudo yum install -y keepalived"
+ansible slb -u echo -b -m shell -a "yum install -y keepalived"
 ```
 
 # 4. Configuraton Example
@@ -243,16 +240,17 @@ listen monitoring
     stats admin if TRUE
 EOF
 
+ansible slb -u echo -b -m copy -a \
+ "src=/tmp/haproxy.cfg 
+  dest=/etc/opt/rh/rh-haproxy18/haproxy/haproxy.cfg 
+  mode=600 owner=haproxy group=haproxy"
 
-ansible slb -u echo -m copy -a "src=/tmp/haproxy.cfg dest=/tmp/haproxy.cfg mode=600"
-ansible slb -u echo -m shell -a "sudo mv /tmp/haproxy.cfg /etc/opt/rh/rh-haproxy18/haproxy/haproxy.cfg"
-ansible slb -u echo -m shell -a "sudo chown haproxy:haproxy /etc/opt/rh/rh-haproxy18/haproxy/haproxy.cfg"
+ansible slb -u echo -b -m copy -a \
+ "src=example.pem 
+  dest=/etc/ssl/certs/example.pem
+  mode=600 owner=haproxy group=haproxy"
 
-ansible slb -u echo -m copy -a "src=example.pem dest=/tmp/example.pem mode=600"
-ansible slb -u echo -m shell -a "sudo mv /tmp/example.pem /etc/ssl/certs/example.pem"
-ansible slb -u echo -m shell -a "sudo chown haproxy:haproxy /etc/ssl/certs/example.pem"
-
-ansible slb -u echo -m shell -a "sudo systemctl restart rh-haproxy18-haproxy"
+ansible slb -u echo -b -m shell -a "systemctl restart rh-haproxy18-haproxy"
 ```
 
 ## 4.3 Example of keepalived.conf
@@ -295,8 +293,10 @@ vrrp_instance VI_1 {
 EOF
 
 
-ansible slb -u echo -m copy -a "src=/tmp/keepalived.conf dest=/tmp/keepalived.conf mode=644"
-ansible slb -u echo -m shell -a "sudo mv /tmp/keepalived.conf /etc/keepalived/keepalived.conf"
+ansible slb -u echo -b -m copy -a \
+ "src=/tmp/keepalived.conf 
+  dest=/etc/keepalived/keepalived.conf
+  mode=644"
 ```
 
 *Edit keepalived.conf on slb02.k8s*
@@ -310,9 +310,9 @@ vi /etc/keepalived/keepalived.conf
 
 *Enable & Restart keepalived*
 
-```
-ansible echoyun-slb -u echo -m shell -a "sudo systemctl enable keepalived"
-ansible echoyun-slb -u echo -m shell -a "sudo systemctl restart keepalived"
+```sh
+ansible echoyun-slb -u echo -b -m shell -a "systemctl enable keepalived"
+ansible echoyun-slb -u echo -b -m shell -a "systemctl restart keepalived"
 ```
 
 # 5. Access HAProxy stats page
@@ -326,6 +326,8 @@ http://cluster.k8s:8081/stats/
 
 # Reference
 
+* [ansible/2.9/modules/list_of_commands_modules.html](https://docs.ansible.com/ansible/2.9/modules/list_of_commands_modules.html)
+* [ansible/2.9/modules/copy_module.html](https://docs.ansible.com/ansible/2.9/modules/copy_module.html)
 * [lists.centos.org/pipermail/centos-announce/2018-June/022915.html](https://lists.centos.org/pipermail/centos-announce/2018-June/022915.html)
 * [thingsboard.io/docs/user-guide/install/pe/add-haproxy-rhel](https://thingsboard.io/docs/user-guide/install/pe/add-haproxy-rhel/)
 * [howtoforge.com/tutorial/how-to-setup-haproxy-as-load-balancer-for-nginx-on-centos-7](https://www.howtoforge.com/tutorial/how-to-setup-haproxy-as-load-balancer-for-nginx-on-centos-7/)
