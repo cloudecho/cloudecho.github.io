@@ -6,7 +6,7 @@ categories: Opensource
 tags:
 - Haproxy
 - Keepalived
-- CentOS
+- centos
 ---
 
 # 1. Preparation
@@ -47,7 +47,7 @@ ansible slb --ask-pass -u echo -m file -a "path=.ssh state=directory mode=700"
 ansible slb --ask-pass -u echo -m copy -a "src=~/.ssh/id_rsa.pub dest=.ssh/authorized_keys mode=600"
 
 # Password free for sudo
-ansible slb --ask-pass -u root -m shell -a "echo 'echo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
+ansible slb --ask-pass -u echo -b -m shell -a "echo 'echo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
 
 # Now we can have a test as below
 ansible slb -u echo -m shell -a 'echo ok'
