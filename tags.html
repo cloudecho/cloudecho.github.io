@@ -1,0 +1,15 @@
+---
+layout: page
+permalink: /tags/
+title: Tags
+---
+
+{% assign tags = site.tags | sort %}
+{% for tag in tags %}
+ <span class="site-tag">
+    <a href="/tags/{{ tag | first }}/"
+       style="font-size: {{ tag | last | size  |  times: 16 | plus: 80  }}%">
+       {{ tag[0] | replace:'-', ' ' }}{%- comment -%} ({{ tag | last | size }}) {%- endcomment -%}
+    </a>
+</span>
+{% endfor %}
