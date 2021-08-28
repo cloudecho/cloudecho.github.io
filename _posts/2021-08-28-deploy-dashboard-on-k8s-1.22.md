@@ -7,6 +7,7 @@ tags:
 - k8s
 - kubernetes
 - dashboard
+- cloudnative
 ---
 
 # 1. Install kubectl on control server
