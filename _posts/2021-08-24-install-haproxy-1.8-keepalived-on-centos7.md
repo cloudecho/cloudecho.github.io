@@ -13,6 +13,7 @@ tags:
 
 ## 1.1 KVMs
 
+
 *2 KVMs*
 
 Hostname       | vCPUs | Memory | Swap | IP             | OS       | sudoer 
@@ -117,7 +118,9 @@ ansible slb -u echo -b -m shell -a "yum install -y keepalived"
 
 ```sh
 # e.g.
-openssl req -newkey rsa:2048 -nodes -sha256 -keyout example.key -x509 -days 3650 -out example.crt
+openssl req -newkey rsa:2048 -nodes -sha256 -keyout example.key \
+  -x509 -days 3650 -out example.crt \
+  -subj "/CN=example.com"
 cat example.crt example.key > example.pem
 ```
 
@@ -175,10 +178,10 @@ global
 defaults
     mode                    http
     log                     global
-    option                  httplog
+    #option                  httplog
     option                  dontlognull
     option http-server-close
-    option forwardfor       except 127.0.0.0/8
+    #option forwardfor       except 127.0.0.0/8
     option                  redispatch
     retries                 3
     timeout http-request    10s
@@ -278,7 +281,7 @@ vrrp_instance VI_1 {
   interface eth0 # interface to monitor
   state MASTER # MASTER on slb01, BACKUP on slb02
   virtual_router_id 51
-  priority 200 # 200 on slb01, 100 on slb02
+  priority 100 # 100 on slb01, 99 on slb02
   authentication {
     auth_type PASS
     auth_pass 1849
@@ -304,7 +307,7 @@ ansible slb -u echo -b -m copy -a \
 ```sh
 # On BACKUP node:
 #   state BACKUP 
-#   priority 100
+#   priority 99
 vi /etc/keepalived/keepalived.conf
 ```
 
@@ -333,4 +336,3 @@ http://cluster.k8s:8081/stats/
 * [howtoforge.com/tutorial/how-to-setup-haproxy-as-load-balancer-for-nginx-on-centos-7](https://www.howtoforge.com/tutorial/how-to-setup-haproxy-as-load-balancer-for-nginx-on-centos-7/)
 * [red_hat_enterprise_linux/7/html/load_balancer_administration/keepalived_install_example1](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/load_balancer_administration/keepalived_install_example1)
 * [red_hat_enterprise_linux/7/html/load_balancer_administration/ch-initial-setup-VSA](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/load_balancer_administration/ch-initial-setup-VSA)
-* [docs.oracle.com/cd/E37670_01/E41138/html/section_wkd_ys2_4r.html](https://docs.oracle.com/cd/E37670_01/E41138/html/section_wkd_ys2_4r.html)
