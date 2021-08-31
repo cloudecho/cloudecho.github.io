@@ -282,6 +282,17 @@ vrrp_instance VI_1 {
   state MASTER # MASTER on slb01, BACKUP on slb02
   virtual_router_id 51
   priority 100 # 100 on slb01, 99 on slb02
+
+  #IP Address of local machine. 
+  #NOTE: this is mandatory if multicast is forbidden in your network  
+  unicast_src_ip 192.168.122.201
+  unicast_peer {
+    #IP Address of other machine(s). 
+    #NOTE1: this is mandatory if multicast is forbidden in your network. 
+    #NOTE2: multiple values can be issued here
+    192.168.122.202
+  }
+
   authentication {
     auth_type PASS
     auth_pass 1849
@@ -305,9 +316,13 @@ ansible slb -u echo -b -m copy -a \
 *Edit keepalived.conf on slb02.k8s*
 
 ```sh
-# On BACKUP node:
+# On slb02.k8s:
 #   state BACKUP 
 #   priority 99
+#   unicast_src_ip 192.168.122.202
+#   unicast_peer {
+#     192.168.122.201 
+#   }
 vi /etc/keepalived/keepalived.conf
 ```
 
@@ -336,3 +351,4 @@ http://cluster.k8s:8081/stats/
 * [howtoforge.com/tutorial/how-to-setup-haproxy-as-load-balancer-for-nginx-on-centos-7](https://www.howtoforge.com/tutorial/how-to-setup-haproxy-as-load-balancer-for-nginx-on-centos-7/)
 * [red_hat_enterprise_linux/7/html/load_balancer_administration/keepalived_install_example1](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/load_balancer_administration/keepalived_install_example1)
 * [red_hat_enterprise_linux/7/html/load_balancer_administration/ch-initial-setup-VSA](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/load_balancer_administration/ch-initial-setup-VSA)
+* [KeepAlived configuration for automatic switch of virtual IP](https://gist.github.com/gasgasalterego/0bb06963f069417058d999994c794a61)
