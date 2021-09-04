@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Create a self-hosted helm chart and deploy it to kubernetes (v1.22)"
-date:   2021-09-03 11:07:00 +0800
+date:   2021-09-04 11:07:00 +0800
 categories: Opensource
 tags:
 - k8s
@@ -313,7 +313,7 @@ Here are the steps:
 * Go to https://artifacthub.io/ in a web browser
 * Sign in, for example, with Github
 * Go to the `Control Panel/Repositories` ([artifacthub.io/control-panel/repositories](https://artifacthub.io/control-panel/repositories) )
-* Click `ADD` button on the right, select `Helm charts` as the kind, input the `Name` and `Url`, for example
+* Click the `ADD` button on the right, select `Helm charts` as the kind, input the `Name` and `Url`, for example
 
 ```
 Kind
@@ -326,7 +326,7 @@ Url
 https://<YOUR_GITHUB_USERNAME>.github.io/charts/
 ```
 
-* Click `ADD` button on the bottom to complete.
+* Click the `ADD` button on the bottom to complete.
 
 Now we'll get an `ID` for this chart repository. 
 
