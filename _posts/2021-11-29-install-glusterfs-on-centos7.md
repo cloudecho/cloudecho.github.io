@@ -48,8 +48,20 @@ sudo virsh attach-disk gluster02 /data/vm_storage/gluster02-disk1-100G vdb --cac
 sudo virsh attach-disk gluster03 /data/vm_storage/gluster03-disk1-100G vdb --cache none
 ```
 
-NOTE: If you already have a `/dev/vdb` disk you need to<br>
-&nbsp;change vdb to a free device like `/dev/vdc` and so on
+NOTE: If you already have a `/dev/vdb` disk you need to change vdb to a free device like `/dev/vdc` and so on.
+
+NOTE: For attaching permanently the disk image to the VM, you should edit the VM configuration file, e.g.
+
+`sudo virsh edit gluster01`, add the following XML fragment into the `<devices>` section:
+
+```xml
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw'/>
+      <source file='/data/vm_storage/gluster01-disk1-100G'/>
+      <target dev='vdb' bus='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x09' function='0x0'/>
+    </disk>
+```
 
 - STEP 3. Partitioning the disk drive in VMs
 
@@ -143,7 +155,7 @@ ansible gluster -u echo -b -m script -a '/tmp/required-ports.sh'
 
 NOTE: Assume that the brick will be residing on `/dev/vdb1`.
 
-On the host server:
+*On the host server:*
 
 ```sh
 cat <<EOF > /tmp/mount-brick.sh
@@ -183,7 +195,7 @@ ansible gluster -u echo -b -m script -a '/tmp/install-gluster.sh'
 
 Check the installed software packages.
 
-```
+```sh
 $ rpm -qa |grep gluster
 libglusterfs0-9.4-1.el7.x86_64
 glusterfs-9.4-1.el7.x86_64
@@ -228,6 +240,14 @@ State: Peer in Cluster (Connected)
 Hostname: gluster03
 Uuid: 3ed0ee52-9af5-4f81-a15b-f841c5ab1754
 State: Peer in Cluster (Connected)
+```
+
+```sh
+$ sudo gluster pool list
+UUID					Hostname 	State
+3313ad84-ca67-4b8b-8aa3-a0aaa104591e	gluster02	Connected 
+3ed0ee52-9af5-4f81-a15b-f841c5ab1754	gluster03	Connected 
+49d29ad7-afe1-49e5-9fe4-497688f1426c	localhost	Connected 
 ```
 
 # 5. Set up a GlusterFS volume
