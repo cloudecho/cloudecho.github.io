@@ -34,24 +34,24 @@ sudo yum install ansible
 
 ```sh
 cat <<EOF | sudo tee -a /etc/ansible/hosts
-[k8s-minion]
+[swarm-nodes]
 minion01.k8s
 minion02.k8s
 minion03.k8s
 EOF
 
 # Have a test 
-ansible k8s-minion --ask-pass -u echo -m shell -a 'echo ok'
+ansible swarm-nodes --ask-pass -u echo -m shell -a 'echo ok'
 
 # Password free for login
-ansible k8s-minion --ask-pass -u echo -m file -a "path=.ssh state=directory mode=700"
-ansible k8s-minion --ask-pass -u echo -m copy -a "src=~/.ssh/id_rsa.pub dest=.ssh/authorized_keys mode=600"
+ansible swarm-nodes --ask-pass -u echo -m file -a "path=.ssh state=directory mode=700"
+ansible swarm-nodes --ask-pass -u echo -m copy -a "src=~/.ssh/id_rsa.pub dest=.ssh/authorized_keys mode=600"
 
 # Password free for sudo
-ansible k8s-minion --ask-pass -u echo -b -m shell -a "echo 'echo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
+ansible swarm-nodes --ask-pass -u echo -b -m shell -a "echo 'echo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
 
 # Now we can have a test as below
-ansible k8s-minion -u echo -m shell -a 'echo ok'
+ansible swarm-nodes -u echo -m shell -a 'echo ok'
 ```
 
 ## 1.4 DNS via hosts file
@@ -65,7 +65,7 @@ cat <<EEE >> /etc/hosts
 EEE
 EOF
 
-ansible k8s-minion -u echo -b -m script -a "/tmp/add-hosts.sh"
+ansible swarm-nodes -u echo -b -m script -a "/tmp/add-hosts.sh"
 ```
 
 # 2. Open protocols and ports between the hosts
@@ -88,7 +88,7 @@ firewall-cmd --permanent --add-port=30000-32767/tcp
 firewall-cmd --reload
 EOF
 
-ansible k8s-minion -u echo -b -m script -a '/tmp/required-ports.sh'
+ansible swarm-nodes -u echo -b -m script -a '/tmp/required-ports.sh'
 ```
 
 # 3. Install docker-ce as the container runtime
@@ -96,7 +96,7 @@ ansible k8s-minion -u echo -b -m script -a '/tmp/required-ports.sh'
 ## 3.1 Install container-selinux
 
 ```sh
-ansible k8s-minion -u echo -m shell -a \
+ansible swarm-nodes -u echo -m shell -a \
 'sudo yum --enablerepo=extras install -y container-selinux'
 ```
 
@@ -151,7 +151,7 @@ systemctl daemon-reload
 systemctl restart docker
 EEE
 
-ansible k8s-minion -u echo -b -m script -a '/tmp/install-docker.sh'
+ansible swarm-nodes -u echo -b -m script -a '/tmp/install-docker.sh'
 ```
 
 # 4 Getting started with swarm mode
