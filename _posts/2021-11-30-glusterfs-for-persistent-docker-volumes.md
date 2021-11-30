@@ -89,11 +89,53 @@ On all Gluster hosts, mount the `gfs` volume locally.
 cat <<EOF > /tmp/mount-gfs.sh
 mkdir -p /mnt/gfs
 
-echo 'localhost:/gfs /mnt/gfs glusterfs defaults,_netdev,backupvolfile-server=gluster01 0 0' >> /etc/fstab
+echo 'localhost:/gfs /mnt/gfs glusterfs defaults,_netdev 0 0' >> /etc/fstab
 mount -a
 EOF
 
 ansible gluster -u echo -b -m script -a '/tmp/mount-gfs.sh'
+
+
+cat <<EOF > /tmp/fix-mount.sh
+mkdir -p /usr/local/sbin
+
+cat <<EEE > /usr/local/sbin/check-gfs.sh
+#!/bin/sh
+while true; do
+  df | grep /mnt/gfs > /dev/null
+  if [[ \\\$? -eq 0 ]]; then
+    exit 0
+  fi
+
+  sleep 3
+  mount -a -t glusterfs
+done  
+EEE
+
+chmod +x /usr/local/sbin/check-gfs.sh
+
+cat <<EEE > /etc/systemd/system/glusterfsmounts.service 
+[Unit]
+Description=Glustermounting
+Requires=glusterd.service
+
+[Service]
+Type=simple
+RemainAfterExit=true
+ExecStartPre=/usr/sbin/gluster volume list
+ExecStart=/usr/local/sbin/check-gfs.sh
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+EEE
+
+systemctl daemon-reload
+systemctl enable glusterfsmounts
+EOF
+
+ansible gluster -u echo -b -m script -a '/tmp/fix-mount.sh'
 ```
 
 *On gluser01 server*
@@ -227,3 +269,4 @@ $ ls -lh /mnt/gfs/vol1/
 - [Getting started with docker swarm mode](/opensource/2021/11/09/getting-started-with-docker-swarm-mode.html)
 - [autoize.com/glusterfs-for-persistent-docker-volumes](https://autoize.com/glusterfs-for-persistent-docker-volumes/)
 - [github.com/marcelo-ochoa/docker-volume-plugins](https://github.com/marcelo-ochoa/docker-volume-plugins/tree/master/glusterfs-volume-plugin)
+- [serverfault.com/questions/800494/glusterfs-mount-on-boot-on-clustered-servers-rhel-7](https://serverfault.com/questions/800494/glusterfs-mount-on-boot-on-clustered-servers-rhel-7)
