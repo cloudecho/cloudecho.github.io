@@ -122,7 +122,7 @@ Requires=glusterd.service
 [Service]
 Type=simple
 RemainAfterExit=true
-ExecStartPre=/usr/sbin/gluster volume list
+ExecStartPre=/usr/sbin/gluster volume status gfs
 ExecStart=/usr/local/sbin/check-gfs.sh
 Restart=on-failure
 RestartSec=3
