@@ -1,7 +1,61 @@
 site_name: ECHOYUN
+site_author: Echo Ma
+site_description: >-
+  This is a personal blog hosted on Github Page. 
+  Thanks to Github Page and Mkdocs-material along with the related opensource projects.
+  Truely thanks to the authors who work on those projects.
 
 theme:
   name: material
+  
+  # Static files
+  static_templates:
+    - 404.html
+
+  # Don't include MkDocs' JavaScript
+  include_search_page: false
+  search_index_only: true
+
+  features:
+    - content.code.annotate
+    # - content.tabs.link
+    # - header.autohide
+    # - navigation.expand
+    - navigation.indexes
+    # - navigation.instant
+    # - navigation.sections
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    # - toc.integrate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/favicon.png
+  icon:
+    logo: logo
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/cloudecho
 
 markdown_extensions:
   - md_in_html
