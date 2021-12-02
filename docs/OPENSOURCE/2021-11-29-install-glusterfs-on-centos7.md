@@ -9,9 +9,9 @@ tags:
 description: 
 ---
 
-# 1. Preparation
+## 1. Preparation
 
-## 1.1 KVMs
+### 1.1 KVMs
 
 *3 KVMs*
 
@@ -84,14 +84,14 @@ sudo fdisk /dev/vdb
 - Enter **w** to write changes and quit. 
 
 
-## 1.2 Install Ansible on the host machine
+### 1.2 Install Ansible on the host machine
 
 ```sh
 # Install ansible on host machine
 sudo yum install ansible
 ```
 
-## 1.3 Password free configuration
+### 1.3 Password free configuration
 
 ```sh
 cat <<EOF | sudo tee -a /etc/hosts
@@ -121,7 +121,7 @@ ansible gluster --ask-pass -u echo -b -m shell -a "echo 'echo ALL=(ALL) NOPASSWD
 ansible gluster -u echo -m shell -a 'echo ok'
 ```
 
-## 1.4 DNS via hosts file
+### 1.4 DNS via hosts file
 
 ```sh
 cat <<EOF > /tmp/add-hosts.sh
@@ -135,7 +135,7 @@ EOF
 ansible gluster -u echo -b -m script -a "/tmp/add-hosts.sh"
 ```
 
-# 2. Configure the firewall
+## 2. Configure the firewall
 
 Ensure that TCP and UDP ports 24007 and 24008 are open on all Gluster servers. 
 Apart from these ports, you need to open one port for each brick 
@@ -151,7 +151,7 @@ EOF
 ansible gluster -u echo -b -m script -a '/tmp/required-ports.sh'
 ```
 
-# 3. Format and mount the device of gluster brick
+## 3. Format and mount the device of gluster brick
 
 NOTE: Assume that the brick will be residing on `/dev/vdb1`.
 
@@ -168,9 +168,9 @@ EOF
 ansible gluster -u echo -b -m script -a '/tmp/mount-brick.sh'
 ```
 
-# 4. Installing GlusterFS
+## 4. Installing GlusterFS
 
-## 4.1 Install the software
+### 4.1 Install the software
 
 *On the host server*
 
@@ -207,7 +207,7 @@ glusterfs-fuse-9.4-1.el7.x86_64
 glusterfs-cli-9.4-1.el7.x86_64
 ```
 
-## 4.2 Enable & start the glusterd service
+### 4.2 Enable & start the glusterd service
 
 ```sh
 cat <<EOF > /tmp/start-glusterd.sh
@@ -218,7 +218,7 @@ EOF
 ansible gluster -u echo -b -m script -a '/tmp/start-glusterd.sh'
 ```
 
-## 4.3 Configure the trusted pool
+### 4.3 Configure the trusted pool
 
 *From `gluster01`*
 
@@ -250,9 +250,9 @@ UUID					Hostname 	State
 49d29ad7-afe1-49e5-9fe4-497688f1426c	localhost	Connected 
 ```
 
-# 5. Set up a GlusterFS volume
+## 5. Set up a GlusterFS volume
 
-## 5.1 Set up a volume named `gv0`
+### 5.1 Set up a volume named `gv0`
 
 *On the host server*
 
@@ -308,7 +308,7 @@ NOTE: If the volume does not show "`Started`", <br>
 &nbsp;These logs can be looked at on one or, all the servers configured.
 
 
-## 5.2 Testing the volume
+### 5.2 Testing the volume
 
 *From `gluster01`*
 
@@ -340,7 +340,7 @@ sudo yum install centos-release-gluster9 -y
 sudo yum install glusterfs glusterfs-fuse -y
 ```
 
-# Reference
+## Reference
 
 - [how-to-add-disk-image-to-kvm-virtual-machine-with-virsh-command](https://www.cyberciti.biz/faq/how-to-add-disk-image-to-kvm-virtual-machine-with-virsh-command/)
 - [Quick-Start-Guide/Quickstart](https://docs.gluster.org/en/latest/Quick-Start-Guide/Quickstart/)

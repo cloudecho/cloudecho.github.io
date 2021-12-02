@@ -10,9 +10,9 @@ tags:
 description: 
 ---
 
-# 1. Preparation
+## 1. Preparation
 
-## 1.1 KVMs
+### 1.1 KVMs
 
 *3 KVMs*
 
@@ -23,14 +23,14 @@ Hostname       | vCPUs | Memory | Swap | IP              | OS       | sudoer
 *minion03*.k8s | 2     | 8G     | 0    | 192.168.122.103 | CentOS 7 | echo  
 
 
-## 1.2 Install Ansible on Host machine
+### 1.2 Install Ansible on Host machine
 
 ```sh
 # Install ansible on host machine
 sudo yum install ansible
 ```
 
-## 1.3 Password free configuration
+### 1.3 Password free configuration
 
 ```sh
 cat <<EOF | sudo tee -a /etc/ansible/hosts
@@ -54,7 +54,7 @@ ansible swarm-nodes --ask-pass -u echo -b -m shell -a "echo 'echo ALL=(ALL) NOPA
 ansible swarm-nodes -u echo -m shell -a 'echo ok'
 ```
 
-## 1.4 DNS via hosts file
+### 1.4 DNS via hosts file
 
 ```sh
 cat <<EOF > /tmp/add-hosts.sh
@@ -68,7 +68,7 @@ EOF
 ansible swarm-nodes -u echo -b -m script -a "/tmp/add-hosts.sh"
 ```
 
-# 2. Open protocols and ports between the hosts
+## 2. Open protocols and ports between the hosts
 
 The following ports must be available. On some systems, these ports are open by default.
 
@@ -91,22 +91,22 @@ EOF
 ansible swarm-nodes -u echo -b -m script -a '/tmp/required-ports.sh'
 ```
 
-# 3. Install docker-ce as the container runtime
+## 3. Install docker-ce as the container runtime
 
-## 3.1 Install container-selinux
+### 3.1 Install container-selinux
 
 ```sh
 ansible swarm-nodes -u echo -m shell -a \
 'sudo yum --enablerepo=extras install -y container-selinux'
 ```
 
-## 3.2 Check docker-ce version
+### 3.2 Check docker-ce version
 
 ```sh
 yum --showduplicates list docker-ce
 ```
 
-## 3.3 Install docker-ce
+### 3.3 Install docker-ce
 
 *NOTE: Use your mirror of dockerhub*
 
@@ -154,13 +154,13 @@ EEE
 ansible swarm-nodes -u echo -b -m script -a '/tmp/install-docker.sh'
 ```
 
-# 4 Getting started with swarm mode
+## 4 Getting started with swarm mode
 
 *[Swarm mode overview](https://docs.docker.com/engine/swarm/)*
 
 *[Swarm mode key concepts](https://docs.docker.com/engine/swarm/key-concepts/)*
 
-## 4.1 Create a new swarm 
+### 4.1 Create a new swarm 
 
 *On minon01.k8s:*
 
@@ -182,7 +182,7 @@ $ sudo docker swarm join --token SWMTKN-1-1vf3r7evq3f28kl0jmki57xdo6yfnwpnivyee5
 This node joined a swarm as a worker.
 ```
 
-### 4.1.1 View the current state of the swarm
+#### 4.1.1 View the current state of the swarm
 
 ```sh
 [echo@minion01 ~]$ sudo docker info
@@ -207,7 +207,7 @@ Swarm: active
  ... ...
 ```
 
-### 4.1.2 View information about nodes
+#### 4.1.2 View information about nodes
 
 ```sh
 [echo@minion01 ~]$ sudo docker node ls
@@ -222,7 +222,7 @@ utczs0xf0k8asv5xhk53h8dhw     minion03.k8s   Ready               Active         
 - *Swarm management commands like `docker node ls` only work on manager nodes.*
 
 
-## 4.2 Deploy a service  
+### 4.2 Deploy a service  
 
 e.g.
 
@@ -240,7 +240,7 @@ ID                  NAME                MODE                REPLICAS            
 vct016qjdzf5        helloworld          replicated          1/1                 cloudecho/hello:latest   
 ```
 
-## 4.3 Inspect a service on the swarm
+### 4.3 Inspect a service on the swarm
 
 e.g. 
 
@@ -253,7 +253,7 @@ sudo docker ps
 *See [docs.docker.com/engine/swarm/swarm-tutorial/inspect-service/](https://docs.docker.com/engine/swarm/swarm-tutorial/inspect-service) for more information.*
 
 
-## 4.4 Scale the service in the swarm
+### 4.4 Scale the service in the swarm
 
 e.g. 
 
@@ -278,7 +278,7 @@ oun32xdz6fi1        helloworld.3        cloudecho/hello:latest   minion03.k8s   
 *See [docs.docker.com/engine/swarm/swarm-tutorial/scale-service/](https://docs.docker.com/engine/swarm/swarm-tutorial/scale-service/) for more information.*
 
 
-## 4.5 Delete the service running on the swarm
+### 4.5 Delete the service running on the swarm
 
 e.g. 
 
@@ -286,11 +286,11 @@ e.g.
 sudo docker service rm helloworld
 ```
 
-## 4.6 Apply rolling updates to a service
+### 4.6 Apply rolling updates to a service
 
 *See [docs.docker.com/engine/swarm/swarm-tutorial/rolling-update/](https://docs.docker.com/engine/swarm/swarm-tutorial/rolling-update/)*
 
-## 4.7 Drain a node on the swarm
+### 4.7 Drain a node on the swarm
 
 In earlier steps of the tutorial, all the nodes have been running with ACTIVE availability. The swarm manager can assign tasks to any ACTIVE node, so up to now all nodes have been available to receive tasks.
 
@@ -298,7 +298,7 @@ Sometimes, such as planned maintenance times, you need to set a node to DRAIN av
 
 *See [docs.docker.com/engine/swarm/swarm-tutorial/drain-node/](https://docs.docker.com/engine/swarm/swarm-tutorial/drain-node/) for more information.*
 
-## 4.8 Publish a port for a service
+### 4.8 Publish a port for a service
 
 e.g.
 
@@ -336,7 +336,7 @@ Hello, World!
 
 *See [https://docs.docker.com/engine/swarm/ingress/](https://docs.docker.com/engine/swarm/ingress/) for more information.*
 
-# Reference
+## Reference
 
 - [docs.docker.com/engine/swarm/](https://docs.docker.com/engine/swarm/)
 - [docs.docker.com/engine/swarm/key-concepts/](https://docs.docker.com/engine/swarm/key-concepts/)

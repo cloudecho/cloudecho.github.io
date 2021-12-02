@@ -9,9 +9,9 @@ tags:
 - centos
 ---
 
-# 1. Preparation
+## 1. Preparation
 
-## 1.1 KVMs
+### 1.1 KVMs
 
 
 *2 KVMs*
@@ -24,14 +24,14 @@ Hostname       | vCPUs | Memory | Swap | IP             | OS       | sudoer
 
 *NOTE: 192.168.10.200 is a virtual (HA) IP which points to slb01 or slb02.*
 
-## 1.2 Install Ansible on Host machine
+### 1.2 Install Ansible on Host machine
 
 ```sh
 # Install ansible on host machine
 sudo yum install ansible
 ```
 
-## 1.3 Password free Configuration
+### 1.3 Password free Configuration
 
 ```sh
 cat <<EOF | sudo tee -a /etc/ansible/hosts
@@ -54,7 +54,7 @@ ansible slb --ask-pass -u echo -b -m shell -a "echo 'echo ALL=(ALL) NOPASSWD: AL
 ansible slb -u echo -m shell -a 'echo ok'
 ```
 
-## 1.4 DNS via hosts file
+### 1.4 DNS via hosts file
 
 ```sh
 cat <<EOF > /tmp/add-hosts.sh
@@ -70,16 +70,16 @@ EOF
 ansible k8s -u echo -b -m script -a "/tmp/add-hosts.sh"
 ```
 
-# 2. Basic Configurations for servers
+## 2. Basic Configurations for servers
 
-## 2.1 Required ports (Firewall Configuration)
+### 2.1 Required ports (Firewall Configuration)
 
 ```sh
 ansible slb -u echo -b -m shell -a "firewall-cmd --permanent --add-port=80/tcp --add-port=443/tcp --add-port=8081/tcp"
 ansible slb -u echo -b -m shell -a "firewall-cmd --reload"
 ```
 
-## 2.2 Set SELinux in permissive mode (effectively disabling it)
+### 2.2 Set SELinux in permissive mode (effectively disabling it)
 
 ```sh
 cat <<EOF > /tmp/set-selinux.sh
@@ -90,9 +90,9 @@ EOF
 ansible slb -u echo -b -m script -a '/tmp/set-selinux.sh'
 ```
 
-# 3. Install HAProxy + Keepalived on SLB servers
+## 3. Install HAProxy + Keepalived on SLB servers
 
-## 3.1 Install HAProxy
+### 3.1 Install HAProxy
 
 ```sh
 cat <<EOF > /tmp/install-haproxy.sh
@@ -106,15 +106,15 @@ EOF
 ansible slb -u echo -b -m script -a "/tmp/install-haproxy.sh"
 ```
 
-## 3.2 Install Keepalived
+### 3.2 Install Keepalived
 
 ```sh
 ansible slb -u echo -b -m shell -a "yum install -y keepalived"
 ```
 
-# 4. Configuraton Example
+## 4. Configuraton Example
 
-## 4.1 Self-signed Cert
+### 4.1 Self-signed Cert
 
 ```sh
 # e.g.
@@ -124,7 +124,7 @@ openssl req -newkey rsa:2048 -nodes -sha256 -keyout example.key \
 cat example.crt example.key > example.pem
 ```
 
-## 4.2 Example of haproxy.cfg
+### 4.2 Example of haproxy.cfg
 
 */etc/opt/rh/rh-haproxy18/haproxy/haproxy.cfg*
 
@@ -256,7 +256,7 @@ ansible slb -u echo -b -m copy -a \
 ansible slb -u echo -b -m shell -a "systemctl restart rh-haproxy18-haproxy"
 ```
 
-## 4.3 Example of keepalived.conf
+### 4.3 Example of keepalived.conf
 
 */etc/keepalived/keepalived.conf*
 
@@ -333,7 +333,7 @@ ansible echoyun-slb -u echo -b -m shell -a "systemctl enable keepalived"
 ansible echoyun-slb -u echo -b -m shell -a "systemctl restart keepalived"
 ```
 
-# 5. Access HAProxy stats page
+## 5. Access HAProxy stats page
 
 *Now we can open HAProxy stats page in Browser*
 
@@ -342,7 +342,7 @@ ansible echoyun-slb -u echo -b -m shell -a "systemctl restart keepalived"
 http://cluster.k8s:8081/stats/
 ```
 
-# Reference
+## Reference
 
 * [ansible/2.9/modules/list_of_commands_modules.html](https://docs.ansible.com/ansible/2.9/modules/list_of_commands_modules.html)
 * [ansible/2.9/modules/copy_module.html](https://docs.ansible.com/ansible/2.9/modules/copy_module.html)

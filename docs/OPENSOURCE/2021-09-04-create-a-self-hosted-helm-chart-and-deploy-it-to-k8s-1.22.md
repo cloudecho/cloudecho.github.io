@@ -12,7 +12,7 @@ tags:
 ---
 
 
-# 1. Concepts
+## 1. Concepts
 
 Here are the descriptions from [helm.sh](https://helm.sh/docs/intro/using_helm/):
 
@@ -24,13 +24,13 @@ Here are the descriptions from [helm.sh](https://helm.sh/docs/intro/using_helm/)
 
 > `Helm` installs charts into Kubernetes, creating a new release for each installation. And to find new charts, you can search Helm chart repositories.
 
-# 2. Install kubectl & helm
+## 2. Install kubectl & helm
 
-## 2.1 Install kubectl
+### 2.1 Install kubectl
 
 See [install-kubectl-on-control-server](/opensource/2021/08/28/deploy-dashboard-on-k8s-1.22.html#1-install-kubectl-on-control-server) .
 
-## 2.2 Install helm
+### 2.2 Install helm
 
 *See [github.com/helm/helm/releases](https://github.com/helm/helm/releases) for helm releases.*
 
@@ -60,7 +60,7 @@ helm version
 version.BuildInfo{Version:"v3.6.3", GitCommit:"d506314abfb5d21419df8c7e7e68012379db2354", GitTreeState:"clean", GoVersion:"go1.16.5"}
 ```
 
-# 3. Create a helm chart
+## 3. Create a helm chart
 
 To get started with a new chart, the best way is to use `helm create` command to initialize a new chart.
 
@@ -110,9 +110,9 @@ But we can go further:
 * Host charts by creating a chart repository
 * Publish a chart repository to artifacthub.io
 
-# 4. Host helm charts using Github Page
+## 4. Host helm charts using Github Page
 
-## 4.1 Create a github repo for helm charts
+### 4.1 Create a github repo for helm charts
 
 First let's create a empty repo on Github, for example, named `charts`, take `main` as the default branch.
 
@@ -149,7 +149,7 @@ By now the file structure of the repo like below:
         └── values.yaml
 ```
 
-## 4.2 Prepare for creating `README.md` for a chart
+### 4.2 Prepare for creating `README.md` for a chart
 
 There is a tool named [`chart-doc-gen`](https://github.com/kubepack/chart-doc-gen) used for generating `README.md` for a chart.
 
@@ -185,7 +185,7 @@ Then append the text `doc.yml` into `charts/hello/.helmignore` file to avoid `do
 Download the latest `chart-doc-gen` from [github.com/kubepack/chart-doc-gen/releases](https://github.com/kubepack/chart-doc-gen/releases) and install it (e.g. copy it to `/usr/local/bin/`).
 
 
-## 4.3 Create `gh-pages` branch for Github Page
+### 4.3 Create `gh-pages` branch for Github Page
 
 Create `gh-pages` branch and simultaneously switch to that branch.
 
@@ -212,7 +212,7 @@ chart-doc-gen \
 cd ..  
 ```
 
-## 4.4 Package and index helm charts
+### 4.4 Package and index helm charts
 
 Use the following command to package `hello` chart and index all the charts: 
 
@@ -238,7 +238,7 @@ We can also:
 * check the content of `hello-0.1.0.tgz` by using `tar -tvf hello-0.1.0.tgz` command.
 
 
-## 4.5 Make it simple by creating a Makefile
+### 4.5 Make it simple by creating a Makefile
 
 Here are some works to update the repo for charts:
 
@@ -284,7 +284,7 @@ index: package
 See [cloudecho/charts](https://github.com/cloudecho/charts/) for more information about this example.
 
 
-## 4.6 Settings for chart repository on Github site
+### 4.6 Settings for chart repository on Github site
 
 After pushing all the changes to remote git server (github site), 
 let's have a look at the settings for chart repository on Github site.
@@ -304,7 +304,7 @@ Branch: gh-pages /(root)
 
 Please refer to [docs.github.com/en/pages](https://docs.github.com/en/pages) for more information about Github Page.
 
-# 5. Publish helm charts to artifacthub.io
+## 5. Publish helm charts to artifacthub.io
 
 This is optional but very convenient for opensource charts as helping people to search and find your charts.
 
@@ -364,7 +364,7 @@ e.g.
 helm search hub hello
 ```
 
-# 6. Deploy a chart into kubernetes
+## 6. Deploy a chart into kubernetes
 
 As an example, let's follow the [instruction of `hello` chart](https://artifacthub.io/packages/helm/cloudecho/hello) to deploy `hello` chart to an existing kubernetes.
 
@@ -407,7 +407,7 @@ Hello, World!
 ```
 
 
-# Reference
+## Reference
 
 * [helm.sh/docs/intro/quickstart](https://helm.sh/docs/intro/quickstart/)
 * [helm.sh/docs/intro/using_helm/](https://helm.sh/docs/intro/using_helm/)

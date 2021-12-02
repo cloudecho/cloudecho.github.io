@@ -10,9 +10,9 @@ tags:
 - cloudnative
 ---
 
-# 1. Install kubectl on control server
+## 1. Install kubectl on control server
 
-## 1.1 Install kubectl
+### 1.1 Install kubectl
 
 ```sh
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
@@ -30,14 +30,14 @@ EOF
 yum install -y kubectl --disableexcludes=kubernetes
 ```
 
-## 1.2 Create `~/.kube/config` file
+### 1.2 Create `~/.kube/config` file
 
 ```sh
 mkdir -p ~/.kube
 scp echo@master01.k8s:~/.kube/config ~/.kube/config
 ```
 
-## 1.3 Check the kubectl version
+### 1.3 Check the kubectl version
 
 ```sh
 kubectl version --short
@@ -50,9 +50,9 @@ Client Version: v1.22.1
 Server Version: v1.22.1
 ```
 
-# 2. Deploy dashborad
+## 2. Deploy dashborad
 
-## 2.1 Deploy dashborad
+### 2.1 Deploy dashborad
 
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
@@ -78,7 +78,7 @@ Warning: spec.template.metadata.annotations[seccomp.security.alpha.kubernetes.io
 deployment.apps/dashboard-metrics-scraper created
 ```
 
-## 2.2 Check the pods & services
+### 2.2 Check the pods & services
 
 ```sh
 kubectl get pod -n kubernetes-dashboard; echo; kubectl get svc -n kubernetes-dashboard 
@@ -96,9 +96,9 @@ dashboard-metrics-scraper   ClusterIP   10.108.194.211   <none>        8000/TCP 
 kubernetes-dashboard        ClusterIP   10.109.50.222    <none>        443/TCP    5m33s
 ```
 
-# 3. Expose dashboard using NodePort
+## 3. Expose dashboard using NodePort
 
-## 3.1 Reconfigure `kubernetes-dashboard` servcie
+### 3.1 Reconfigure `kubernetes-dashboard` servcie
 
 *Reconfigure `kubernetes-dashboard` servcie with fixed nodePort `32700`*
 
@@ -128,7 +128,7 @@ EOF
 service/kubernetes-dashboard configured
 ```
 
-## 3.2 Check the services
+### 3.2 Check the services
 
 ```sh
 kubectl get svc -n kubernetes-dashboard 
@@ -142,7 +142,7 @@ dashboard-metrics-scraper   ClusterIP   10.108.194.211   <none>        8000/TCP 
 kubernetes-dashboard        NodePort    10.109.50.222    <none>        443:32700/TCP   141m
 ```
 
-# 4. Create a ServiceAccount
+## 4. Create a ServiceAccount
 
 Create a `root` service account `my-dashboard-sa` like this
 
@@ -165,12 +165,12 @@ tokenname=`kubectl get secrets | grep my-dashboard-sa-token | awk '{print $1}'`
 kubectl describe secret $tokenname | awk '$1=="token:"{print $2}'
 ```
 
-# 5. Access the dashboard in a web browser
+## 5. Access the dashboard in a web browser
 
 Now we can visit the dashboard via [`https://master01.k8s:32700/`](https://master01.k8s:32700/) in a web browser.<br>
 And put that token in the login screen for authentication.
 
-# Reference
+## Reference
 
 * [Install Kubernetes (k8s) v1.22 Highly Available Clusters on CentOS 7](/opensource/2021/08/26/install-k8s-1.22-ha-clusters-on-centos7.html)
 * [docs/tasks/access-application-cluster/web-ui-dashboard/](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
