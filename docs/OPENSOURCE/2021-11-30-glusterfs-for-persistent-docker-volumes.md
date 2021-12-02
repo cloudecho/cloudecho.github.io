@@ -32,10 +32,10 @@ NOTE: swarm-nodes: minion*.k8s
 ### 1.2 Installing GlusterFS and docker swarm
 
 For installing GlusterFS, please refer to 
-[Install Glusterfs on Centos 7](/opensource/2021/11/29/install-glusterfs-on-centos7.html).
+[Install Glusterfs on Centos 7](/OPENSOURCE/2021-11-29-install-glusterfs-on-centos7/).
 
 For getting started with docker warm, please refer to
-[Getting started with docker swarm mode](/opensource/2021/11/09/getting-started-with-docker-swarm-mode.html).
+[Getting started with docker swarm mode](/OPENSOURCE/2021-11-09-getting-started-with-docker-swarm-mode/).
 
 
 ### 1.3 DNS via hosts file
@@ -265,8 +265,8 @@ $ ls -lh /mnt/gfs/vol1/
 
 ## Reference
 
-- [Install Glusterfs on Centos 7](/opensource/2021/11/29/install-glusterfs-on-centos7.html)
-- [Getting started with docker swarm mode](/opensource/2021/11/09/getting-started-with-docker-swarm-mode.html)
+- [Install Glusterfs on Centos 7](/OPENSOURCE/2021-11-29-install-glusterfs-on-centos7/)
+- [Getting started with docker swarm mode](/OPENSOURCE/2021-11-09-getting-started-with-docker-swarm-mode/)
 - [autoize.com/glusterfs-for-persistent-docker-volumes](https://autoize.com/glusterfs-for-persistent-docker-volumes/)
 - [github.com/marcelo-ochoa/docker-volume-plugins](https://github.com/marcelo-ochoa/docker-volume-plugins/tree/master/glusterfs-volume-plugin)
 - [serverfault.com/questions/800494/glusterfs-mount-on-boot-on-clustered-servers-rhel-7](https://serverfault.com/questions/800494/glusterfs-mount-on-boot-on-clustered-servers-rhel-7)
