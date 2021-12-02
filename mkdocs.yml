@@ -53,6 +53,9 @@ theme:
     logo: logo
 
 extra:
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/cloudecho
