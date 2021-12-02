@@ -1,0 +1,2686 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="This is a personal blog hosted on Github Page.  Thanks to Github Page and Mkdocs-material along with the related opensource projects. Truely thanks to the authors who work on those projects.">
+      
+      
+        <meta name="author" content="Echo Ma">
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.2">
+    
+    
+      
+        <title>Google Java编程风格指南 - ECHOYUN</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.816931ca.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"../..":"../.."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECHOYUN" class="md-header__button md-logo" aria-label="ECHOYUN" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECHOYUN
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Google Java编程风格指南
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECHOYUN" class="md-nav__button md-logo" aria-label="ECHOYUN" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    ECHOYUN
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        HOME
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          BOOKS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="BOOKS" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          BOOKS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/2016-02-27-%25e6%2595%258f%25e6%258d%25b7%25e8%25bd%25af%25e4%25bb%25b6%25e5%25bc%2580%25e5%258f%2591%25ef%25bc%259a%25e5%258e%259f%25e5%2588%2599%25e3%2580%2581%25e6%25a8%25a1%25e5%25bc%258f%25e4%25b8%258e%25e5%25ae%259e%25e8%25b7%25b5.html/" class="md-nav__link">
+        敏捷软件开发：原则、模式与实践
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/2017-05-07-425.html/" class="md-nav__link">
+        三毛作品集
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/2018-05-23-%25e5%25bc%25a0%25e7%2588%25b1%25e7%258e%25b2%25e6%2596%2587%25e9%259b%2586.html/" class="md-nav__link">
+        张爱玲文集
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/2018-11-07-%25e4%25b8%2589%25e9%2598%25b6%25e9%25ad%2594%25e6%2596%25b9%25e5%25b1%2582%25e4%25bc%2598%25e5%2585%2588%25e7%258e%25a9%25e6%25b3%2595.html/" class="md-nav__link">
+        三阶魔方层优先玩法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/2019-10-09-mooc%25e7%25b4%25b0%25e8%25ae%2580%25e5%25bc%25b5%25e6%2584%259b%25e7%258e%25b2%25e5%259c%25a8%25e7%25ba%25bf%25e8%25af%25be%25e7%25a8%258b.html/" class="md-nav__link">
+        [MOOC]細讀張愛玲在线课程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/2021-08-20-rubik-simplecfop/" class="md-nav__link">
+        三阶魔方CFOP简版 Rubik Simple CFOP method
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/2021-10-29-applied-mathematical-programming/" class="md-nav__link">
+        Applied Mathematical Programming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOKS/2021-11-20-online-ebooks/" class="md-nav__link">
+        Online ebooks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          DATABASE
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DATABASE" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          DATABASE
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2015-07-30-centos7-%25e5%25ae%2589%25e8%25a3%2585-mariadb-mysql%25e7%25a4%25be%25e5%258c%25ba%25e7%2589%2588.html/" class="md-nav__link">
+        centos7 安装 MariaDB - MySQL社区版
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2015-12-07-centos-6-4%25e7%25b3%25bb%25e7%25bb%259fmysql%25e4%25b8%25bb%25e4%25bb%258e%25e5%25a4%258d%25e5%2588%25b6%25e5%259f%25ba%25e6%259c%25ac%25e9%2585%258d%25e7%25bd%25ae%25e5%25ae%259e%25e8%25b7%25b5.html/" class="md-nav__link">
+        CentOS 6.4系统MySQL主从复制基本配置实践
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2015-12-07-mysql-%25e6%259f%25a5%25e8%25af%25a2%25e9%2594%2581%25e3%2580%2581%25e8%25a7%25a3%25e9%2594%2581%25e8%25af%25ad%25e5%258f%25a5.html/" class="md-nav__link">
+        MySQL 查询锁、解锁语句
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2015-12-16-mysql%25e4%25ba%258b%25e5%258a%25a1%25e4%25bb%25a5%25e5%258f%258a%25e5%258a%25a0%25e9%2594%2581%25e6%259c%25ba%25e5%2588%25b6.html/" class="md-nav__link">
+        MySQL 事务以及加锁机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2015-12-16-mysql-%25e5%2585%25a8%25e5%25b1%2580%25e7%25a6%2581%25e7%2594%25a8autocommit.html/" class="md-nav__link">
+        MySQL 全局禁用autocommit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2015-12-17-mysql-transaction-isolation%25e5%258f%2582%25e6%2595%25b0%25e7%259a%2584%25e8%25ae%25be%25e7%25bd%25ae.html/" class="md-nav__link">
+        MySQL transaction-isolation参数的设置
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2016-01-26-mysql%25e6%2595%25b0%25e6%258d%25ae%25e5%258e%25bb%25e9%2587%258d%25e7%25a4%25ba%25e4%25be%258b.html/" class="md-nav__link">
+        MySQL数据去重示例
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2016-11-08-mongodb-%25e5%258f%25af%25e8%25a7%2586%25e5%258c%2596%25e5%25b7%25a5%25e5%2585%25b7.html/" class="md-nav__link">
+        Mongodb 可视化工具/图形客户端
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2016-11-08-mongodb-%25e6%259f%25a5%25e8%25af%25a2.html/" class="md-nav__link">
+        MongoDB 查询
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2016-12-06-centos-7-2-yum-%25e5%25ae%2589%25e8%25a3%2585-mysql-%25e7%25a4%25be%25e5%258c%25ba%25e7%2589%2588.html/" class="md-nav__link">
+        centos 7.2 yum 安装 MySQL 社区版
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DATABASE/2017-05-07-oracle-9i-10g%25e7%25bc%2596%25e7%25a8%258b%25e8%2589%25ba%25e6%259c%25af-%25e6%25b7%25b1%25e5%2585%25a5%25e6%2595%25b0%25e6%258d%25ae%25e5%25ba%2593%25e4%25bd%2593%25e7%25b3%25bb%25e7%25bb%2593%25e6%259e%2584.html/" class="md-nav__link">
+        Oracle 9i &10g编程艺术-深入数据库体系结构
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          FRONTEND
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="FRONTEND" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          FRONTEND
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../FRONTEND/2015-12-20-jquery%25e8%25a1%25a8%25e5%258d%2595%25e9%25aa%258c%25e8%25af%2581validate%25e6%258f%2592%25e4%25bb%25b6%25e5%2585%25a8%25e6%2594%25bb%25e7%2595%25a5.html/" class="md-nav__link">
+        jquery表单验证validate插件全攻略
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          OPENSOURCE
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="OPENSOURCE" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          OPENSOURCE
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2015-11-26-maven-%25e8%25ae%25be%25e7%25bd%25aejdk%25e7%25bc%2596%25e8%25af%2591%25e6%25b0%25b4%25e5%25b9%25b3.html/" class="md-nav__link">
+        maven 设置jdk编译水平
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2015-11-27-%25e8%25bd%25ac-maven-%25e5%258f%2591%25e5%25b8%2583artifact%25e5%2588%25b0%25e4%25b8%25ad%25e5%25a4%25ae%25e5%25ba%2593.html/" class="md-nav__link">
+        maven 发布artifact到中央库
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2015-11-29-%25e9%2585%258d%25e7%25bd%25aeapache-basic%25e5%2592%258cdigest%25e8%25ae%25a4%25e8%25af%2581.html/" class="md-nav__link">
+        配置Apache Basic和Digest认证
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2015-11-29-zookeeper%25e9%259b%2586%25e7%25be%25a4%25e9%2585%258d%25e7%25bd%25ae.html/" class="md-nav__link">
+        zookeeper集群配置
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Google Java编程风格指南
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2015-12-08-activemq-delay-and-schedule-message-delivery-download.html/" class="md-nav__link">
+        ActiveMQ Delay and Schedule Message Delivery
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2015-12-08-quartz-cron%25e8%25a1%25a8%25e8%25be%25be%25e5%25bc%258f.html/" class="md-nav__link">
+        QuartZ Cron表达式
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2015-12-09-%25e5%2588%25a9%25e7%2594%25a8cors%25e5%25ae%259e%25e7%258e%25b0js%25e8%25b7%25a8%25e5%259f%259f%25e8%25ae%25bf%25e9%2597%25ae.html/" class="md-nav__link">
+        利用cors实现js跨域访问
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2015-12-19-web-xml-%25e4%25b8%25ad%25e7%259a%2584listener%25e3%2580%2581-filter%25e3%2580%2581servlet-%25e5%258a%25a0%25e8%25bd%25bd%25e9%25a1%25ba%25e5%25ba%258f.html/" class="md-nav__link">
+        web.xml 中的listener、 filter、servlet 加载顺序极其详解
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2015-12-25-maven-%25e5%25a6%2582%25e4%25bd%2595%25e4%25b8%25ba%25e5%25bc%2580%25e5%258f%2591%25e5%2592%258c%25e7%2594%259f%25e4%25ba%25a7%25e7%258e%25af%25e5%25a2%2583%25e5%25bb%25ba%25e7%25ab%258b%25e4%25b8%258d%25e5%2590%258c%25e7%259a%2584%25e9%2585%258d%25e7%25bd%25ae%25e6%2596%2587%25e4%25bb%25b6.html/" class="md-nav__link">
+        maven 如何为开发和生产环境建立不同的配置文件
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-01-03-jssc-library-for-easy-work-with-serial-ports.html/" class="md-nav__link">
+        jSSC library - for easy work with serial ports
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-01-03-netty-websocket-%25e7%25a4%25ba%25e4%25be%258b.html/" class="md-nav__link">
+        Netty WebSocket 示例
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-01-03-swixml-sample-code.html/" class="md-nav__link">
+        Swixml Sample Code
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-01-08-maven-assembly-plugin-%25e6%2589%2593%25e5%258c%2585%25e5%258f%25af%25e6%2589%25a7%25e8%25a1%258cjar%25e5%258c%2585.html/" class="md-nav__link">
+        maven-assembly-plugin 打包可执行jar包
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-01-16-secure-cookie-with-httponly-and-secure-flag-in-apache.html/" class="md-nav__link">
+        Secure cookie with HttpOnly and Secure flag in Apache
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-03-06-maven%25e5%25ae%259e%25e6%2588%2598-%25e5%25b8%25b8%25e7%2594%25a8maven%25e6%258f%2592%25e4%25bb%25b6%25e4%25bb%258b%25e7%25bb%258d.html/" class="md-nav__link">
+        Maven实战 &mdash; 常用Maven插件介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-03-06-maven-practice-%25e6%2596%2587%25e9%259b%2586-infoq.html/" class="md-nav__link">
+        Maven Practice 文集 @InfoQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-04-04-redis%25e4%25b8%25bb%25e4%25bb%258e%25e9%2585%258d%25e7%25bd%25ae%25e5%258f%258a%25e4%25bd%25bf%25e7%2594%25a8keepalived%25e5%25ae%259e%25e7%258e%25b0redis%25e9%25ab%2598%25e5%258f%25af%25e7%2594%25a8.html/" class="md-nav__link">
+        Redis主从配置及使用KeepAlived实现Redis高可用
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-11-04-gitsvn-resetrevert-%25e5%259b%259e%25e6%25bb%259a%25e5%2588%25b0%25e6%259c%258d%25e5%258a%25a1%25e5%2599%25a8%25e4%25b8%258a%25e7%259a%2584%25e6%259f%2590%25e4%25b8%2580%25e4%25b8%25aa%25e7%2589%2588%25e6%259c%25ac.html/" class="md-nav__link">
+        git/svn reset/revert 回滚到服务器上的某一个版本
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-12-08-centos-6-yum-%25e5%25ae%2589%25e8%25a3%2585-glusterfs-3-6.html/" class="md-nav__link">
+        CentOS 6 yum 安装  GlusterFS 3.6
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-12-08-centos-6-yum-%25e5%25ae%2589%25e8%25a3%2585-nginx.html/" class="md-nav__link">
+        CentOS 6  yum 安装 nginx
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-12-20-mongodb-%25e7%25a3%2581%25e7%259b%2598%25e7%25a9%25ba%25e9%2597%25b4%25e9%2587%258d%25e7%2594%25a8%25e6%25b5%258b%25e8%25af%2595%25e5%25af%25b9%25e6%25af%2594-2-6-12-v-s-3-2-11.html/" class="md-nav__link">
+        mongodb 磁盘空间重用测试对比 (2.6.12 v.s. 3.2.11)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-12-21-centos-7-2-redis-3-0-5-warning-solved.html/" class="md-nav__link">
+        CentOS 7.2 redis-3.0.5 WARNING  solved
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-12-21-mongodb-3-2-11-%25e5%2589%25af%25e6%259c%25ac%25e9%259b%2586-%25e5%25ae%2589%25e8%25a3%2585%25e6%2597%25a5%25e5%25bf%2597-%25e4%25b8%25bb%25e4%25bb%258e%25e4%25bb%25b2%25e8%25a3%2581.html/" class="md-nav__link">
+        mongodb 3.2.11 副本集 安装日志 主从仲裁
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2016-12-21-tuning-linux-for-mongodb-%25e8%25bd%25ac.html/" class="md-nav__link">
+        Tuning Linux for MongoDB -- 转
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2017-05-05-activemq5-x-x%25e4%25b8%25bb%25e4%25bb%258e%25e5%25ae%2589%25e8%25a3%2585%25e6%258c%2587%25e5%258d%2597.html/" class="md-nav__link">
+        activemq5.x.x主从安装指南
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2017-05-21-%25e4%25bf%25ae%25e6%2594%25b9%25e4%25ba%2586ssh%25e9%25bb%2598%25e8%25ae%25a4%25e7%25ab%25af%25e5%258f%25a3%25e4%25b9%258b%25e5%2590%258e%25ef%25bc%258c%25e5%25a6%2582%25e4%25bd%2595%25e9%2585%258d%25e7%25bd%25aegit%25ef%25bc%259f.html/" class="md-nav__link">
+        修改了SSH默认端口之后，如何配置git？
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2017-07-01-understand-jmeter-apdex.html/" class="md-nav__link">
+        Understand JMeter APDEX
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2017-07-06-gradle-to-maven-conversion-and-vice-versa.html/" class="md-nav__link">
+        Gradle to maven conversion and vice versa
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2017-07-27-git-list-remote-branches.html/" class="md-nav__link">
+        git list remote branches
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2017-09-17-how-to-disable-console-logging-in-spring-boot.html/" class="md-nav__link">
+        How to disable console logging in spring-boot?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2017-09-17-spring-boot-slf4j-logging-example.html/" class="md-nav__link">
+        Spring Boot SLF4J Logging example
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2017-09-21-filter-and-rename-resources-with-maven.html/" class="md-nav__link">
+        Filter and rename resources with Maven
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2018-12-15-install-cloudstack-4-11-1-0-centos-7-5.html/" class="md-nav__link">
+        Install CloudStack 4.11.1.0 on CentOS 7.5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2019-10-16-install-mariadb-10-4-apache2httpd-2-4-php-7-3-on-centos-7-6.html/" class="md-nav__link">
+        Install MariaDB 10.4 + Apache2(httpd) 2.4 + PHP 7.3 on CentOS 7.6
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-08-24-install-haproxy-1.8-keepalived-on-centos7/" class="md-nav__link">
+        Install Haproxy v1.8 and Keepalived on CentOS 7
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-08-26-install-k8s-1.22-ha-clusters-on-centos7/" class="md-nav__link">
+        Install Kubernetes (k8s) v1.22 Highly Available Clusters on CentOS 7
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-08-28-deploy-dashboard-on-k8s-1.22/" class="md-nav__link">
+        Deploy dashboard on Kubernetes (k8s) v1.22
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-09-04-create-a-self-hosted-helm-chart-and-deploy-it-to-k8s-1.22/" class="md-nav__link">
+        Create a self-hosted helm chart and deploy it to kubernetes (v1.22)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-11-01-javase17-gctuning/" class="md-nav__link">
+        HotSpot Virtual Machine Garbage Collection Tuning Guide (Release 17)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-11-09-getting-started-with-docker-swarm-mode/" class="md-nav__link">
+        Getting started with docker swarm mode
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-11-29-install-glusterfs-on-centos7/" class="md-nav__link">
+        Install Glusterfs on Centos 7
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-11-30-glusterfs-for-persistent-docker-volumes/" class="md-nav__link">
+        GlusterFS for Persistent Docker Volumes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          UTILITIES
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="UTILITIES" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          UTILITIES
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-09-15-mac%25e7%2594%25b5%25e8%2584%2591%25ef%25bc%2588yosemite%25ef%25bc%2589%25e4%25b8%258a%25e5%25bc%2580%25e6%259c%25ba%25e8%2587%25aa%25e5%2590%25af%25e8%2584%259a%25e6%259c%25ac%25e7%259a%2584%25e5%2588%259b%25e5%25bb%25ba%25e6%2596%25b9%25e6%25b3%2595.html/" class="md-nav__link">
+        mac电脑（yosemite）开机自启脚本的创建方法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-09-25-fdiskmountfstab-%25e5%2591%25bd%25e4%25bb%25a4%25e8%25af%25b4%25e6%2598%258e.html/" class="md-nav__link">
+        fdisk+mount+fstab 命令说明
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-09-26-turn-any-linux-computer-into-socks5-proxy-in-one-command.html/" class="md-nav__link">
+        Turn any Linux computer into SOCKS5 proxy in one command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-11-27-ubuntu-%25e6%2596%2587%25e4%25bb%25b6%25e5%2585%25b1%25e4%25ba%25ab-samba%25e6%259c%258d%25e5%258a%25a1.html/" class="md-nav__link">
+        Ubuntu 文件共享 samba服务
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-11-29-iptables%25e7%25ab%25af%25e5%258f%25a3%25e6%2598%25a0%25e5%25b0%2584%25e8%25af%25a6%25e8%25a7%25a3.html/" class="md-nav__link">
+        iptables端口映射详解
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-11-29-myiptables-iptables%25e5%25b8%25b8%25e7%2594%25a8%25e9%2585%258d%25e7%25bd%25ae.html/" class="md-nav__link">
+        myiptables: iptables常用配置
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-12-09-mac-finder-%25e6%2598%25be%25e7%25a4%25ba%25e9%259a%2590%25e8%2597%258f%25e6%2596%2587%25e4%25bb%25b6.html/" class="md-nav__link">
+        mac finder 显示隐藏文件
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-12-09-mac-vi-%25e8%25af%25ad%25e6%25b3%2595%25e9%25ab%2598%25e4%25ba%25ae.html/" class="md-nav__link">
+        mac vi 语法高亮
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-12-09-rc-local-in-osx-yosemite.html/" class="md-nav__link">
+        rc.local in osx-yosemite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-12-09-tcpip%25e5%259b%259b%25e5%25b1%2582%25e6%25a8%25a1%25e5%259e%258b.html/" class="md-nav__link">
+        TCP/IP四层模型
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-12-11-centos7-%25e4%25bd%25bf%25e7%2594%25a8systemctl%25e8%25bf%259b%25e8%25a1%258c%25e9%2585%258d%25e7%25bd%25ae.html/" class="md-nav__link">
+        CentOS7 使用systemctl进行配置
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-12-17-ascii%25e8%25a1%25a8.html/" class="md-nav__link">
+        ASCII码对照表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-12-17-grep%25e5%2591%25bd%25e4%25bb%25a4%25e7%259a%2584or%25ef%25bc%258cand%25ef%25bc%258cnot%25e6%2593%258d%25e4%25bd%259c%25e7%25a4%25ba%25e4%25be%258b.html/" class="md-nav__link">
+        grep命令的or，and，not操作示例
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-12-27-linux-awk-%25e5%2586%2585%25e7%25bd%25ae%25e5%2587%25bd%25e6%2595%25b0%25e8%25af%25a6%25e7%25bb%2586%25e4%25bb%258b%25e7%25bb%258d%25ef%25bc%2588%25e5%25ae%259e%25e4%25be%258b%25ef%25bc%2589.html/" class="md-nav__link">
+        linux awk 内置函数详细介绍（实例）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2015-12-29-linux%25e4%25b8%258b%25e5%2588%25a9%25e7%2594%25a8nc%25e5%2591%25bd%25e4%25bb%25a4%25e6%259d%25a5%25e7%259b%2591%25e6%258e%25a7%25e6%25a3%2580%25e6%25b5%258b%25e6%259c%258d%25e5%258a%25a1%25e5%2599%25a8%25e7%259a%2584%25e7%25ab%25af%25e5%258f%25a3%25e4%25bd%25bf%25e7%2594%25a8%25e6%2583%2585%25e5%2586%25b5.html/" class="md-nav__link">
+        Linux下利用nc命令来监控检测服务器的端口使用情况
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2016-01-09-ubuntu-14-04-lts-%25e7%25b3%25bb%25e7%25bb%259f%25e8%25ae%25be%25e7%25bd%25ae%25e6%25ae%258b%25e7%25bc%25ba%25e7%259a%2584%25e9%2597%25ae%25e9%25a2%2598.html/" class="md-nav__link">
+        Ubuntu 14.04 LTS 系统设置残缺的问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2016-02-26-ubuntu-%25e4%25bd%25bf%25e7%2594%25a8-playonlinux-%25e5%25ae%2589%25e8%25a3%2585-tm2013.html/" class="md-nav__link">
+        Ubuntu 使用 PlayOnLinux 安装 TM2013
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2016-03-02-virtualbox-%25e8%2599%259a%25e6%258b%259f%25e6%259c%25ba%25e5%2585%258b%25e9%259a%2586.html/" class="md-nav__link">
+        virtualbox 虚拟机克隆
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2016-06-19-centos-6-x-%25e5%25ae%2589%25e8%25a3%2585nvidia%25e6%2598%25be%25e5%258d%25a1%25e9%25a9%25b1%25e5%258a%25a8%25e5%258f%258a%25e5%25b1%258f%25e5%25b9%2595%25e4%25ba%25ae%25e5%25ba%25a6%25e9%2597%25ae%25e9%25a2%2598.html/" class="md-nav__link">
+        CentOS 6.x 安装nvidia显卡驱动及屏幕亮度问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2016-11-08-%25e6%259f%25a5%25e7%259c%258b%25e6%2596%2587%25e4%25bb%25b6%25e7%259a%2584-md5-sha1-sha256.html/" class="md-nav__link">
+        查看文件的 md5 sha1 sha256
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2016-11-24-mac-%25e4%25bd%25bf%25e7%2594%25a8-nfs-%25e8%25bf%259e%25e6%258e%25a5-centos-%25e4%25b8%258a%25e7%259a%2584%25e5%2585%25b1%25e4%25ba%25ab%25e6%2596%2587%25e4%25bb%25b6%25e5%25a4%25b9.html/" class="md-nav__link">
+        Mac 使用 NFS 连接 Centos 上的共享文件夹
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2016-12-13-mac-%25e9%2587%258d%25e5%2590%25af-finder.html/" class="md-nav__link">
+        mac 重启 finder
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2016-12-17-linux-%25e6%258c%2582%25e8%25bd%25bd-ntfs.html/" class="md-nav__link">
+        linux 挂载 ntfs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-01-01-ubuntu-linuxmint%25e4%25b8%258b%25e8%2587%25aa%25e5%258a%25a8%25e5%25ae%2589%25e8%25a3%2585%25e9%259b%2585%25e9%25bb%2591%25e5%25ad%2597%25e4%25bd%2593%25e8%2584%259a%25e6%259c%25ac-%25e8%25bd%25ac.html/" class="md-nav__link">
+        ubuntu linuxmint下自动安装雅黑字体脚本 -- 转
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-05-08-osx%25e7%25a6%2581%25e6%25ad%25a2mobilebackups%25e7%2589%25b9%25e6%2580%25a7timemachine%25e6%259c%25ac%25e5%259c%25b0%25e5%25a4%2587%25e4%25bb%25bd.html/" class="md-nav__link">
+        OSX禁止MobileBackups特性(TimeMachine本地备份)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-05-20-linux%25e7%25b3%25bb%25e7%25bb%259f%25e8%25ae%25be%25e7%25bd%25aeswap%25e5%2588%2586%25e5%258c%25ba%25e7%259a%2584%25e5%25a4%25a7%25e5%25b0%258f%25e4%25b8%25a4%25e7%25a7%258d%25e6%2596%25b9%25e6%25b3%2595.html/" class="md-nav__link">
+        Linux系统设置Swap分区的大小(两种方法)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-05-27-%25e8%25a7%25a3%25e6%25b1%25balinux%25e7%25b3%25bb%25e7%25b5%25b1%25e7%259a%2584%25e4%25b8%25ad%25e6%2596%2587%25e8%25ae%258a%25e6%2588%2590%25e7%25b4%25b0%25e6%2598%258e%25e9%25ab%2594%25e6%2588%2596%25e6%2598%25af%25e6%25a8%2599%25e6%25a5%25b7%25e9%25ab%2594%25e7%259a%2584%25e5%2595%258f%25e9%25a1%258c.html/" class="md-nav__link">
+        解決Linux系統的中文變成細明體或是標楷體的問題
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-06-13-centos-7-%25e4%25b8%258b-ifconfig-command-not-found-%25e8%25a7%25a3%25e5%2586%25b3%25e5%258a%259e%25e6%25b3%2595.html/" class="md-nav__link">
+        CentOS 7 下 ifconfig command not found 解决办法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-07-20-encrypt-file-with-openssl-rsa.html/" class="md-nav__link">
+        Encrypt file with openssl RSA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-10-02-%25e5%259c%25a8mac%25e4%25b8%258a%25e5%2588%25b6%25e4%25bd%259c-u%25e7%259b%2598-%25e5%2590%25af%25e5%258a%25a8%25e7%259b%2598.html/" class="md-nav__link">
+        在mac上制作 U盘 启动盘
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-10-02-installing-fcitx-chinese-ime-arch-linux.html/" class="md-nav__link">
+        Installing fcitx (a Chinese IME) on Arch Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-10-08-install-wps-office-manjaro-linux.html/" class="md-nav__link">
+        Install wps office on Manjaro Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-12-15-remote-x11-gui-linuxunix.html/" class="md-nav__link">
+        Remote X11 GUI For Linux/Unix
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2017-12-23-encrypt-large-file-openssl-using-public-key.html/" class="md-nav__link">
+        How to encrypt a large file in openssl using public key
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2018-01-24-mac-retina-%25e5%2590%2588%25e7%259b%2596%25e5%2590%258e%25e6%2589%2593%25e5%25bc%2580%25e7%25aa%2581%25e7%2584%25b6%25e9%25bb%2591%25e5%25b1%258f%25ef%25bc%258c%25e9%2595%25bf%25e6%258c%2589%25e5%25bc%2580%25e6%259c%25ba%25e9%2594%25ae%25e6%2597%25a0%25e5%258f%258d%25e5%25ba%2594.html/" class="md-nav__link">
+        Mac Retina 合盖后打开突然黑屏，长按开机键无反应?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2018-01-27-sublime-text-%25e6%2594%25af%25e6%258c%2581gbk%25ef%25bc%2588%25e8%25a7%25a3%25e5%2586%25b3%25e4%25b8%25ad%25e6%2596%2587%25e4%25b9%25b1%25e7%25a0%2581%25ef%25bc%2589.html/" class="md-nav__link">
+        Sublime Text 支持GBK（解决中文乱码）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2018-05-05-using-vi-hex-editor.html/" class="md-nav__link">
+        Using vi as a hex editor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2018-11-17-install-skype-4-5-centos-7.html/" class="md-nav__link">
+        Install Skype for Linux 4.5 on CentOS 7
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2018-12-01-install-fcitx-cloudpinyin-centos-7-5.html/" class="md-nav__link">
+        Install fcitx-cloudpinyin on CentOS 7.5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2019-01-18-change-default-font-linux.html/" class="md-nav__link">
+        How to change the default font of Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2019-07-06-centos7-4%25e5%25ae%2589%25e8%25a3%2585%25e7%25bd%2591%25e6%2598%2593%25e4%25ba%2591%25e9%259f%25b3%25e4%25b9%2590.html/" class="md-nav__link">
+        Centos7.4安装网易云音乐
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2020-01-10-how-to-mount-exfat-on-centos.html/" class="md-nav__link">
+        How to mount exFAT on centos
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UTILITIES/2021-09-19-pretty-git-log-in-one-line/" class="md-nav__link">
+        Pretty git log in one line
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+  <h1>Google Java编程风格指南</h1>
+
+<p>January 20, 2014</p>
+<p>作者：Hawstein<br />
+出处：<a href="http://www.hawstein.com/posts/google-java-style.html">http://hawstein.com/posts/google-java-style.html</a><br />
+声明：本文采用以下协议进行授权： <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">自由转载-非商用-非衍生-保持署名|Creative Commons BY-NC-ND 3.0</a> ，转载请注明作者及出处。</p>
+<h2>目录</h2>
+<ol>
+<li><a href="http://www.hawstein.com/posts/google-java-style.html#Intro">前言</a></li>
+<li><a href="http://www.hawstein.com/posts/google-java-style.html#SFBasic">源文件基础</a></li>
+<li><a href="http://www.hawstein.com/posts/google-java-style.html#SFStruct">源文件结构</a></li>
+<li><a href="http://www.hawstein.com/posts/google-java-style.html#Format">格式</a></li>
+<li><a href="http://www.hawstein.com/posts/google-java-style.html#Naming">命名约定</a></li>
+<li><a href="http://www.hawstein.com/posts/google-java-style.html#Practice">编程实践</a></li>
+<li><a href="http://www.hawstein.com/posts/google-java-style.html#Javadoc">Javadoc</a></li>
+<li><a href="http://www.hawstein.com/posts/google-java-style.html#End">后记</a></li>
+</ol>
+<h2><a id="Intro"></a>前言</h2>
+<p>这份文档是Google Java编程风格规范的完整定义。当且仅当一个Java源文件符合此文档中的规则， 我们才认为它符合Google的Java编程风格。</p>
+<p>与其它的编程风格指南一样，这里所讨论的不仅仅是编码格式美不美观的问题， 同时也讨论一些约定及编码标准。然而，这份文档主要侧重于我们所普遍遵循的规则， 对于那些不是明确强制要求的，我们尽量避免提供意见。</p>
+<h3>1.1 术语说明</h3>
+<p>在本文档中，除非另有说明：</p>
+<ol>
+<li>术语class可表示一个普通类，枚举类，接口或是annotation类型(<code>@interface</code>)</li>
+<li>术语comment只用来指代实现的注释(implementation comments)，我们不使用&ldquo;documentation comments&rdquo;一词，而是用Javadoc。</li>
+</ol>
+<p>其他的术语说明会偶尔在后面的文档出现。</p>
+<h3>1.2 指南说明</h3>
+<p>本文档中的示例代码并不作为规范。也就是说，虽然示例代码是遵循Google编程风格，但并不意味着这是展现这些代码的唯一方式。 示例中的格式选择不应该被强制定为规则。</p>
+<h2><a id="SFBasic"></a>源文件基础</h2>
+<h3>2.1 文件名</h3>
+<p>源文件以其最顶层的类名来命名，大小写敏感，文件扩展名为<code>.java</code>。</p>
+<h3>2.2 文件编码：UTF-8</h3>
+<p>源文件编码格式为UTF-8。</p>
+<h3>2.3 特殊字符</h3>
+<h4>2.3.1 空白字符</h4>
+<p>除了行结束符序列，ASCII水平空格字符(0x20，即空格)是源文件中唯一允许出现的空白字符，这意味着：</p>
+<ol>
+<li>所有其它字符串中的空白字符都要进行转义。</li>
+<li>制表符不用于缩进。</li>
+</ol>
+<h4>2.3.2 特殊转义序列</h4>
+<p>对于具有特殊<a href="http://zh.wikipedia.org/wiki/%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97">转义序列</a>的任何字符(\b, \t, \n, \f, \r, \&ldquo;, \&lsquo;及\)，我们使用它的转义序列，而不是相应的八进制(比如<code>\012</code>)或Unicode(比如<code>\u000a</code>)转义。</p>
+<h4>2.3.3 非ASCII字符</h4>
+<p>对于剩余的非ASCII字符，是使用实际的Unicode字符(比如&infin;)，还是使用等价的Unicode转义符(比如\u221e)，取决于哪个能让代码更易于阅读和理解。</p>
+<blockquote>
+<blockquote><p>Tip: 在使用Unicode转义符或是一些实际的Unicode字符时，建议做些注释给出解释，这有助于别人阅读和理解。</p></blockquote>
+</blockquote>
+<p>例如：</p>
+<pre><code>String unitAbbrev = "&mu;s";                                 | 赞，即使没有注释也非常清晰
+String unitAbbrev = "\u03bcs"; // "&mu;s"                    | 允许，但没有理由要这样做
+String unitAbbrev = "\u03bcs"; // Greek letter mu, "s"    | 允许，但这样做显得笨拙还容易出错
+String unitAbbrev = "\u03bcs";                            | 很糟，读者根本看不出这是什么
+return '\ufeff' + content; // byte order mark             | Good，对于非打印字符，使用转义，并在必要时写上注释
+</code></pre>
+<blockquote>
+<blockquote><p>Tip: 永远不要由于害怕某些程序可能无法正确处理非ASCII字符而让你的代码可读性变差。当程序无法正确处理非ASCII字符时，它自然无法正确运行， 你就会去fix这些问题的了。(言下之意就是大胆去用非ASCII字符，如果真的有需要的话)</p></blockquote>
+</blockquote>
+<h2><a id="SFStruct"></a>源文件结构</h2>
+<p>一个源文件包含(按顺序地)：</p>
+<ol>
+<li>许可证或版权信息(如有需要)</li>
+<li>package语句</li>
+<li>import语句</li>
+<li>一个顶级类(<strong>只有一个</strong>)</li>
+</ol>
+<p>以上每个部分之间用一个空行隔开。</p>
+<h3>3.1 许可证或版权信息</h3>
+<p>如果一个文件包含许可证或版权信息，那么它应当被放在文件最前面。</p>
+<h3>3.2 package语句</h3>
+<p>package语句不换行，列限制(4.4节)并不适用于package语句。(即package语句写在一行里)</p>
+<h3>3.3 import语句</h3>
+<h4>3.3.1 import不要使用通配符</h4>
+<p>即，不要出现类似这样的import语句：<code>import java.util.*;</code></p>
+<h4>3.3.2 不要换行</h4>
+<p>import语句不换行，列限制(4.4节)并不适用于import语句。(每个import语句独立成行)</p>
+<h4>3.3.3 顺序和间距</h4>
+<p>import语句可分为以下几组，按照这个顺序，每组由一个空行分隔：</p>
+<ol>
+<li>所有的静态导入独立成组</li>
+<li><code>com.google</code> imports(仅当这个源文件是在<code>com.google</code>包下)</li>
+<li>第三方的包。每个顶级包为一组，字典序。例如：android, com, junit, org, sun</li>
+<li><code>java</code> imports</li>
+<li><code>javax</code> imports</li>
+</ol>
+<p>组内不空行，按字典序排列。</p>
+<h3>3.4 类声明</h3>
+<h4>3.4.1 只有一个顶级类声明</h4>
+<p>每个顶级类都在一个与它同名的源文件中(当然，还包含<code>.java</code>后缀)。</p>
+<p>例外：<code>package-info.java</code>，该文件中可没有<code>package-info</code>类。</p>
+<h4>3.4.2 类成员顺序</h4>
+<p>类的成员顺序对易学性有很大的影响，但这也不存在唯一的通用法则。不同的类对成员的排序可能是不同的。 最重要的一点，每个类应该以某种逻辑去排序它的成员，维护者应该要能解释这种排序逻辑。比如， 新的方法不能总是习惯性地添加到类的结尾，因为这样就是按时间顺序而非某种逻辑来排序的。</p>
+<h5>3.4.2.1 重载：永不分离</h5>
+<p>当一个类有多个构造函数，或是多个同名方法，这些函数/方法应该按顺序出现在一起，中间不要放进其它函数/方法。</p>
+<h2><a id="Format"></a>格式</h2>
+<p><strong>术语说明</strong>：块状结构(block-like construct)指的是一个类，方法或构造函数的主体。需要注意的是，数组初始化中的初始值可被选择性地视为块状结构(4.8.3.1节)。</p>
+<h3>4.1 大括号</h3>
+<h4>4.1.1 使用大括号(即使是可选的)</h4>
+<p>大括号与<code>if, else, for, do, while</code>语句一起使用，即使只有一条语句(或是空)，也应该把大括号写上。</p>
+<h4>4.1.2 非空块：K &amp; R 风格</h4>
+<p>对于非空块和块状结构，大括号遵循Kernighan和Ritchie风格 (<a href="http://www.codinghorror.com/blog/2012/07/new-programming-jargon.html">Egyptian brackets</a>):</p>
+<ul>
+<li>左大括号前不换行</li>
+<li>左大括号后换行</li>
+<li>右大括号前换行</li>
+<li>如果右大括号是一个语句、函数体或类的终止，则右大括号后换行; 否则不换行。例如，如果右大括号后面是else或逗号，则不换行。</li>
+</ul>
+<p>示例：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="k">return</span> <span class="k">new</span> <span class="nf">MyClass</span><span class="o">()</span> <span class="o">{</span>
+  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">condition</span><span class="o">())</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+        <span class="n">something</span><span class="o">();</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ProblemException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">recover</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">};</span></code></pre>
+</div>
+<p>4.8.1节给出了enum类的一些例外。</p>
+<h4>4.1.3 空块：可以用简洁版本</h4>
+<p>一个空的块状结构里什么也不包含，大括号可以简洁地写成<code>{}</code>，不需要换行。例外：如果它是一个多块语句的一部分(if/else 或 try/catch/finally) ，即使大括号内没内容，右大括号也要换行。</p>
+<p>示例：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">doNothing</span><span class="o">()</span> <span class="o">{}</span></code></pre>
+</div>
+<h3>4.2 块缩进：2个空格</h3>
+<p>每当开始一个新的块，缩进增加2个空格，当块结束时，缩进返回先前的缩进级别。缩进级别适用于代码和注释。(见4.1.2节中的代码示例)</p>
+<h3>4.3 一行一个语句</h3>
+<p>每个语句后要换行。</p>
+<h3>4.4 列限制：80或100</h3>
+<p>一个项目可以选择一行80个字符或100个字符的列限制，除了下述例外，任何一行如果超过这个字符数限制，必须自动换行。</p>
+<p>例外：</p>
+<ol>
+<li>不可能满足列限制的行(例如，Javadoc中的一个长URL，或是一个长的JSNI方法参考)。</li>
+<li><code>package</code>和<code>import</code>语句(见3.2节和3.3节)。</li>
+<li>注释中那些可能被剪切并粘贴到shell中的命令行。</li>
+</ol>
+<h3>4.5 自动换行</h3>
+<p><strong>术语说明</strong>：一般情况下，一行长代码为了避免超出列限制(80或100个字符)而被分为多行，我们称之为自动换行(line-wrapping)。</p>
+<p>我们并没有全面，确定性的准则来决定在每一种情况下如何自动换行。很多时候，对于同一段代码会有好几种有效的自动换行方式。</p>
+<blockquote>
+<blockquote><p>Tip: 提取方法或局部变量可以在不换行的情况下解决代码过长的问题(是合理缩短命名长度吧)</p></blockquote>
+</blockquote>
+<h4>4.5.1 从哪里断开</h4>
+<p>自动换行的基本准则是：更倾向于在更高的语法级别处断开。</p>
+<ol>
+<li>如果在<code>非赋值运算符</code>处断开，那么在该符号前断开(比如+，它将位于下一行)。注意：这一点与Google其它语言的编程风格不同(如C++和JavaScript)。 这条规则也适用于以下&ldquo;类运算符&rdquo;符号：点分隔符(.)，类型界限中的&amp;（<code><T extends Foo &amp; Bar></code>)，catch块中的管道符号(<code>catch (FooException | BarException e</code>)</li>
+<li>如果在<code>赋值运算符</code>处断开，通常的做法是在该符号后断开(比如=，它与前面的内容留在同一行)。这条规则也适用于<code>foreach</code>语句中的分号。</li>
+<li>方法名或构造函数名与左括号留在同一行。</li>
+<li>逗号(,)与其前面的内容留在同一行。</li>
+</ol>
+<h4>4.5.2 自动换行时缩进至少+4个空格</h4>
+<p>自动换行时，第一行后的每一行至少比第一行多缩进4个空格(注意：制表符不用于缩进。见2.3.1节)。</p>
+<p>当存在连续自动换行时，缩进可能会多缩进不只4个空格(语法元素存在多级时)。一般而言，两个连续行使用相同的缩进当且仅当它们开始于同级语法元素。</p>
+<p>第4.6.3水平对齐一节中指出，不鼓励使用可变数目的空格来对齐前面行的符号。</p>
+<h3>4.6 空白</h3>
+<h4>4.6.1 垂直空白</h4>
+<p>以下情况需要使用一个空行：</p>
+<ol>
+<li>类内连续的成员之间：字段，构造函数，方法，嵌套类，静态初始化块，实例初始化块。
+<ul>
+<li><strong>例外</strong>：两个连续字段之间的空行是可选的，用于字段的空行主要用来对字段进行逻辑分组。</li>
+</ul>
+</li>
+<li>在函数体内，语句的逻辑分组间使用空行。</li>
+<li>类内的第一个成员前或最后一个成员后的空行是可选的(既不鼓励也不反对这样做，视个人喜好而定)。</li>
+<li>要满足本文档中其他节的空行要求(比如3.3节：import语句)</li>
+</ol>
+<p>多个连续的空行是允许的，但没有必要这样做(我们也不鼓励这样做)。</p>
+<h4>4.6.2 水平空白</h4>
+<p>除了语言需求和其它规则，并且除了文字，注释和Javadoc用到单个空格，单个ASCII空格也出现在以下几个地方：</p>
+<ol>
+<li>分隔任何保留字与紧随其后的左括号(<code>(</code>)(如<code>if, for catch</code>等)。</li>
+<li>分隔任何保留字与其前面的右大括号(<code>}</code>)(如<code>else, catch</code>)。</li>
+<li>在任何左大括号前(<code>{</code>)，两个例外：
+<ul>
+<li><code>@SomeAnnotation({a, b})</code>(不使用空格)。</li>
+<li><code>String[][] x = foo;</code>(大括号间没有空格，见下面的Note)。</li>
+</ul>
+</li>
+<li>在任何二元或三元运算符的两侧。这也适用于以下&ldquo;类运算符&rdquo;符号：
+<ul>
+<li>类型界限中的&amp;(<code><T extends Foo &amp; Bar></code>)。</li>
+<li>catch块中的管道符号(<code>catch (FooException | BarException e</code>)。</li>
+<li><code>foreach</code>语句中的分号。</li>
+</ul>
+</li>
+<li>在<code>, : ;</code>及右括号(<code>)</code>)后</li>
+<li>如果在一条语句后做注释，则双斜杠(//)两边都要空格。这里可以允许多个空格，但没有必要。</li>
+<li>类型和变量之间：List list。</li>
+<li>数组初始化中，大括号内的空格是可选的，即<code>new int[] {5, 6}</code>和<code>new int[] { 5, 6 }</code>都是可以的。</li>
+</ol>
+<blockquote>
+<blockquote><p>Note：这个规则并不要求或禁止一行的开关或结尾需要额外的空格，只对内部空格做要求。</p></blockquote>
+</blockquote>
+<h4>4.6.3 水平对齐：不做要求</h4>
+<p><strong>术语说明</strong>：水平对齐指的是通过增加可变数量的空格来使某一行的字符与上一行的相应字符对齐。</p>
+<p>这是允许的(而且在不少地方可以看到这样的代码)，但Google编程风格对此不做要求。即使对于已经使用水平对齐的代码，我们也不需要去保持这种风格。</p>
+<p>以下示例先展示未对齐的代码，然后是对齐的代码：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">int</span> <span class="n">x</span><span class="o">;</span> <span class="c1">// this is fine</span>
+<span class="kd">private</span> <span class="n">Color</span> <span class="n">color</span><span class="o">;</span> <span class="c1">// this too</span>
+
+<span class="kd">private</span> <span class="kt">int</span>   <span class="n">x</span><span class="o">;</span>      <span class="c1">// permitted, but future edits</span>
+<span class="kd">private</span> <span class="n">Color</span> <span class="n">color</span><span class="o">;</span>  <span class="c1">// may leave it unaligned</span></code></pre>
+</div>
+<blockquote>
+<blockquote><p>Tip：对齐可增加代码可读性，但它为日后的维护带来问题。考虑未来某个时候，我们需要修改一堆对齐的代码中的一行。 这可能导致原本很漂亮的对齐代码变得错位。很可能它会提示你调整周围代码的空白来使这一堆代码重新水平对齐(比如程序员想保持这种水平对齐的风格)， 这就会让你做许多的无用功，增加了reviewer的工作并且可能导致更多的合并冲突。</p></blockquote>
+</blockquote>
+<h3>4.7 用小括号来限定组：推荐</h3>
+<p>除非作者和reviewer都认为去掉小括号也不会使代码被误解，或是去掉小括号能让代码更易于阅读，否则我们不应该去掉小括号。 我们没有理由假设读者能记住整个Java运算符优先级表。</p>
+<h3>4.8 具体结构</h3>
+<h4>4.8.1 枚举类</h4>
+<p>枚举常量间用逗号隔开，换行可选。</p>
+<p>没有方法和文档的枚举类可写成数组初始化的格式：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">enum</span> <span class="n">Suit</span> <span class="o">{</span> <span class="n">CLUBS</span><span class="o">,</span> <span class="n">HEARTS</span><span class="o">,</span> <span class="n">SPADES</span><span class="o">,</span> <span class="n">DIAMONDS</span> <span class="o">}</span></code></pre>
+</div>
+<p>由于枚举类也是一个类，因此所有适用于其它类的格式规则也适用于枚举类。</p>
+<h4>4.8.2 变量声明</h4>
+<h5>4.8.2.1 每次只声明一个变量</h5>
+<p>不要使用组合声明，比如<code>int a, b;</code>。</p>
+<h5>4.8.2.2 需要时才声明，并尽快进行初始化</h5>
+<p>不要在一个代码块的开头把局部变量一次性都声明了(这是c语言的做法)，而是在第一次需要使用它时才声明。 局部变量在声明时最好就进行初始化，或者声明后尽快进行初始化。</p>
+<h4>4.8.3 数组</h4>
+<h5>4.8.3.1 数组初始化：可写成块状结构</h5>
+<p>数组初始化可以写成块状结构，比如，下面的写法都是OK的：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span>
+  <span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span> 
+<span class="o">}</span>
+
+<span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span>
+  <span class="mi">0</span><span class="o">,</span>
+  <span class="mi">1</span><span class="o">,</span>
+  <span class="mi">2</span><span class="o">,</span>
+  <span class="mi">3</span>
+<span class="o">}</span>
+
+<span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span>
+  <span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span>
+  <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span>
+<span class="o">}</span>
+
+<span class="k">new</span> <span class="kt">int</span><span class="o">[]</span>
+    <span class="o">{</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">}</span></code></pre>
+</div>
+<h5>4.8.3.2 非C风格的数组声明</h5>
+<p>中括号是类型的一部分：<code>String[] args</code>， 而非<code>String args[]</code>。</p>
+<h4>4.8.4 switch语句</h4>
+<p><strong>术语说明</strong>：switch块的大括号内是一个或多个语句组。每个语句组包含一个或多个switch标签(<code>case FOO:</code>或<code>default:</code>)，后面跟着一条或多条语句。</p>
+<h5>4.8.4.1 缩进</h5>
+<p>与其它块状结构一致，switch块中的内容缩进为2个空格。</p>
+<p>每个switch标签后新起一行，再缩进2个空格，写下一条或多条语句。</p>
+<h5>4.8.4.2 Fall-through：注释</h5>
+<p>在一个switch块内，每个语句组要么通过<code>break, continue, return</code>或抛出异常来终止，要么通过一条注释来说明程序将继续执行到下一个语句组， 任何能表达这个意思的注释都是OK的(典型的是用<code>// fall through</code>)。这个特殊的注释并不需要在最后一个语句组(一般是<code>default</code>)中出现。示例：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="k">switch</span> <span class="o">(</span><span class="n">input</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+  <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+    <span class="n">prepareOneOrTwo</span><span class="o">();</span>
+    <span class="c1">// fall through</span>
+  <span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
+    <span class="n">handleOneTwoOrThree</span><span class="o">();</span>
+    <span class="k">break</span><span class="o">;</span>
+  <span class="k">default</span><span class="o">:</span>
+    <span class="n">handleLargeNumber</span><span class="o">(</span><span class="n">input</span><span class="o">);</span>
+<span class="o">}</span></code></pre>
+</div>
+<h5>4.8.4.3 default的情况要写出来</h5>
+<p>每个switch语句都包含一个<code>default</code>语句组，即使它什么代码也不包含。</p>
+<h4>4.8.5 注解(Annotations)</h4>
+<p>注解紧跟在文档块后面，应用于类、方法和构造函数，一个注解独占一行。这些换行不属于自动换行(第4.5节，自动换行)，因此缩进级别不变。例如：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="nd">@Nullable</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getNameIfPresent</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span></code></pre>
+</div>
+<p><strong>例外</strong>：单个的注解可以和签名的第一行出现在同一行。例如：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span></code></pre>
+</div>
+<p>应用于字段的注解紧随文档块出现，应用于字段的多个注解允许与字段出现在同一行。例如：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="nd">@Partial</span> <span class="nd">@Mock</span> <span class="n">DataLoader</span> <span class="n">loader</span><span class="o">;</span></code></pre>
+</div>
+<p>参数和局部变量注解没有特定规则。</p>
+<h4>4.8.6 注释</h4>
+<h5>4.8.6.1 块注释风格</h5>
+<p>块注释与其周围的代码在同一缩进级别。它们可以是<code>/* ... */</code>风格，也可以是<code>// ...</code>风格。对于多行的<code>/* ... */</code>注释，后续行必须从<code>*</code>开始， 并且与前一行的<code>*</code>对齐。以下示例注释都是OK的。</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="cm">/*</span>
+<span class="cm"> * This is          // And so           /* Or you can</span>
+<span class="cm"> * okay.            // is this.          * even do this. */</span>
+ <span class="o">*/</span></code></pre>
+</div>
+<p>注释不要封闭在由星号或其它字符绘制的框架里。</p>
+<blockquote>
+<blockquote><p>Tip：在写多行注释时，如果你希望在必要时能重新换行(即注释像段落风格一样)，那么使用<code>/* ... */</code>。</p></blockquote>
+</blockquote>
+<h4>4.8.7 Modifiers</h4>
+<p>类和成员的modifiers如果存在，则按Java语言规范中推荐的顺序出现。</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">protected</span> <span class="kd">private</span> <span class="kd">abstract</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kd">transient</span> <span class="kd">volatile</span> <span class="kd">synchronized</span> <span class="kd">native</span> <span class="kd">strictfp</span></code></pre>
+</div>
+<h2><a id="Naming"></a>命名约定</h2>
+<h3>5.1 对所有标识符都通用的规则</h3>
+<p>标识符只能使用ASCII字母和数字，因此每个有效的标识符名称都能匹配正则表达式<code>\w+</code>。</p>
+<p>在Google其它编程语言风格中使用的特殊前缀或后缀，如<code>name_</code>, <code>mName</code>, <code>s_name</code>和<code>kName</code>，在Java编程风格中都不再使用。</p>
+<h3>5.2 标识符类型的规则</h3>
+<h4>5.2.1 包名</h4>
+<p>包名全部小写，连续的单词只是简单地连接起来，不使用下划线。</p>
+<h4>5.2.2 类名</h4>
+<p>类名都以<code>UpperCamelCase</code>风格编写。</p>
+<p>类名通常是名词或名词短语，接口名称有时可能是形容词或形容词短语。现在还没有特定的规则或行之有效的约定来命名注解类型。</p>
+<p>测试类的命名以它要测试的类的名称开始，以<code>Test</code>结束。例如，<code>HashTest</code>或<code>HashIntegrationTest</code>。</p>
+<h4>5.2.3 方法名</h4>
+<p>方法名都以<code>lowerCamelCase</code>风格编写。</p>
+<p>方法名通常是动词或动词短语。</p>
+<p>下划线可能出现在JUnit测试方法名称中用以分隔名称的逻辑组件。一个典型的模式是：<code>test<MethodUnderTest>_<state></code>，例如<code>testPop_emptyStack</code>。 并不存在唯一正确的方式来命名测试方法。</p>
+<h4>5.2.4 常量名</h4>
+<p>常量名命名模式为<code>CONSTANT_CASE</code>，全部字母大写，用下划线分隔单词。那，到底什么算是一个常量？</p>
+<p>每个常量都是一个静态final字段，但不是所有静态final字段都是常量。在决定一个字段是否是一个常量时， 考虑它是否真的感觉像是一个常量。例如，如果任何一个该实例的观测状态是可变的，则它几乎肯定不会是一个常量。 只是永远不<code>打算</code>改变对象一般是不够的，它要真的一直不变才能将它示为常量。</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="c1">// Constants</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">NUMBER</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableList</span><span class="o"><</span><span class="n">String</span><span class="o">></span> <span class="n">NAMES</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"Ed"</span><span class="o">,</span> <span class="s">"Ann"</span><span class="o">);</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">Joiner</span> <span class="n">COMMA_JOINER</span> <span class="o">=</span> <span class="n">Joiner</span><span class="o">.</span><span class="na">on</span><span class="o">(</span><span class="sc">','</span><span class="o">);</span>  <span class="c1">// because Joiner is immutable</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">SomeMutableType</span><span class="o">[]</span> <span class="n">EMPTY_ARRAY</span> <span class="o">=</span> <span class="o">{};</span>
+<span class="kd">enum</span> <span class="n">SomeEnum</span> <span class="o">{</span> <span class="n">ENUM_CONSTANT</span> <span class="o">}</span>
+
+<span class="c1">// Not constants</span>
+<span class="kd">static</span> <span class="n">String</span> <span class="n">nonFinal</span> <span class="o">=</span> <span class="s">"non-final"</span><span class="o">;</span>
+<span class="kd">final</span> <span class="n">String</span> <span class="n">nonStatic</span> <span class="o">=</span> <span class="s">"non-static"</span><span class="o">;</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">Set</span><span class="o"><</span><span class="n">String</span><span class="o">></span> <span class="n">mutableCollection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o"><</span><span class="n">String</span><span class="o">>();</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableSet</span><span class="o"><</span><span class="n">SomeMutableType</span><span class="o">></span> <span class="n">mutableElements</span> <span class="o">=</span> <span class="n">ImmutableSet</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">mutable</span><span class="o">);</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">MyClass</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">nonEmptyArray</span> <span class="o">=</span> <span class="o">{</span><span class="s">"these"</span><span class="o">,</span> <span class="s">"can"</span><span class="o">,</span> <span class="s">"change"</span><span class="o">};</span></code></pre>
+</div>
+<p>这些名字通常是名词或名词短语。</p>
+<h4>5.2.5 非常量字段名</h4>
+<p>非常量字段名以<code>lowerCamelCase</code>风格编写。</p>
+<p>这些名字通常是名词或名词短语。</p>
+<h4>5.2.6 参数名</h4>
+<p>参数名以<code>lowerCamelCase</code>风格编写。</p>
+<p>参数应该避免用单个字符命名。</p>
+<h4>5.2.7 局部变量名</h4>
+<p>局部变量名以<code>lowerCamelCase</code>风格编写，比起其它类型的名称，局部变量名可以有更为宽松的缩写。</p>
+<p>虽然缩写更宽松，但还是要避免用单字符进行命名，除了临时变量和循环变量。</p>
+<p>即使局部变量是final和不可改变的，也不应该把它示为常量，自然也不能用常量的规则去命名它。</p>
+<h4>5.2.8 类型变量名</h4>
+<p>类型变量可用以下两种风格之一进行命名：</p>
+<ul>
+<li>单个的大写字母，后面可以跟一个数字(如：E, T, X, T2)。</li>
+<li>以类命名方式(5.2.2节)，后面加个大写的T(如：RequestT, FooBarT)。</li>
+</ul>
+<h3>5.3 驼峰式命名法(CamelCase)</h3>
+<p><a href="http://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB">驼峰式命名法</a>分大驼峰式命名法(<code>UpperCamelCase</code>)和小驼峰式命名法(<code>lowerCamelCase</code>)。 有时，我们有不只一种合理的方式将一个英语词组转换成驼峰形式，如缩略语或不寻常的结构(例如"IPv6"或"iOS")。Google指定了以下的转换方案。</p>
+<p>名字从<code>散文形式</code>(prose form)开始:</p>
+<ol>
+<li>把短语转换为纯ASCII码，并且移除任何单引号。例如："M&uuml;ller&rsquo;s algorithm"将变成"Muellers algorithm"。</li>
+<li>把这个结果切分成单词，在空格或其它标点符号(通常是连字符)处分割开。
+<ul>
+<li>推荐：如果某个单词已经有了常用的驼峰表示形式，按它的组成将它分割开(如"AdWords"将分割成"ad words")。 需要注意的是"iOS"并不是一个真正的驼峰表示形式，因此该推荐对它并不适用。</li>
+</ul>
+</li>
+<li>现在将所有字母都小写(包括缩写)，然后将单词的第一个字母大写：
+<ul>
+<li>每个单词的第一个字母都大写，来得到大驼峰式命名。</li>
+<li>除了第一个单词，每个单词的第一个字母都大写，来得到小驼峰式命名。</li>
+</ul>
+</li>
+<li>最后将所有的单词连接起来得到一个标识符。</li>
+</ol>
+<p>示例：</p>
+<pre><code>Prose form                Correct               Incorrect
+------------------------------------------------------------------
+"XML HTTP request"        XmlHttpRequest        XMLHTTPRequest
+"new customer ID"         newCustomerId         newCustomerID
+"inner stopwatch"         innerStopwatch        innerStopWatch
+"supports IPv6 on iOS?"   supportsIpv6OnIos     supportsIPv6OnIOS
+"YouTube importer"        YouTubeImporter
+                          YoutubeImporter*
+</code></pre>
+<p>加星号处表示可以，但不推荐。</p>
+<blockquote>
+<blockquote><p>Note：在英语中，某些带有连字符的单词形式不唯一。例如："nonempty"和"non-empty"都是正确的，因此方法名<code>checkNonempty</code>和<code>checkNonEmpty</code>也都是正确的。</p></blockquote>
+</blockquote>
+<h2><a id="Practice"></a>编程实践</h2>
+<h3>6.1 @Override：能用则用</h3>
+<p>只要是合法的，就把<code>@Override</code>注解给用上。</p>
+<h3>6.2 捕获的异常：不能忽视</h3>
+<p>除了下面的例子，对捕获的异常不做响应是极少正确的。(典型的响应方式是打印日志，或者如果它被认为是不可能的，则把它当作一个<code>AssertionError</code>重新抛出。)</p>
+<p>如果它确实是不需要在catch块中做任何响应，需要做注释加以说明(如下面的例子)。</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="k">try</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">response</span><span class="o">);</span>
+  <span class="k">return</span> <span class="nf">handleNumericResponse</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NumberFormatException</span> <span class="n">ok</span><span class="o">)</span> <span class="o">{</span>
+  <span class="c1">// it's not numeric; that's fine, just continue</span>
+<span class="o">}</span>
+<span class="k">return</span> <span class="nf">handleTextResponse</span><span class="o">(</span><span class="n">response</span><span class="o">);</span></code></pre>
+</div>
+<p><strong>例外</strong>：在测试中，如果一个捕获的异常被命名为<code>expected</code>，则它可以被不加注释地忽略。下面是一种非常常见的情形，用以确保所测试的方法会抛出一个期望中的异常， 因此在这里就没有必要加注释。</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="k">try</span> <span class="o">{</span>
+  <span class="n">emptyStack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+  <span class="n">fail</span><span class="o">();</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchElementException</span> <span class="n">expected</span><span class="o">)</span> <span class="o">{</span>
+<span class="o">}</span></code></pre>
+</div>
+<h3>6.3 静态成员：使用类进行调用</h3>
+<p>使用类名调用静态的类成员，而不是具体某个对象或表达式。</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="n">Foo</span> <span class="n">aFoo</span> <span class="o">=</span> <span class="o">...;</span>
+<span class="n">Foo</span><span class="o">.</span><span class="na">aStaticMethod</span><span class="o">();</span> <span class="c1">// good</span>
+<span class="n">aFoo</span><span class="o">.</span><span class="na">aStaticMethod</span><span class="o">();</span> <span class="c1">// bad</span>
+<span class="n">somethingThatYieldsAFoo</span><span class="o">().</span><span class="na">aStaticMethod</span><span class="o">();</span> <span class="c1">// very bad</span></code></pre>
+</div>
+<h3>6.4 Finalizers: 禁用</h3>
+<p>极少会去重写<code>Object.finalize</code>。</p>
+<blockquote>
+<blockquote><p>Tip：不要使用finalize。如果你非要使用它，请先仔细阅读和理解<a href="http://books.google.com/books?isbn=8131726592">Effective Java</a> 第7条款：&ldquo;Avoid Finalizers&rdquo;，然后不要使用它。</p></blockquote>
+</blockquote>
+<h2><a id="Javadoc"></a>Javadoc</h2>
+<h3>7.1 格式</h3>
+<h4>7.1.1 一般形式</h4>
+<p>Javadoc块的基本格式如下所示：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm"> * Multiple lines of Javadoc text are written here,</span>
+<span class="cm"> * wrapped normally...</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">method</span><span class="o">(</span><span class="n">String</span> <span class="n">p1</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span></code></pre>
+</div>
+<p>或者是以下单行形式：</p>
+<div class="highlight">
+<pre><code class="language-java" data-lang="java"><span class="cm">/** An especially short bit of Javadoc. */</span></code></pre>
+</div>
+<p>基本格式总是OK的。当整个Javadoc块能容纳于一行时(且没有Javadoc标记@XXX)，可以使用单行形式。</p>
+<h4>7.1.2 段落</h4>
+<p>空行(即，只包含最左侧星号的行)会出现在段落之间和Javadoc标记(@XXX)之前(如果有的话)。 除了第一个段落，每个段落第一个单词前都有标签<code>
+<p></code>，并且它和第一个单词间没有空格。</p>
+<h4>7.1.3 Javadoc标记</h4>
+<p>标准的Javadoc标记按以下顺序出现：<code>@param</code>, <code>@return</code>, <code>@throws</code>, <code>@deprecated</code>, 前面这4种标记如果出现，描述都不能为空。 当描述无法在一行中容纳，连续行需要至少再缩进4个空格。</p>
+<h3>7.2 摘要片段</h3>
+<p>每个类或成员的Javadoc以一个简短的摘要片段开始。这个片段是非常重要的，在某些情况下，它是唯一出现的文本，比如在类和方法索引中。</p>
+<p>这只是一个小片段，可以是一个名词短语或动词短语，但不是一个完整的句子。它不会以<code>A {@code Foo} is a...</code>或<code>This method returns...</code>开头, 它也不会是一个完整的祈使句，如<code>Save the record...</code>。然而，由于开头大写及被加了标点，它看起来就像是个完整的句子。</p>
+<blockquote>
+<blockquote><p>Tip：一个常见的错误是把简单的Javadoc写成<code>/** @return the customer ID */</code>，这是不正确的。它应该写成<code>/** Returns the customer ID. */</code>。</p></blockquote>
+</blockquote>
+<h3>7.3 哪里需要使用Javadoc</h3>
+<p>至少在每个public类及它的每个public和protected成员处使用Javadoc，以下是一些例外：</p>
+<h4>7.3.1 例外：不言自明的方法</h4>
+<p>对于简单明显的方法如<code>getFoo</code>，Javadoc是可选的(即，是可以不写的)。这种情况下除了写&ldquo;Returns the foo&rdquo;，确实也没有什么值得写了。</p>
+<p>单元测试类中的测试方法可能是不言自明的最常见例子了，我们通常可以从这些方法的描述性命名中知道它是干什么的，因此不需要额外的文档说明。</p>
+<blockquote>
+<blockquote><p>Tip：如果有一些相关信息是需要读者了解的，那么以上的例外不应作为忽视这些信息的理由。例如，对于方法名<code>getCanonicalName</code>， 就不应该忽视文档说明，因为读者很可能不知道词语<code>canonical name</code>指的是什么。</p></blockquote>
+</blockquote>
+<h4>7.3.2 例外：重写</h4>
+<p>如果一个方法重写了超类中的方法，那么Javadoc并非必需的。</p>
+<h4>7.3.3 可选的Javadoc</h4>
+<p>对于包外不可见的类和方法，如有需要，也是要使用Javadoc的。如果一个注释是用来定义一个类，方法，字段的整体目的或行为， 那么这个注释应该写成Javadoc，这样更统一更友好。</p>
+<h2><a id="End"></a>后记</h2>
+<p>本文档翻译自<a href="http://google-styleguide.googlecode.com/svn/trunk/javaguide.html">Google Java Style</a>， 译者<a href="http://weibo.com/hawstein">@Hawstein</a>。</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../2015-11-29-zookeeper%25e9%259b%2586%25e7%25be%25a4%25e9%2585%258d%25e7%25bd%25ae.html/" class="md-footer__link md-footer__link--prev" aria-label="Previous: zookeeper集群配置" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              zookeeper集群配置
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../2015-12-08-activemq-delay-and-schedule-message-delivery-download.html/" class="md-footer__link md-footer__link--next" aria-label="Next: ActiveMQ Delay and Schedule Message Delivery" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              ActiveMQ Delay and Schedule Message Delivery
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/cloudecho" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "navigation.indexes", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.01824240.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ff0eccb3.min.js"></script>
+      
+    
+  </body>
+</html>
