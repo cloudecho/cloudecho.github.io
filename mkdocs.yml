@@ -72,3 +72,5 @@ plugins:
   - search
   - git-revision-date
   - awesome-pages
+  - minify:
+      minify_html: true
