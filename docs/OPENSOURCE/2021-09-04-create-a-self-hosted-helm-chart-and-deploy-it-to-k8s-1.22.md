@@ -28,7 +28,7 @@ Here are the descriptions from [helm.sh](https://helm.sh/docs/intro/using_helm/)
 
 ### 2.1 Install kubectl
 
-See [install-kubectl-on-control-server](/opensource/2021/08/28/deploy-dashboard-on-k8s-1.22.html#1-install-kubectl-on-control-server) .
+See [install-kubectl-on-control-server](/OPENSOURCE/2021-08-28-deploy-dashboard-on-k8s-1.22/#1-install-kubectl-on-control-server) .
 
 ### 2.2 Install helm
 
