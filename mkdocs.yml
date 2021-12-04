@@ -8,6 +8,7 @@ site_description: >-
 
 theme:
   name: material
+  # custom_dir: overrides
   
   # Static files
   static_templates:
@@ -60,6 +61,12 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/cloudecho
+    # - icon: fontawesome/solid/rss-square
+    #   link: /feed_rss_updated.xml
+    #   name: RSS recent updated 
+    - icon: fontawesome/solid/rss-square
+      link: /feed_rss_created.xml
+      name: RSS recent created
 
 markdown_extensions:
   - md_in_html
@@ -75,3 +82,11 @@ plugins:
   - awesome-pages
   - minify:
       minify_html: true
+  - rss:
+      categories:
+        - categories
+        - tags
+      date_from_meta:
+        as_creation: "date"
+        as_update: false
+        datetime_format: "%Y-%m-%d %H:%M:%S +0800"
