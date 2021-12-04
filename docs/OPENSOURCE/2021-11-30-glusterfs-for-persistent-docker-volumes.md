@@ -182,7 +182,7 @@ sudo mkdir -p /mnt/gfs/vol1
 
 From any Swarm node, create a stack file named `docker-compose.yml`.
 
-```sh
+```yaml
 cat <<EOF > docker-compose.yml
 version: "3.7"
 

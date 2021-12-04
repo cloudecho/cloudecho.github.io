@@ -157,7 +157,7 @@ First let's create a file named `doc.yml` and place it to `charts/hello` directo
 
 e.g. 
 
-```yml
+```yaml
 project:
   name: Hello World
   shortName: Hello
@@ -336,7 +336,7 @@ and place it to the root path of the github repo for charts.
 
 The content of the file is like this:
 
-```yml
+```yaml
 # Artifact Hub repository metadata file
 #
 # Some settings like the verified publisher flag or the ignored packages won't
