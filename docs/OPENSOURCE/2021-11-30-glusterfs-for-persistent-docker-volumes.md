@@ -26,7 +26,13 @@ Hostname       | vCPUs | Memory | Swap | IP              | OS       | sudoer | D
 *minion02*.k8s | 2     | 8G     | 0    | 192.168.122.102 | CentOS 7 | echo   |
 *minion03*.k8s | 2     | 8G     | 0    | 192.168.122.103 | CentOS 7 | echo   |
 
-NOTE: swarm-nodes: minion*.k8s
+??? note "swarm-nodes"
+
+    \# /etc/ansible/hosts<br>
+    [swarm-nodes]<br>
+    minion01.k8s<br>
+    minion02.k8s<br>
+    minion03.k8s
 
 
 ### 1.2 Installing GlusterFS and docker swarm
