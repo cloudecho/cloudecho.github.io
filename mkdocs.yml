@@ -67,6 +67,9 @@ extra:
     - icon: fontawesome/solid/rss-square
       link: /feed_rss_created.xml
       name: RSS recent created
+    - icon: fontawesome/solid/sitemap
+      link: /sitemap.xml
+      name: sitemap
 
 markdown_extensions:
   - md_in_html
