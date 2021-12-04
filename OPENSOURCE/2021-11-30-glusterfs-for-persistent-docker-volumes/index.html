@@ -79,27 +79,27 @@ localhost:/gfs           100G  <span class=m>1</span>.1G   99G    <span class=m>
 
 ansible swarm-nodes -u <span class=nb>echo</span> -b -m script -a <span class=s1>&#39;/tmp/gfs-plugin.sh&#39;</span> 
 </code></pre></div> <h2 id=4-deploy-a-stack-consisting-of-1-simple-service-with-a-glusterfs-volume>4. Deploy a stack consisting of 1 simple service with a GlusterFS volume<a class=headerlink href=#4-deploy-a-stack-consisting-of-1-simple-service-with-a-glusterfs-volume title="Permanent link">&para;</a></h2> <h3 id=41-create-a-subdiectory-at-the-root-of-the-glusterfs-volume>4.1 Create a subdiectory at the root of the GlusterFS volume<a class=headerlink href=#41-create-a-subdiectory-at-the-root-of-the-glusterfs-volume title="Permanent link">&para;</a></h3> <p>From <code>gluster01</code> server, create a subdirectory named <code>vol1</code> at the root of the GlusterFS volume.</p> <div class=highlight><pre><span></span><code>sudo mkdir -p /mnt/gfs/vol1
-</code></pre></div> <h3 id=42-deploy-a-stack>4.2 Deploy a stack<a class=headerlink href=#42-deploy-a-stack title="Permanent link">&para;</a></h3> <p>From any Swarm node, create a stack file named <code>docker-compose.yml</code>.</p> <div class=highlight><pre><span></span><code>cat <span class=s>&lt;&lt;EOF &gt; docker-compose.yml</span>
-<span class=s>version: &quot;3.7&quot;</span>
+</code></pre></div> <h3 id=42-deploy-a-stack>4.2 Deploy a stack<a class=headerlink href=#42-deploy-a-stack title="Permanent link">&para;</a></h3> <p>From any Swarm node, create a stack file named <code>docker-compose.yml</code>.</p> <div class=highlight><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">cat &lt;&lt;EOF &gt; docker-compose.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class=s>&quot;3.7&quot;</span>
 
-<span class=s>services:</span>
-<span class=s>  foo:</span>
-<span class=s>    image: alpine</span>
-<span class=s>    command: ping localhost</span>
-<span class=s>    networks:</span>
-<span class=s>      - net</span>
-<span class=s>    volumes:</span>
-<span class=s>      - vol1:/tmp</span>
+<span class=nt>services</span><span class=p>:</span>
+  <span class=nt>foo</span><span class=p>:</span>
+    <span class=nt>image</span><span class=p>:</span> <span class="l l-Scalar l-Scalar-Plain">alpine</span>
+    <span class=nt>command</span><span class=p>:</span> <span class="l l-Scalar l-Scalar-Plain">ping localhost</span>
+    <span class=nt>networks</span><span class=p>:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">net</span>
+    <span class=nt>volumes</span><span class=p>:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">vol1:/tmp</span>
 
-<span class=s>networks:</span>
-<span class=s>  net:</span>
-<span class=s>    driver: overlay</span>
+<span class=nt>networks</span><span class=p>:</span>
+  <span class=nt>net</span><span class=p>:</span>
+    <span class=nt>driver</span><span class=p>:</span> <span class="l l-Scalar l-Scalar-Plain">overlay</span>
 
-<span class=s>volumes:</span>
-<span class=s>  vol1:</span>
-<span class=s>    driver: glusterfs</span>
-<span class=s>    name: &quot;gfs/vol1&quot;</span>
-<span class=s>EOF</span>
+<span class=nt>volumes</span><span class=p>:</span>
+  <span class=nt>vol1</span><span class=p>:</span>
+    <span class=nt>driver</span><span class=p>:</span> <span class="l l-Scalar l-Scalar-Plain">glusterfs</span>
+    <span class=nt>name</span><span class=p>:</span> <span class=s>&quot;gfs/vol1&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div> <p>Deploy the stack.</p> <div class=highlight><pre><span></span><code>$ sudo docker stack deploy -c docker-compose.yml <span class=nb>test</span>
 Creating network test_net
 Creating service test_foo
