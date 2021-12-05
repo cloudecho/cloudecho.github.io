@@ -28,11 +28,12 @@ Hostname       | vCPUs | Memory | Swap | IP              | OS       | sudoer | D
 
 ??? note "swarm-nodes"
 
-    \# /etc/ansible/hosts<br>
-    [swarm-nodes]<br>
-    minion01.k8s<br>
-    minion02.k8s<br>
+    ```txt title="/etc/ansible/hosts"
+    [swarm-nodes]
+    minion01.k8s
+    minion02.k8s
     minion03.k8s
+    ```
 
 
 ### 1.2 Installing GlusterFS and docker swarm
