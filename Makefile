@@ -1,3 +1,10 @@
+PLUGIN_NAMES = git-revision-date \
+ awesome-pages \
+ minify \
+ rss
+
+MKDOCS_PLUGINS = $(foreach p, $(PLUGIN_NAMES), mkdocs-$(p)-plugin)
+
 default: push publish
 
 push:
@@ -5,3 +12,10 @@ push:
 
 publish:
 	mkdocs gh-deploy --force
+
+upgrade-mkdocs:
+	pip install --upgrade mkdocs-material
+	pip install --upgrade $(MKDOCS_PLUGINS)
+
+run:
+	mkdocs serve
