@@ -172,6 +172,6 @@ And put that token in the login screen for authentication.
 
 ## Reference
 
-* [Install Kubernetes (k8s) v1.22 Highly Available Clusters on CentOS 7](/opensource/2021/08/26/install-k8s-1.22-ha-clusters-on-centos7.html)
+* [Install Kubernetes (k8s) v1.22 Highly Available Clusters on CentOS 7](/OPENSOURCE/2021-08-26-install-k8s-1.22-ha-clusters-on-centos7/)
 * [docs/tasks/access-application-cluster/web-ui-dashboard/](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
 * [blog.heptio.com/on-securing-the-kubernetes-dashboard](https://blog.heptio.com/on-securing-the-kubernetes-dashboard-16b09b1b7aca)
