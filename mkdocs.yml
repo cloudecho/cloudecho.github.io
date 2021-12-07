@@ -2,9 +2,8 @@ site_name: ECHOYUN
 site_url: https://echoyun.xyz/
 site_author: Echo Ma
 site_description: >-
-  This is a personal blog hosted on Github Page. 
-  Thanks to Github Page and Mkdocs-material along with the related opensource projects.
-  Truely thanks to the authors who work on those projects.
+  This is a personal blog hosted on GitHub Pages. 
+  Truly thanks to the authors who work on opensource projects such as mkdocs.
 
 theme:
   name: material
