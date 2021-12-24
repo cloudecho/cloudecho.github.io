@@ -110,7 +110,8 @@ markdown_extensions:
   - pymdownx.tilde
 
 plugins:
-  - search
+  - search:
+      lang: ja
   - git-revision-date
   - awesome-pages
   - minify:
