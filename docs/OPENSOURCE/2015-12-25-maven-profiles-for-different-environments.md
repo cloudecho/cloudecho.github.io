@@ -14,20 +14,25 @@ tags:
 - package
 comments: []
 ---
-<p>src/main目录下原来有 java, resources, 新建环境相关的配置文件目录：</p>
-<p>resources : 一些共享的配置文件<br />
-environment/dev : 开发环境下用的配置文件, 打包时会覆盖resources目录下的同名文件.<br />
-environment/test : 测试环境下用的配置文件, 打包时会覆盖resources目录下的同名文件.<br />
-environment/prod : 生产环境下用的配置文件, 打包时会覆盖resources目录下的同名文件.</p>
-<p>本机开发时设置源码目录为 java, resources, 可直接开发调试.</p>
-<p>编译的时候希望maven根据不同环境, 打包不同目录下的文件, 我们利用maven的profile和maven-resources-plugin插件来实现这个目标.</p>
-<blockquote><p> 运行 mvn clean package -P test 打包.
-</p></blockquote>
-<p>pom.xml相关配置如下：</p>
-<pre style="font-size:12px;font-family:verdana">
-	<!-- == 配置开发/测试/生产环境 == -->
+`src/main`目录下原来有 `java`, `resources`, 新建环境相关的配置文件目录：
 
-        <properties>
+- resources : 一些共享的配置文件
+- environment/dev : 开发环境下用的配置文件, 打包时会覆盖resources目录下的同名文件.
+- environment/test : 测试环境下用的配置文件, 打包时会覆盖resources目录下的同名文件.
+- environment/prod : 生产环境下用的配置文件, 打包时会覆盖resources目录下的同名文件.
+
+本机开发时设置源码目录为 java, resources, 可直接开发调试.
+
+编译的时候希望maven根据不同环境, 打包不同目录下的文件, 我们利用maven的profile和maven-resources-plugin插件来实现这个目标.
+
+e.g. 运行 `mvn clean package -P test` 打包.
+
+
+`pom.xml` 相关配置如下：
+
+```xml
+	<!-- == 配置开发/测试/生产环境 == -->
+    <properties>
 		<package.target>prod</package.target>
 	</properties>
 
@@ -52,19 +57,9 @@ environment/prod : 生产环境下用的配置文件, 打包时会覆盖resource
 		</profile>
 	</profiles>
 
-       <!-- == 使用maven-resources-plugin拷贝不同环境下的资源 == -->
+    <!-- == 使用maven-resources-plugin拷贝不同环境下的资源 == -->
 	<build>
 		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.5</version>
@@ -86,7 +81,6 @@ environment/prod : 生产环境下用的配置文件, 打包时会覆盖resource
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
-</pre>
+```
