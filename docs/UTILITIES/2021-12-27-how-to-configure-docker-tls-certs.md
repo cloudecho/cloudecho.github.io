@@ -21,10 +21,10 @@ chmod +x make-certs
 
 Use the script to generate the certs.
 
-Let's say the server dns name is `echoyun.demo`,
+Let's say the server dns name is `echoyun.demo`, and the server ip is `192.168.10.3`
 
 ```sh
-./make-certs -d3650 -J/CN=echoyun.demo -Sechoyun.demo
+./make-certs -d3650 -J/CN=echoyun.demo -Sechoyun.demo -H192.168.10.3
 ```
 
 ## 2. Configuration of the client-side
