@@ -13,7 +13,7 @@ push:
 publish:
 	mkdocs gh-deploy --force
 
-upgrade-mkdocs:
+mkdocs:
 	pip install --upgrade mkdocs-material
 	pip install --upgrade $(MKDOCS_PLUGINS)
 
