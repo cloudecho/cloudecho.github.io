@@ -63,10 +63,10 @@ extra:
     # - icon: fontawesome/solid/rss-square
     #   link: /feed_rss_updated.xml
     #   name: RSS recent updated 
-    - icon: fontawesome/solid/rss-square
+    - icon: material/rss-box
       link: /feed_rss_created.xml
       name: RSS recent created
-    - icon: fontawesome/solid/sitemap
+    - icon: material/sitemap
       link: /sitemap.xml
       name: sitemap
 
