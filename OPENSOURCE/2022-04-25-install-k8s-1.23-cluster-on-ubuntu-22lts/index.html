@@ -221,7 +221,7 @@ k8s.gcr.io/kube-proxy:v1.23.6
 k8s.gcr.io/pause:3.6
 k8s.gcr.io/etcd:3.5.1-0
 k8s.gcr.io/coredns/coredns:v1.8.6
-</code></pre></div> <h3 id=52-init-cluster-on-master01>5.2 Init cluster on master01<a class=headerlink href=#52-init-cluster-on-master01 title="Permanent link">&para;</a></h3> <p>For flannel pod network (see <a href=#54-deploy-a-pod-network-flannel-to-the-cluster>6.3</a>), the argument <code>--pod-network-cidr=10.244.0.0/16</code> should be provided.</p> <div class=highlight><pre><span></span><code>$ sudo kubeadm init <span class=se>\</span>
+</code></pre></div> <h3 id=52-init-cluster-on-master01>5.2 Init cluster on master01<a class=headerlink href=#52-init-cluster-on-master01 title="Permanent link">&para;</a></h3> <p>For flannel pod network (see <a href=#54-deploy-a-pod-network-flannel-to-the-cluster>5.4</a>), the argument <code>--pod-network-cidr=10.244.0.0/16</code> should be provided.</p> <div class=highlight><pre><span></span><code>$ sudo kubeadm init <span class=se>\</span>
   --control-plane-endpoint <span class=s2>&quot;k8s-cluster:6443&quot;</span> <span class=se>\</span>
   --apiserver-advertise-address <span class=s2>&quot;192.168.56.200&quot;</span> <span class=se>\</span>
   --pod-network-cidr<span class=o>=</span><span class=m>10</span>.244.0.0/16
