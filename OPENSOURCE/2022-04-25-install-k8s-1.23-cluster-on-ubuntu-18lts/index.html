@@ -269,7 +269,7 @@ k8s.gcr.io/coredns/coredns:v1.8.6
   --control-plane-endpoint <span class=s2>&quot;k8s-cluster:6443&quot;</span> <span class=se>\</span>
   --apiserver-advertise-address <span class=s2>&quot;192.168.56.200&quot;</span> <span class=se>\</span>
   --pod-network-cidr<span class=o>=</span><span class=m>10</span>.244.0.0/16
-</code></pre></div> <p><em>Output:</em></p> <div class=highlight><pre><span></span><code><span class=o>[</span>init<span class=o>]</span> Using Kubernetes version: v1.23.6
+</code></pre></div> <details class=note> <summary>Output</summary> <div class=highlight><pre><span></span><code><span class=o>[</span>init<span class=o>]</span> Using Kubernetes version: v1.23.6
 <span class=o>[</span>preflight<span class=o>]</span> Running pre-flight checks
 <span class=o>[</span>preflight<span class=o>]</span> Pulling images required <span class=k>for</span> setting up a Kubernetes cluster
 <span class=o>[</span>preflight<span class=o>]</span> This might take a minute or two, depending on the speed of your internet connection
@@ -341,14 +341,14 @@ You can now join any number of control-plane nodes by copying certificate author
 and service account keys on each node and <span class=k>then</span> running the following as root:
 
   kubeadm join k8s-cluster:6443 --token eu2pzh.mbow7h16pv2bnl4i <span class=se>\</span>
-    --discovery-token-ca-cert-hash sha256:021b945cecea1f592acf107b27fc7aba098b58a4bba0295aa96118a13b81e19f <span class=se>\</span>
-    --control-plane 
+  --discovery-token-ca-cert-hash sha256:021b945cecea1f592acf107b27fc7aba098b58a4bba0295aa96118a13b81e19f <span class=se>\</span>
+  --control-plane 
 
 Then you can join any number of worker nodes by running the following on each as root:
 
 kubeadm join k8s-cluster:6443 --token eu2pzh.mbow7h16pv2bnl4i <span class=se>\</span>
-    --discovery-token-ca-cert-hash sha256:021b945cecea1f592acf107b27fc7aba098b58a4bba0295aa96118a13b81e19f 
-</code></pre></div> <h3 id=53-create-homekubeconfig-on-master01-or-any-server-with-kubectl-installed>5.3 Create <code>$HOME/.kube/config</code> on master01 (or any server with kubectl installed)<a class=headerlink href=#53-create-homekubeconfig-on-master01-or-any-server-with-kubectl-installed title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code>  mkdir -p <span class=nv>$HOME</span>/.kube
+  --discovery-token-ca-cert-hash sha256:021b945cecea1f592acf107b27fc7aba098b58a4bba0295aa96118a13b81e19f 
+</code></pre></div> </details> <h3 id=53-create-homekubeconfig-on-master01-or-any-server-with-kubectl-installed>5.3 Create <code>$HOME/.kube/config</code> on master01 (or any server with kubectl installed)<a class=headerlink href=#53-create-homekubeconfig-on-master01-or-any-server-with-kubectl-installed title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code>  mkdir -p <span class=nv>$HOME</span>/.kube
   sudo cp -i /etc/kubernetes/admin.conf <span class=nv>$HOME</span>/.kube/config
   sudo chown <span class=k>$(</span>id -u<span class=k>)</span>:<span class=k>$(</span>id -g<span class=k>)</span> <span class=nv>$HOME</span>/.kube/config
 </code></pre></div> <p>See also <a href=https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux>Install and Set Up kubectl on Linux</a></p> <h3 id=54-deploy-a-pod-network-flannel-to-the-cluster>5.4 Deploy a pod network (flannel) to the cluster<a class=headerlink href=#54-deploy-a-pod-network-flannel-to-the-cluster title="Permanent link">&para;</a></h3> <p><em>On master01</em></p> <div class=highlight><pre><span></span><code>kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.17.0/Documentation/kube-flannel.yml
@@ -358,7 +358,7 @@ kubectl get node
 ./foreach-node.sh -n <span class=s2>&quot;minion01 minion02 minion03&quot;</span> <span class=se>\</span>
   sudo kubeadm join k8s-cluster:6443 --token eu2pzh.mbow7h16pv2bnl4i <span class=se>\</span>
     --discovery-token-ca-cert-hash sha256:021b945cecea1f592acf107b27fc7aba098b58a4bba0295aa96118a13b81e19f 
-</code></pre></div> <p><em>Output:</em></p> <div class=highlight><pre><span></span><code><span class=o>[</span>preflight<span class=o>]</span> Running pre-flight checks
+</code></pre></div> <details class=note> <summary>Output</summary> <div class=highlight><pre><span></span><code><span class=o>[</span>preflight<span class=o>]</span> Running pre-flight checks
 <span class=o>[</span>preflight<span class=o>]</span> Reading configuration from the cluster...
 <span class=o>[</span>preflight<span class=o>]</span> FYI: You can look at this config file with <span class=s1>&#39;kubectl -n kube-system get cm kubeadm-config -o yaml&#39;</span>
 W0425 <span class=m>13</span>:33:32.424506   <span class=m>24882</span> utils.go:69<span class=o>]</span> The recommended value <span class=k>for</span> <span class=s2>&quot;resolvConf&quot;</span> <span class=k>in</span> <span class=s2>&quot;KubeletConfiguration&quot;</span> is: /run/systemd/resolve/resolv.conf<span class=p>;</span> the provided value is: /run/systemd/resolve/resolv.conf
@@ -372,7 +372,7 @@ This node has joined the cluster:
 * The Kubelet was informed of the new secure connection details.
 
 Run <span class=s1>&#39;kubectl get nodes&#39;</span> on the control-plane to see this node join the cluster.
-</code></pre></div> <h3 id=57-check-the-cluster>5.7 Check the cluster<a class=headerlink href=#57-check-the-cluster title="Permanent link">&para;</a></h3> <p><em>On master01.k8s. Check the nodes</em></p> <div class=highlight><pre><span></span><code>kubectl get nodes
+</code></pre></div> </details> <h3 id=57-check-the-cluster>5.7 Check the cluster<a class=headerlink href=#57-check-the-cluster title="Permanent link">&para;</a></h3> <p><em>On master01.k8s. Check the nodes</em></p> <div class=highlight><pre><span></span><code>kubectl get nodes
 </code></pre></div> <p><em>Output:</em></p> <div class=highlight><pre><span></span><code>NAME       STATUS   ROLES                  AGE    VERSION
 master01   Ready    control-plane,master   30m    v1.23.6
 minion01   Ready    &lt;none&gt;                 109s   v1.23.6
