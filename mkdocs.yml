@@ -58,17 +58,18 @@ extra:
     provider: google
     property: !ENV GOOGLE_ANALYTICS_KEY
   social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/cloudecho
-    # - icon: fontawesome/solid/rss-square
-    #   link: /feed_rss_updated.xml
-    #   name: RSS recent updated 
     - icon: material/rss-box
       link: /feed_rss_created.xml
       name: RSS recent created
     - icon: material/sitemap
       link: /sitemap.xml
       name: sitemap
+    - icon: material/linkedin
+      link: https://www.linkedin.cn/incareer/in/cloudecho
+      name: Linkedin
+    - icon: fontawesome/brands/github
+      link: https://github.com/cloudecho
+      name: Github
 
 markdown_extensions:
   - admonition
