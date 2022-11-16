@@ -43,6 +43,7 @@ Configure the envrionment variables by editing `~/.bash_profile` or `~/.profile`
 export DOCKER_TLS_VERIFY="1"
 export COMPOSE_TLS_VERSION=TLSv1_2
 export DOCKER_HOST="tcp://echoyun.demo:2376"
+export DOCKER_CERT_PATH="$HOME/.docker/certs"
 ```
 
 ??? note "configure `/etc/hosts` if need"
