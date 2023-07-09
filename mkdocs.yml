@@ -65,7 +65,7 @@ extra:
       link: /sitemap.xml
       name: sitemap
     - icon: material/linkedin
-      link: https://www.linkedin.cn/incareer/in/cloudecho
+      link: https://www.linkedin.com/in/techo-dev/
       name: Linkedin
     - icon: fontawesome/brands/github
       link: https://github.com/cloudecho
