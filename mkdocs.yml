@@ -114,7 +114,7 @@ plugins:
   - search:
       lang: ja
   - git-revision-date
-  # - awesome-pages
+  - awesome-pages
   - minify:
       minify_html: true
   - rss:
