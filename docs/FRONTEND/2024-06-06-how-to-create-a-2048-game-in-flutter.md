@@ -28,8 +28,26 @@ First, we need a computer, of course. It's a laptop for me. We also need to know
 
 Second, set up the development environment. Refer to https://docs.flutter.dev/get-started/install .
 
-## 4. 
+Third, choose your favorite IDE, I prefer `Visual Studio Code` (VSCode).
 
+## 4. Programming
+
+### 4.1 Create a Flutter project
+
+Open a terminal, use the following command to create the project
+
+```sh
+flutter create -e g2048
+```
+
+Here, `g2048` is the project name.
+
+We can also create it using VSCode. Go `View > Command Palette`, type `flutter`, then click `Flutter: New Project`, and then click `Empty Application`. 
+
+Now we have a `Hello World` app. Great! Run `flutter run` and we'll see it.
+
+
+## 4.2 
 
 (to be continued...)
 
