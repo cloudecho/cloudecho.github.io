@@ -47,7 +47,27 @@ We can also create it using VSCode. Go `View > Command Palette`, type `flutter`,
 Now we have a `Hello World` app. Great! Run `flutter run` and we'll see it.
 
 
-## 4.2 
+## 4.2 Graphic User Interface
+
+We're going to implement a simple GUI like
+
+```txt
+2048  | Score
+          0
+ -----------
+|           |               
+|   Board   |  
+|   (4x4)   |  
+|           |  
+ -----------
+```
+
+Let's say it in Flutter language:
+
+<img src='/assets/2048-1.png' width="300px">
+
+<img src='/assets/2048-2.png' width="300px">
+
 
 (to be continued...)
 
