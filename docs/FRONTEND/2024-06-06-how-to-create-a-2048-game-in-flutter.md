@@ -47,7 +47,7 @@ We can also create it using VSCode. Go `View > Command Palette`, type `flutter`,
 Now we have a `Hello World` app. Great! Run `flutter run` and we'll see it.
 
 
-### 4.2 Graphic User Interface
+### 4.2 Graphic User Interface (GUI)
 
 We're going to implement a simple GUI like
 
@@ -549,7 +549,8 @@ class GameState extends ChangeNotifier {
 
 #### 4.3.4 Inject the `GameState` into Widgets
 
-We're going to use [`provider`](https://pub.dev/packages/provider) to manage object dependencies.
+We're going to use [`provider`](https://pub.dev/packages/provider) to manage object dependencies. Please read the article [Simple app state management](https://docs.flutter.dev/data-and-backend/state-mgmt/simple) to know more.
+
 Run the following command to add the `provider` package.
 
 ```sh
@@ -684,6 +685,283 @@ flutter pub add provider
     // class Tile extends StatelessWidget {
     // ... ...  
     ```
+
+### 4.4 Implementation of the core logic
+
+The core logic is implemented by the following methods.
+
+```mermaid
+classDiagram
+  class GameState{
+    +swipeLeft()
+    +swipeRight()
+    +swipeUp()
+    +swipeDown()
+  }
+```
+
+Take the method `swipeLeft()` as an example, there are at least five things we need to do:
+
+- `_moveZeros`: Move all the non-zero numbers to the left side
+- `_mergeNumbers`: Merge the adjacent non-zero number into a bigger one, if they are the same value, from left to right
+- Accumulate the score
+- `_nextNum`: Generate the next number (2 or 4)
+- `_checkDone`: Check if game over
+
+#### 4.4.1 Helper class `Nums`
+
+Before implementing the `swipeXxx` methods, let's define a helper class `Nums` first.
+
+```mermaid
+classDiagram
+  class Nums{
+    -final Model model
+    -final int which
+    -final bool column 
+    +int get length
+    +int operator [ ]
+    +operator [ ]=
+  }
+```
+
+```{.dart .copy linenums="1"}
+/// The view of the numbers in a row or a column 
+class Nums {
+  Nums(this.model, this.which, {this.column = false});
+  final Model model;
+
+  /// Which row or column
+  final int which;
+  final bool column;
+
+  int get length => column ? model[0].length : model.length;
+
+  int operator [](int k) => column ? model[k][which] : model[which][k];
+
+  operator []=(int k, int value) {
+    if (column) {
+      model[k][which] = value;
+    } else {
+      model[which][k] = value;
+    }
+  }
+}
+```
+
+#### 4.4.2 Method `_nums`
+
+```{.dart .copy linenums="1"}
+  Nums _numsAtColumn(int j) => _nums(j, column: true);
+
+  Nums _nums(int which, {bool column = false}) =>
+      Nums(_model, which, column: column);
+```
+
+#### 4.4.3 Method `_moveZeros`
+
+For instance,
+
+```c
+0 2 0 4  swipeLeft -->  2 4 0 0
+
+
+0 2 0 4  swipeRight -->  0 0 2 4
+
+
+0           4
+4  swipeUp  8
+0   ---->   0  
+8           0
+
+
+0             0
+4  swipeDown  0
+0   ---->     4  
+8             8
+```
+
+```{.dart .copy linenums="1"}
+  /// Move the non-zero numbers to the left side if [reverse] is false,
+  /// or to the right side if [reverse] is true
+  List<int> _moveZeros(Nums nums, {bool reverse = false}) {
+    var moves = List.filled(nums.length, 0, growable: false);
+    if (reverse) {
+      // TODO 
+    } else {
+      for (var k = 1; k < nums.length; k++) {
+        if (nums[k] == 0) continue;
+        var i = k - 1;
+        for (; i >= 0 && nums[i] == 0; i--) {}
+        var count = (k - 1) - i;
+        if (count > 0) {
+          nums[i + 1] = nums[k];
+          nums[k] = 0;
+          moves[i + 1] = count;
+        }
+      }
+    }
+    return moves;
+  }
+```
+
+#### 4.4.4 Method `_mergeNumbers`
+
+For instance,
+
+```c
+2  2  2  4  swipeLeft --> 4 2 4 0 
+
+
+2  2  2  4  swipeRight --> 0 2 4 4 
+
+
+0           8
+4  swipeUp  0
+0   ---->   0  
+4           0
+
+
+0             0
+4  swipeDown  0
+0   ---->     0  
+4             8
+```
+
+```{.dart .copy linenums="1"}
+  /// Merge the adjacent non-zero number into a bigger one,
+  /// from left to right if [reserve] is false,
+  /// or from right to left if [reserve] is true.
+  /// Return the score to be accumulated.
+  int _mergeNumbers(Nums nums, {bool reserve = false}) {
+    var gotScore = 0;
+    if (reserve) {
+      // TODO
+    } else {
+      for (var k = 0; k < nums.length - 1; k++) {
+        if (nums[k] == 0) continue;
+        if (nums[k] == nums[k + 1]) {
+          nums[k] *= 2;
+          nums[k + 1] = 0;
+          gotScore += nums[k];
+        }
+      }
+    }
+    return gotScore;
+  }
+```
+
+#### 4.4.5 Method `_nextNum`
+
+```{.dart .copy linenums="1"}
+  // import 'dart:math' as math;
+  static final _rand = math.Random();
+
+  Point? _newPostion;
+
+  void _nextNum() {
+    List<Point> points = [];
+    for (var i = 0; i < size; i++) {
+      for (var j = 0; j < size; j++) {
+        if (0 == _model[i][j]) points.add((x: i, y: j));
+      }
+    }
+    if (points.isEmpty) return;
+
+    var p = points[_rand.nextInt(points.length)];
+    _model[p.x][p.y] = _rand.nextDouble() < 0.1 ? 4 : 2;
+    _newPostion = p;
+  }
+```
+
+#### 4.4.6 Method `_checkDone`
+
+```{.dart .copy linenums="1"}
+  void _checkDone() {
+    for (var k = 0; k < size; k++) {
+      if (!_isDone(_nums(k)) || !_isDone(_numsAtColumn(k))) {
+        return;
+      }
+    }
+    done = true;
+  }
+
+  bool _isDone(Nums nums) {
+    for (var k = 0; k < nums.length; k++) {
+      if (0 == nums[k] || (k > 0 && nums[k - 1] == nums[k])) {
+        return false;
+      }
+    }
+    return true;
+  }
+```
+
+#### 4.4.7 Method `swipeLeft`
+
+```{.dart .copy linenums="1"}
+  void swipeLeft() {
+    _swipe(_swipeLeft);
+  }
+
+  bool _swipeLeft(final int i) {
+    var hasMoved = false;
+    var moves = _moveZeros(_nums(i));
+    for (var k = 0; k < size; k++) {
+      hasMoved |= moves[k] > 0;
+    }
+    return hasMoved;
+  }
+
+  void _swipe(bool Function(int) swipeAction) async {
+    // move zeros
+    _resetNewPosition();
+    var hasMoved = false;
+    for (var i = 0; i < size; i++) {
+      hasMoved |= swipeAction(i);
+    }
+    if (hasMoved) notifyListeners();
+
+    // merge numbers
+    var gotScore = 0;
+    for (var k = 0; k < size; k++) {
+      final vertical = swipeAction == _swipeUp || swipeAction == _swipeDown;
+      var nums = _nums(k, column: vertical);
+      gotScore += _mergeNumbers(
+        nums,
+        reserve: swipeAction == _swipeRight || swipeAction == _swipeDown,
+      );
+      swipeAction(k);
+    }
+
+    // score & next number
+    if (hasMoved || gotScore > 0) {
+      score += gotScore;
+      _nextNum();
+      _checkDone();
+      notifyListeners();
+    }
+  }
+
+  void _resetNewPosition() {
+    _newPostion = null;
+  }
+```
+
+#### 4.4.8 Other `swipe` methods
+
+We use the same approach as `swipeLeft` to implement:
+
+- `swipeRight`
+- `swipeUp`
+- `swipeDown`
+
+### 4.5 Back to the GUI
+
+There are some functions or widgets we need to implement for the GUI.
+
+- `Swipeable`: A widget that helps swipe left/right/up/down, which is essential
+- `SlideWidget`: A widget that implements the slide animation for sliding tiles (numbers)
+- `TwinkleWidget`: A widget that implements the animation function for the newly generated number
+- The font color, font size, and background color of the tiles (numbers) 
 
 
 (to be continued...)
