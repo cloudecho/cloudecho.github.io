@@ -245,6 +245,7 @@ class HomeScreen extends StatelessWidget {
 #### 4.2.4 First refactor
 
 We have created three files now:
+
 - `lib/main.dart`
 - `lib/src/status_pane.dart`
 - `lib/src/board.dart`
