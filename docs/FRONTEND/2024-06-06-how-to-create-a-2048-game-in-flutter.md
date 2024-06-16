@@ -1838,6 +1838,7 @@ That's all.
 
 It's not easy to master a new programming language or framework (development tool kit). It's a good start to write a little game, through which we can understand some basic concepts better. The game 2048 is easy to understand. That's why I chose it as an example of practicing programming in Flutter. To help me express my ideas better, I drew some diagrams, which I hope will help you understand the codes in this article better.
 
+Here is the full source code [g2048](https://github.com/cloudecho/g2048).
 
 ## Reference
 
