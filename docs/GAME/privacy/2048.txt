@@ -1,17 +1,17 @@
-Privacy Policy for "Let's 2048!"
+Privacy Policy for "Joy 2048"
 
 Effective Date: March 2, 2025
 
 Our Commitment to Your Privacy
 
-At "Let's 2048!", we are deeply committed to your privacy and believe in 
+At "Joy 2048", we are deeply committed to your privacy and believe in 
 transparency. This Privacy Policy explains our practices regarding data.  
 However, in this case, the most important practice to understand is that 
-"Let's 2048!" does not collect any personal data from you.
+"Joy 2048" does not collect any personal data from you.
 
 1. No Personal Data Collection
 
-We want to be absolutely clear: "Let's 2048!" is designed and built to 
+We want to be absolutely clear: "Joy 2048" is designed and built to 
 function without collecting any personal data from its users.
 
 This means we do not collect information such as:
@@ -21,7 +21,7 @@ IP address, usernames, or account names.
 
 Demographic Data: Age, gender, location, interests, or preferences.
 
-Usage Data: Information about how you use "Let's 2048!", such as pages visited, 
+Usage Data: Information about how you use "Joy 2048", such as pages visited, 
 features used, time spent, or interactions within the service.
 
 Device Information: Type of device, operating system, unique device identifiers.
@@ -32,11 +32,11 @@ beacons, or similar technologies to collect user data.
 
 2. Why We Don't Collect Data
 
-Design Philosophy: "Let's 2048!" is intentionally designed to operate locally 
+Design Philosophy: "Joy 2048" is intentionally designed to operate locally 
 on your device or within your browser without needing to transmit or store 
 personal data.
 
-Functionality: The core functionality of "Let's 2048!" does not require us to 
+Functionality: The core functionality of "Joy 2048" does not require us to 
 collect or process any user data to operate effectively.
 
 Privacy as a Priority: We believe in minimizing data collection as a core 
@@ -44,9 +44,9 @@ principle to protect user privacy.
 
 3. Children's Privacy
 
-"Let's 2048!" is committed to protecting children's privacy.  Because we do not 
+"Joy 2048" is committed to protecting children's privacy.  Because we do not 
 collect any personal data, the Children's Online Privacy Protection Act (COPPA) 
-and similar regulations do not apply to "Let's 2048!" in the context of data 
+and similar regulations do not apply to "Joy 2048" in the context of data 
 collection.
 
 4. Changes to this Privacy Policy
