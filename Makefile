@@ -1,3 +1,4 @@
+#source ~/workpython/venv/bin/activate
 PLUGIN_NAMES = git-revision-date \
  awesome-pages \
  minify \
