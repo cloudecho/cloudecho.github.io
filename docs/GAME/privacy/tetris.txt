@@ -1,0 +1,63 @@
+Privacy Policy for "Joy Tetris"
+
+Effective Date: March 2, 2025
+
+Our Commitment to Your Privacy
+
+At "Joy Tetris", we are deeply committed to your privacy and believe in 
+transparency. This Privacy Policy explains our practices regarding data.  
+However, in this case, the most important practice to understand is that 
+"Joy Tetris" does not collect any personal data from you.
+
+1. No Personal Data Collection
+
+We want to be absolutely clear: "Joy Tetris" is designed and built to 
+function without collecting any personal data from its users.
+
+This means we do not collect information such as:
+
+Personal Identifiers: Name, email address, phone number, postal address, 
+IP address, usernames, or account names.
+
+Demographic Data: Age, gender, location, interests, or preferences.
+
+Usage Data: Information about how you use "Joy Tetris", such as pages visited, 
+features used, time spent, or interactions within the service.
+
+Device Information: Type of device, operating system, unique device identifiers.
+Location Data: Precise or approximate location information.
+
+Cookies or Tracking Technologies: We do not employ cookies, trackers, web
+beacons, or similar technologies to collect user data.
+
+2. Why We Don't Collect Data
+
+Design Philosophy: "Joy Tetris" is intentionally designed to operate locally 
+on your device or within your browser without needing to transmit or store 
+personal data.
+
+Functionality: The core functionality of "Joy Tetris" does not require us to 
+collect or process any user data to operate effectively.
+
+Privacy as a Priority: We believe in minimizing data collection as a core 
+principle to protect user privacy.
+
+3. Children's Privacy
+
+"Joy Tetris" is committed to protecting children's privacy.  Because we do not 
+collect any personal data, the Children's Online Privacy Protection Act (COPPA) 
+and similar regulations do not apply to "Joy Tetris" in the context of data 
+collection.
+
+4. Changes to this Privacy Policy
+
+We may update this Privacy Policy from time to time. We will notify you of any 
+significant changes by posting the new Privacy Policy on our website. We 
+encourage you to review this Privacy Policy periodically for any updates.  
+The "Effective Date" at the top of this Privacy Policy indicates when it was 
+last revised.
+
+5. Contact Us
+
+If you have any questions about this Privacy Policy, please contact us at: 
+maywide@qq.com
