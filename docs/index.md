@@ -10,4 +10,4 @@
 
 [BOOKS](/BOOKS/2021-11-20-online-ebooks)
 
-[从0开始学Dart][/dartpl]
+[从0开始学Dart](/dartpl)
