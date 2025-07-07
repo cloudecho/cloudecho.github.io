@@ -476,7 +476,7 @@ comments: []
 
 ### 其他
 * [《高原的百合花: 玻利维亚记行》](http://www.kanunu8.com/book3/7169/159044.html)
-* [《赴欧旅途见闻录》](http://www.kanunu8.com/book3/7169/159043.html)
+* [《赴欧旅途见闻录》](http://www.kanunu8.com/book3/7169/159043.html)n
 * [《西北民歌大师王洛宾》](http://www.kanunu8.com/book3/7169/159042.html)
 
 ## 摘自
