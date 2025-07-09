@@ -13,8 +13,8 @@ description:
 [ANIMAL FARM](https://dn790000.ca.archive.org/0/items/animalfarm00orwe_0/animalfarm00orwe_0.pdf)|GEORGE ORWELL
 [THE GREAT GATSBY](https://dn720501.ca.archive.org/0/items/greatgatsby00fitz_1/greatgatsby00fitz_1.pdf)|F. SCOTT FITZGERALD
 [ALICE’S Adventures in Wonderland](https://www.adobe.com/be_en/active-use/pdf/Alice_in_Wonderland.pdf)|LEWIS CARROLL
-中国人的思维危机                                                                       |宋怀常
-[丑陋的中国人](https://libgen.is/book/index.php?md5=BB99B704AB6504C09A5DE3CAAC55D088) |柏杨    
-[沉默的大多数](https://libgen.is/book/index.php?md5=BE21C85AAD4ED2D6F13DAFCFC50E0A10) |王小波 
-[丰乳肥臀](https://libgen.is/book/index.php?md5=52B66C94212F69E033614ABB6A7D5E11)     |莫言    
-[硅谷钢铁侠](https://libgen.is/book/index.php?md5=9EE14D196F0927736A55911C73969F4D)   |（美）阿什利·万斯
+[中国人的思维危机](https://www.scribd.com/document/779164686/%E4%B8%AD%E5%9B%BD%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E5%8D%B1%E6%9C%BA-%E5%AE%8B%E6%80%80%E5%B8%B8%E8%91%97-Z-Library) |宋怀常
+[丑陋的中国人](https://archive.org/details/The-Ugly-Chinese) |柏杨    
+[沉默的大多数](https://eol.nwafu.edu.cn/meol/analytics/resPdfShow.do?resId=278117&lid=44729) |王小波 
+[丰乳肥臀](https://docs.google.com/open?id=0B61Z4IXsLjTXYUZISU9YZUpLYVE)     |莫言    
+[硅谷钢铁侠](https://archive.org/details/77ebooks.com_202202)   |（美）阿什利·万斯
