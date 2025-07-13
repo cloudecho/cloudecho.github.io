@@ -10,6 +10,7 @@ description:
 
   Book                                                                              |Author 
 ------------------------------------------------------------------------------------|-------
+[A Thousand Splendid Suns](https://ia802805.us.archive.org/1/items/athousandsplendidsun/A%20thousand%20splendid%20sun.pdf)|Khaled Hosseini
 [Normal People](https://drive.google.com/file/d/1mwamwITtiuMDxX-8cNj8TpMO31SJzirb/view)|SALLY ROONEY
 [ANIMAL FARM](https://dn790000.ca.archive.org/0/items/animalfarm00orwe_0/animalfarm00orwe_0.pdf)|GEORGE ORWELL
 [THE GREAT GATSBY](https://dn720501.ca.archive.org/0/items/greatgatsby00fitz_1/greatgatsby00fitz_1.pdf)|F. SCOTT FITZGERALD
