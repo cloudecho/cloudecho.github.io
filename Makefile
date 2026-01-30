@@ -14,6 +14,9 @@ push:
 # publish:
 # 	mkdocs gh-deploy --force
 
+showplugins:
+	@echo $(MKDOCS_PLUGINS)
+
 mkdocs:
 	pip install --upgrade mkdocs-material
 	pip install --upgrade $(MKDOCS_PLUGINS)
