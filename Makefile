@@ -11,8 +11,8 @@ default: push publish
 push:
 	git push
 
-publish:
-	mkdocs gh-deploy --force
+# publish:
+# 	mkdocs gh-deploy --force
 
 mkdocs:
 	pip install --upgrade mkdocs-material
