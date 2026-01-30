@@ -1,9 +1,9 @@
 name: Deploy Site
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [ main ]
+  repository_dispatch:
+    types: [rebuild-from-demo]
   workflow_dispatch:
 
 permissions:
