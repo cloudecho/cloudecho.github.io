@@ -36,7 +36,7 @@ Design Philosophy: "Techo Gomoku" is intentionally designed to operate locally
 on your device or within your browser without needing to transmit or store 
 personal data.
 
-Functionality: The core functionality of "Joy Gomoku" does not require us to 
+Functionality: The core functionality of "Techo Gomoku" does not require us to 
 collect or process any user data to operate effectively.
 
 Privacy as a Priority: We believe in minimizing data collection as a core 
@@ -46,7 +46,7 @@ principle to protect user privacy.
 
 "Techo Gomoku" is committed to protecting children's privacy.  Because we do not 
 collect any personal data, the Children's Online Privacy Protection Act (COPPA) 
-and similar regulations do not apply to "Joy Gomoku" in the context of data 
+and similar regulations do not apply to "Techo Gomoku" in the context of data 
 collection.
 
 4. Changes to this Privacy Policy
