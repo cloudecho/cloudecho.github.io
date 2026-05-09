@@ -22,6 +22,8 @@ jobs:
           python-version: '3.x'
 
       - name: Install and Build
+        env:
+          GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
         run: |
           pip install mkdocs-material mkdocs-git-revision-date-plugin mkdocs-awesome-pages-plugin mkdocs-minify-plugin mkdocs-rss-plugin
           mkdocs build
